@@ -1,52 +1,47 @@
 import React from "react";
-import { Card, Layout, Typography, Row, Col } from "antd";
-import { EditOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { Layout, Card, Typography, Avatar } from "antd";
+import { CheckCircleOutlined, ProfileOutlined } from "@ant-design/icons";
 
 const { Header, Content } = Layout;
-const { Title, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const AdminDashboard = () => {
     return (
-        <Layout style={{ minHeight: "100vh", backgroundColor: "#f8f8f8" }}>
-            <Header
-                style={{
-                    background: "linear-gradient(to right, #91c1c1, #5c9e9e)",
-                    padding: "20px",
-                    textAlign: "center",
-                }}
-            >
-                <Title style={{ color: "#fff", margin: 0 }}>Welcome to the Admin Dashboard!</Title>
+        <Layout style={{ minHeight: "100vh", backgroundImage: "url('./admin_dashboard_background.jpeg')", backgroundSize: "cover" }}>
+            {/* Header */}
+            <Header style={{ background: "#5AB1AE", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 20px" }}>
+                <img src="/assets/southex_logo.png" alt="SOUTHEX" style={{ height: 40 }} />
+                <Avatar src="/admin-avatar.jpg" /> <Text style={{ color: "white" }}>Admin A</Text>
             </Header>
 
-            <Content style={{ padding: "50px", textAlign: "center" }}>
-                <Paragraph style={{ fontSize: "16px", color: "#555" }}>
-                    Manage tours, review bookings, and streamline operations with ease.
-                    Use the options below to update tour details, verify payments, and approve reservations efficiently.
-                </Paragraph>
+            {/* Welcome Section */}
+            <Content style={{ textAlign: "center", padding: "40px 20px" }}>
+                <Title level={2}>ยินดีต้อนรับสู่ระบบการจัดการทัวร์ของ <span style={{ color: "#5AB1AE" }}>Southex</span></Title>
+                <Text>
+                    คุณสามารถจัดการทัวร์ ตรวจสอบการจอง และทำให้การดำเนินงานเป็นไปอย่างราบรื่นได้ง่ายๆ
+                    ใช้ตัวเลือกด้านล่างเพื่ออัปเดตรายละเอียดทัวร์ ยืนยันการชำระเงิน และอนุมัติการจองอย่างมีประสิทธิภาพ
+                </Text>
 
-                <Row gutter={[24, 24]} justify="center" style={{ marginTop: "30px" }}>
-                    <Col xs={24} sm={12} md={8}>
-                        <Card
-                            hoverable
-                            style={{ backgroundColor: "#d3ecec", padding: "20px" }}
-                            cover={<EditOutlined style={{ fontSize: "40px", margin: "20px 0" }} />}
-                        >
-                            <Title level={3}>Manage Tour</Title>
-                            <Paragraph>Add, edit, and delete tours, set prices, and manage tour details.</Paragraph>
-                        </Card>
-                    </Col>
+                {/* Card Section */}
+                <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "40px", flexWrap: "wrap" }}>
+                    <Card
+                        hoverable
+                        style={{ width: 300, textAlign: "center", background: "#E3F2F1" }}
+                        cover={<ProfileOutlined style={{ fontSize: "50px", marginTop: "20px", color: "#5AB1AE" }} />}
+                    >
+                        <Title level={3}>จัดการทัวร์</Title>
+                        <Text>เพิ่ม แก้ไข และลบทัวร์ ตั้งราคา และจัดการรายละเอียดทัวร์</Text>
+                    </Card>
 
-                    <Col xs={24} sm={12} md={8}>
-                        <Card
-                            hoverable
-                            style={{ backgroundColor: "#d3ecec", padding: "20px" }}
-                            cover={<CheckCircleOutlined style={{ fontSize: "40px", margin: "20px 0" }} />}
-                        >
-                            <Title level={3}>Booking Approval</Title>
-                            <Paragraph>Review bookings, verify payments, and approve/reject reservations.</Paragraph>
-                        </Card>
-                    </Col>
-                </Row>
+                    <Card
+                        hoverable
+                        style={{ width: 300, textAlign: "center", background: "#E3F2F1" }}
+                        cover={<CheckCircleOutlined style={{ fontSize: "50px", marginTop: "20px", color: "#5AB1AE" }} />}
+                    >
+                        <Title level={3}>อนุมัติการจอง</Title>
+                        <Text>ตรวจสอบการจอง, ยืนยันการชำระเงิน และอนุมัติ/ปฏิเสธการจอง</Text>
+                    </Card>
+                </div>
             </Content>
         </Layout>
     );
