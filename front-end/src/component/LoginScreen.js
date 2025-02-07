@@ -99,10 +99,11 @@ export default function LoginScreen() {
             onFinish={handleSubmit}
             autoComplete="off"
           >
-            <p>Login</p>
-            <p>sign in to your account</p>
+            <p className="login-Title">Login</p>
+            <p className="login-Subtitle">Sign in to your account</p>
             <Form.Item
               name="username"
+              wrapperCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -118,6 +119,7 @@ export default function LoginScreen() {
             </Form.Item>
             <Form.Item
               name="password"
+              wrapperCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -132,17 +134,22 @@ export default function LoginScreen() {
                 type="password"
               />
             </Form.Item>
-            <Form.Item label={null}>
+            <Form.Item wrapperCol={{ span: 24 }}>
               <Button
+                className="button-Login"
                 type="primary"
                 htmlType="submit"
                 loading={loading}
-                style={{ width: "100%" }}
               >
                 Login
               </Button>
             </Form.Item>
-            <Form.Item name="remember" valuePropName="checked" label={null}>
+            <Form.Item
+              className="Checkbox"
+              name="remember"
+              valuePropName="checked"
+              wrapperCol={{ span: 24 }}
+            >
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
           </Form>

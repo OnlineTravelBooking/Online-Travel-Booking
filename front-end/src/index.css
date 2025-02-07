@@ -3,32 +3,63 @@ body {
   padding: 0;
   height: 100%; 
   overflow-y: hidden;
+  background-color: #F6F4F0;
 }
 #root {
   height: 100%;
 }
 
 .formLogin {
+  scale: 1.3;
   width: 300px;
-  padding: 20px;
+  padding: 10px;
   background-color: #F6F4F0;
   display: flex;
   flex-direction: column;
-  
   text-align: center;
-  border-radius: 20px;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005C78;
 }
 
-.Inputpassword {
-  width: 100%;
-  background-color: #D9D9D9;
-  border-radius: 20px;
-  box-shadow: 0px 1px  #757474;
+.formLogin .ant-form-item {
+  margin-bottom: 15px; 
 }
 
 .Inputusername {
-  width: 100%;
+  width: 80%;
   background-color: #D9D9D9;
   border-radius: 20px;
   box-shadow: 0px 1px  #757474;
+}
+
+.Inputpassword {
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.button-Login {
+  width:80%;
+  background-color: #005C78;
+  border-radius: 20px;
+}
+
+.Checkbox {
+ width: 70%;
+ margin-top: -10px;
+}
+
+.login-Title{
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2E5077;
+  margin-bottom: -12px;
+}
+
+.login-Subtitle{
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
