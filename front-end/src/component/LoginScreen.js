@@ -58,7 +58,7 @@ export default function LoginScreen() {
 
       // Use roleType directly for navigation:
       if (roleType === "user") {
-        navigate("/home");
+        navigate("/");
       } else if (roleType === "admin") {
         navigate("/admin");
       }
