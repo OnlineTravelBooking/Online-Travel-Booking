@@ -150,7 +150,12 @@ export default function LoginScreen() {
               valuePropName="checked"
               wrapperCol={{ span: 24 }}
             >
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox className="Checkbox">Remember me</Checkbox>
+            </Form.Item>
+            <Form.Item wrapperCol={{ span: 24 }} className="Register-container">
+              <Button htmlType="submit" className="button-Register">
+                Register New Account
+              </Button>
             </Form.Item>
           </Form>
         </div>

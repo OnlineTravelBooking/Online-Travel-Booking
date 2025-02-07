@@ -10,7 +10,7 @@ body {
 }
 
 .formLogin {
-  scale: 1.3;
+  scale: 1.2;
   width: 300px;
   padding: 10px;
   background-color: #F6F4F0;
@@ -19,6 +19,21 @@ body {
   text-align: center;
   border-radius: 15px;
   box-shadow: 7px 10px #005C78;
+  font-style: inherit;
+}
+
+.login-Title{
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2E5077;
+  margin-bottom: -12px;
+}
+
+.login-Subtitle{
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 
 .formLogin .ant-form-item {
@@ -46,20 +61,24 @@ body {
 }
 
 .Checkbox {
- width: 70%;
- margin-top: -10px;
+ transform: scale(0.9);
+ width: 90%;
+ margin-top: -12px;
+ margin-bottom: -16px;
+ font-size: 12px;
+ font-weight: 450;
+ color: #7b7575;
 }
 
-.login-Title{
-  font-size: 30px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #2E5077;
-  margin-bottom: -12px;
+.Register-container{
+  margin-top: -12px;
 }
 
-.login-Subtitle{
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 8px;
+.button-Register{
+  width:80%;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  border-color: #005C78;
+  color: #7b7575;
 }
+
