@@ -1,0 +1,28 @@
+import React from "react";
+import { gql } from "@apollo/client";
+
+export const MUTATION_LOGIN = gql`
+  mutation Mutation($input: UsersPermissionsLoginInput!) {
+    login(input: $input) {
+      jwt
+      user {
+        documentId
+        username
+        email
+        role {
+          type
+        }
+      }
+    }
+  }
+`;
+
+export const ROLE = gql`
+  query Query($filters: UsersPermissionsUserFiltersInput) {
+    usersPermissionsUsers(filters: $filters) {
+      role {
+        type
+      }
+    }
+  }
+`;
