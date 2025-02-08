@@ -1,13 +1,84 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  height: 100%; 
+  overflow-y: hidden;
+  background-color: #F6F4F0;
+}
+#root {
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.formLogin {
+  scale: 1.2;
+  width: 300px;
+  padding: 10px;
+  background-color: #F6F4F0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005C78;
+  font-style: inherit;
 }
+
+.login-Title{
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2E5077;
+  margin-bottom: -12px;
+}
+
+.login-Subtitle{
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.formLogin .ant-form-item {
+  margin-bottom: 15px; 
+}
+
+.Inputusername {
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.Inputpassword {
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.button-Login {
+  width:80%;
+  background-color: #005C78;
+  border-radius: 20px;
+}
+
+.Checkbox {
+ transform: scale(0.9);
+ width: 90%;
+ margin-top: -12px;
+ margin-bottom: -16px;
+ font-size: 12px;
+ font-weight: 450;
+ color: #7b7575;
+}
+
+.Register-container{
+  margin-top: -12px;
+}
+
+.button-Register{
+  width:80%;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  border-color: #005C78;
+  color: #7b7575;
+}
+
