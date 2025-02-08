@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
 import LoginScreen from "./component/LoginScreen";
-import Home from "./component/Home";
+import Home from "./component/HomePage/Home";
 import AdminDashboard from "./component/AdminDashboard";
 import React, { useEffect } from "react";
 

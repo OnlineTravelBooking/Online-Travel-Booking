@@ -28,26 +28,26 @@
       "type": "blocks"
     },
     "Image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
-    },
-    "Start": {
-      "type": "date",
-      "required": true
-    },
-    "End": {
-      "type": "date"
+      ]
     },
     "bookings": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::booking.booking",
+      "mappedBy": "package"
+    },
+    "Date": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::travel-date.travel-date",
       "mappedBy": "package"
     }
   }
