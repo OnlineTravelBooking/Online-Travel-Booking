@@ -1,7 +1,9 @@
 import React from "react";
-import { UserHeader, LoggedIn } from "./Header";
+import { UserHeader, LoggedIn } from "../Header";
 import { Layout, Menu } from "antd";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../AuthContext";
+import PackageCard from "./PackageCard";
+
 const { Header } = Layout;
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -14,8 +16,10 @@ export default function Home() {
             <UserHeader />
           </Header>
         </Layout>
+
         <div>
           <h1>Home YAY!</h1>
+          <PackageCard />
         </div>
       </div>
     );

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "travel_dates",
+  "info": {
+    "singularName": "travel-date",
+    "pluralName": "travel-dates",
+    "displayName": "TravelDate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Start_Date": {
+      "type": "date",
+      "required": true
+    },
+    "package": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::package.package",
+      "inversedBy": "Date"
+    },
+    "End_Date": {
+      "type": "date"
+    }
+  }
+}
