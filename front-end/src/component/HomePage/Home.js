@@ -4,8 +4,8 @@ import { Layout, Menu } from "antd";
 import { useAuth } from "../../AuthContext";
 import PackageCard from "./PackageCard";
 
-const { Header } = Layout;
 export default function Home() {
+  const { Header } = Layout;
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
@@ -32,7 +32,7 @@ export default function Home() {
           </Header>
         </Layout>
         <div>
-          <h1>Home YAY!</h1>
+          <PackageCard />
         </div>
       </div>
     );
