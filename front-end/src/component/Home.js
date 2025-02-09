@@ -3,6 +3,7 @@ import { UserHeader, LoggedIn } from "./Header";
 import { Layout, Menu } from "antd";
 import { useAuth } from "../AuthContext";
 const { Header } = Layout;
+
 export default function Home() {
   const { isAuthenticated } = useAuth();
 

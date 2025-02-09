@@ -5,12 +5,14 @@ import { MUTATION_LOGIN, ROLE } from "../Graphql";
 import { Button, Checkbox, Form, Input, message, Layout } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useMutation, useLazyQuery } from "@apollo/client";
+import RegisterForm from "./RegisterForm";
 
 export default function LoginScreen() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [userRole, setUserRole] = useState(null);
+  const [isregister, setIsRegister] = useState(false);
 
   const [
     getRole,
@@ -18,6 +20,7 @@ export default function LoginScreen() {
   ] = useLazyQuery(ROLE);
 
   const [loginMutation, { loading, error, data }] = useMutation(MUTATION_LOGIN);
+
   const handleSubmit = async (values) => {
     try {
       await loginMutation({
@@ -89,75 +92,89 @@ export default function LoginScreen() {
             flexDirection: "column",
           }}
         >
-          <Form
-            className="formLogin"
-            form={form}
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={handleSubmit}
-            autoComplete="off"
-          >
-            <p className="login-Title">Login</p>
-            <p className="login-Subtitle">Sign in to your account</p>
-            <Form.Item
-              name="username"
-              wrapperCol={{ span: 24 }}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
-                },
-              ]}
+          {isregister ? (
+            <RegisterForm
+              setIsRegister={setIsRegister}
+              handleSubmit={handleSubmit}
+            />
+          ) : (
+            <Form
+              className="formLogin"
+              form={form}
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={handleSubmit}
+              autoComplete="off"
             >
-              <Input
-                className="Inputusername"
-                placeholder="Username"
-                prefix={<UserOutlined />}
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              wrapperCol={{ span: 24 }}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-            >
-              <Input.Password
-                className="Inputpassword"
-                placeholder="Password"
-                prefix={<LockOutlined />}
-                type="password"
-              />
-            </Form.Item>
-            <Form.Item wrapperCol={{ span: 24 }}>
-              <Button
-                className="button-Login"
-                type="primary"
-                htmlType="submit"
-                loading={loading}
+              <p className="login-Title">Login</p>
+              <p className="login-Subtitle">Sign in to your account</p>
+              <Form.Item
+                name="username"
+                wrapperCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}
               >
-                Login
-              </Button>
-            </Form.Item>
-            <Form.Item
-              className="Checkbox"
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ span: 24 }}
-            >
-              <Checkbox className="Checkbox">Remember me</Checkbox>
-            </Form.Item>
-            <Form.Item wrapperCol={{ span: 24 }} className="Register-container">
-              <Button htmlType="submit" className="button-Register">
-                Register New Account
-              </Button>
-            </Form.Item>
-          </Form>
+                <Input
+                  className="Input-login"
+                  placeholder="Username"
+                  prefix={<UserOutlined />}
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                wrapperCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+              >
+                <Input.Password
+                  className="Input-login"
+                  placeholder="Password"
+                  prefix={<LockOutlined />}
+                  type="password"
+                />
+              </Form.Item>
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <Button
+                  className="button-Login"
+                  type="primary"
+                  htmlType="submit"
+                  loading={loading}
+                >
+                  Login
+                </Button>
+              </Form.Item>
+              <Form.Item
+                className="Checkbox"
+                name="remember"
+                valuePropName="checked"
+                wrapperCol={{ span: 24 }}
+              >
+                <Checkbox className="Checkbox">Remember me</Checkbox>
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{ span: 24 }}
+                className="Register-container"
+              >
+                <Button
+                  type="primary"
+                  className="button-Register"
+                  onClick={() => setIsRegister(true)}
+                >
+                  Register New Account
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
         </div>
       </Content>
     </Layout>
