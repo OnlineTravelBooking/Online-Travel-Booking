@@ -6,6 +6,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 
 import AdminDashboard from "./component/AdminDashboard";
+import Main from "./test/Main";
 
 const client = new ApolloClient({
   uri: "http://localhost:1337/graphql",
@@ -14,7 +15,7 @@ const client = new ApolloClient({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(
+/* root.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
       <BrowserRouter>
@@ -22,9 +23,13 @@ root.render(
       </BrowserRouter>
     </React.StrictMode>
   </ApolloProvider>
-);
+); */
 
+
+root.render(
+  <AdminDashboard />
+)
 
 /* root.render(
-  <AdminDashboard />
+  <Main />
 ) */
