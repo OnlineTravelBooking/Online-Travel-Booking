@@ -19,7 +19,6 @@ export default function RegisterForm({ setIsRegister }) {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
-      onFinish={handleSubmit}
       autoComplete="off"
     >
       <p className="login-Title">Register</p>
