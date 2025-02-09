@@ -61,7 +61,7 @@ const AdminDashboard = () => {
         <Layout className="admin-layout">
             <Header className="admin-header">
                 <div className="header-left">
-                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo"/>
+                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo" />
                     <Title level={3} className="header-title">SOUTHEX</Title>
                 </div>
                 <div className="header-right">
