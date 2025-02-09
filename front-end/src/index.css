@@ -197,3 +197,48 @@ body {
 .add-package-btn {
   margin-top: 20px;
 }
+
+.Box {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 15px;
+  gap: 20px;
+}
+
+.trip-data{
+  width: 100%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #757474;
+}
+
+.Qr-payment{
+  width: 100%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #757474;
+}
+
+.Upload-payment{
+  width: 100%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #757474;
+}
+
+.Steps{
+  width: 100%;
+  justify-content: center;
+}
+
+.Step-Body{
+ color: #005C78;
+}
+.Back-button{
+  background-color: #4B6A5D;
+  color: #ffffff;
+}

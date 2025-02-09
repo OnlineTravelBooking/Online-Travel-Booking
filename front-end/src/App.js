@@ -5,6 +5,7 @@ import LoginScreen from "./component/LoginScreen";
 import Home from "./component/HomePage/Home";
 import AdminDashboard from "./component/AdminDashboard";
 import Detail from "./component/DetailPage/Detail";
+import Transaction from "./component/Transactionpage/Transaction";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -31,6 +32,7 @@ function App() {
           }
         />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/transaction" element={<Transaction />} />
       </Routes>
     </AuthProvider>
   );
