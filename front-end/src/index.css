@@ -198,47 +198,91 @@ body {
   margin-top: 20px;
 }
 
+
+ /*------------------- Transaction Page -------------------------*/
 .Box {
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  overflow-y: auto;
+  height: 80vh;
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 15px;
-  gap: 20px;
+  gap: 30px;
+}
+
+.Box-trip-data{
+  width: 70%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
 }
 
 .trip-data{
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  padding-left: 20px;
+  margin-Top: -10px;
+}
+
+.Box-Qr-payment{
+  width: 70%;
+  align-items: center;
   border-radius: 15px;
   background: #D9D9D9;  
-  box-shadow: 0px 2px 5px #757474;
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
+}
+
+.Qr-container {
+  display: flex;
+  align-items: center; 
+  margin-Top: -20px;
 }
 
 .Qr-payment{
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Box-Upload-payment{
+  width: 70%;
   border-radius: 15px;
   background: #D9D9D9;  
-  box-shadow: 0px 2px 5px #757474;
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 20px ;
 }
 
 .Upload-payment{
-  width: 100%;
-  border-radius: 15px;
-  background: #D9D9D9;  
-  box-shadow: 0px 2px 5px #757474;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin-Top: 15px;
+}
+
+.summit-upload{
+  background-color: #4B6A5D;
+  color: #FFF0F0;
+  font-weight: 600;
+  font-size: large;
+  margin-bottom: 15px;
 }
 
 .Steps{
-  width: 100%;
+  width: 80%;
   justify-content: center;
 }
 
 .Step-Body{
  color: #005C78;
 }
+
 .Back-button{
   background-color: #4B6A5D;
-  color: #ffffff;
+  color: #FFF0F0;
+  font-size: large  ;
 }

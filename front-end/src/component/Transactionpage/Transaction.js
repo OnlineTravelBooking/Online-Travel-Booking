@@ -26,20 +26,49 @@ export default function Transaction() {
     <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
       <Header className="admin-header">James</Header>
       <Content className="Box">
-        <div className="trip-data">
+        <div className="Box-trip-data">
           <h2>รายละเอียดการจองของลูกค้า</h2>
-          <p>ชื่อ: สมชาย ใจดี</p>
-          <p>อีเมล: somchai@example.com</p>
+          <div className="trip-data">
+            {bookingDetails.map((item, index) => (
+              <p key={index}>
+                <strong>{item.label}:</strong> {item.value}
+              </p>
+            ))}
+          </div>
         </div>
 
-        <div className="Qr-payment">
-          <h2>Qr-payment</h2>
+        <div className="Box-Qr-payment">
+          <h2>การชำระเงินด้วย QR Code</h2>
+          <div className="Qr-container">
+            <img
+              src="/qrcode-placeholder.png"
+              alt="QR Code"
+              style={{ width: "200px", margin: "20px 0" }}
+            />
+            <div className="Qr-payment">
+              <p>
+                สแกน QR Code
+                นี้ด้วยแอปมือถือธนาคารของคุณเพื่อชำระเงินให้เสร็จสมบูรณ์
+                ข้อมูลการชำระเงิน
+              </p>
+              {paymentInfo.map((item, index) => (
+                <p key={index}>
+                  {"- "}
+                  <strong>{item.label}:</strong> {item.value}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="Upload-payment">
+        <div className="Box-Upload-payment">
           <h2>อัปโหลดหลักฐานการชำระเงิน</h2>
+          <div className="Upload-payment">
+            <Button className="summit-upload" variant="solid">
+              Submit Payment Proof
+            </Button>
+          </div>
         </div>
-
         <div className="Steps">
           <h2>สถานะการชำระเงิน</h2>
           <Steps
@@ -54,7 +83,7 @@ export default function Transaction() {
           />
         </div>
         <div>
-          <Button className="Back-button" variant="solid">
+          <Button className="Back-button" variant="solid" size="large">
             ย้อนกลับไปน้าแรก
           </Button>
         </div>
