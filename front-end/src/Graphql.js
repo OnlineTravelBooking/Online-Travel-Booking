@@ -26,3 +26,18 @@ export const ROLE = gql`
     }
   }
 `;
+
+export const GET_PACKAGES = gql`
+  query Packages {
+    packages {
+      documentId
+      Title
+      Type
+      Price
+      Image {
+        url
+      }
+      Description
+    }
+  }
+`;

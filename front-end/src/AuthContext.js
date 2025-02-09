@@ -22,6 +22,8 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       const fetchUserData = async () => {
         try {
+          setIsAuthenticated(true);
+          setRole(storedRole);
         } catch (error) {
           localStorage.removeItem("token");
         }
