@@ -10,7 +10,7 @@ export default function PackageCard() {
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_PACKAGES);
   const [dataSource, setDataSource] = useState([]);
-  console.log("data: ", data);
+
   useEffect(() => {
     if (data && data.packages) {
       const mapData = data.packages.map((item) => ({
@@ -25,7 +25,6 @@ export default function PackageCard() {
     }
   }, [data]);
 
-  console.log("dataSource: ", dataSource);
   return (
     <Row gutter={[16, 16]} style={{ padding: "24px" }}>
       {dataSource.map((item) => (

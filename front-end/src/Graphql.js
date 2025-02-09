@@ -41,3 +41,15 @@ export const GET_PACKAGES = gql`
     }
   }
 `;
+
+export const TRAVEL_DATE = gql`
+  query TravelDates($filters: TravelDateFiltersInput) {
+    travelDates(filters: $filters) {
+      Start_Date
+      End_Date
+      package {
+        Title
+      }
+    }
+  }
+`;
