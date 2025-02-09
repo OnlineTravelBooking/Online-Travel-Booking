@@ -1,9 +1,10 @@
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
 import LoginScreen from "./component/LoginScreen";
 import Home from "./component/HomePage/Home";
 import AdminDashboard from "./component/AdminDashboard";
-import React, { useEffect } from "react";
+import Detail from "./component/DetailPage/Detail";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -29,6 +30,7 @@ function App() {
             isAuthorized("admin") ? <AdminDashboard /> : <Navigate to="/" />
           }
         />
+        <Route path="/detail" element={<Detail />} />
       </Routes>
     </AuthProvider>
   );

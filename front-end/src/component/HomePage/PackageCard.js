@@ -3,10 +3,11 @@ import { Card, Row, Col } from "antd";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import Title from "antd/es/skeleton/Title";
-
+import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 
 export default function PackageCard() {
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_PACKAGES);
   const [dataSource, setDataSource] = useState([]);
   console.log("data: ", data);
@@ -44,6 +45,9 @@ export default function PackageCard() {
                 }}
               />
             }
+            onClick={() => {
+              navigate("/detail");
+            }}
           >
             <Meta
               title={item.Title}
