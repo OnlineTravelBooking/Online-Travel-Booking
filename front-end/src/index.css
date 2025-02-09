@@ -26,7 +26,6 @@ body {
 }
 
 .login-Title {
-.login-Title {
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 8px;
@@ -34,7 +33,6 @@ body {
   margin-bottom: -12px;
 }
 
-.login-Subtitle {
 .login-Subtitle {
   font-size: 15px;
   font-weight: 500;
@@ -86,17 +84,18 @@ body {
   color: #7b7575;
 }
 
-.Register-container  {
+.Register-container {
   margin-top: -12px;
 }
 
-.button-Register  {
-  width:  80%;
+.button-Register {
+  width: 80%;
   background-color: #FFFFFF;
   border-radius: 20px;
   border-color: #005C78;
   color: #7b7575;
 }
+
 /*-------------------------- AdminDashboard.css -------------------------------*/
 
 
