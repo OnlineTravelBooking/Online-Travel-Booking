@@ -1,70 +1,92 @@
 import React from "react";
-import { Card, Layout, Typography, Row, Col } from "antd";
-import { EditOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { Layout, Table, Typography, Avatar, Button, Tag } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 const { Header, Content } = Layout;
-const { Title, Paragraph } = Typography;
+const { Title, Text } = Typography;
+
+const columns = [
+    {
+        title: "ชื่อทัวร์",
+        dataIndex: "name",
+        key: "name",
+        align: "center",
+    },
+    {
+        title: "ประเภท",
+        dataIndex: "type",
+        key: "type",
+        align: "center",
+        render: (type) => <Tag color="blue">{type}</Tag>,
+    },
+    {
+        title: "จัดการ",
+        key: "manage",
+        align: "center",
+        render: () => (
+            <>
+                <Button type="primary" style={{ marginRight: 8 }}>Approval</Button>
+                <Button type="default">ดูรายชื่อ</Button>
+            </>
+        ),
+    },
+    {
+        title: "Actions",
+        key: "actions",
+        align: "center",
+        render: () => (
+            <>
+                <Button type="link">Edit</Button>
+                <Button type="link" danger>Delete</Button>
+            </>
+        ),
+    },
+];
+
+const data = [
+    {
+        key: "1",
+        name: "ทัวร์หาดสมิลา",
+        type: "One Day Trip",
+    },
+    {
+        key: "2",
+        name: "ทัวร์ลุง",
+        type: "Multi Day Trip",
+    },
+];
 
 const AdminDashboard = () => {
-  return (
-    <Layout style={{ minHeight: "100vh", backgroundColor: "#f8f8f8" }}>
-      <Header
-        style={{
-          background: "linear-gradient(to right, #91c1c1, #5c9e9e)",
-          padding: "20px",
-          textAlign: "center",
-        }}
-      >
-        <Title style={{ color: "#fff", margin: 0 }}>
-          Welcome to the Admin Dashboard!
-        </Title>
-      </Header>
+    return (
+        <Layout className="admin-layout">
+            <Header className="admin-header">
+                <div className="header-left">
+                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo" />
+                    <Title level={3} className="header-title">SOUTHEX</Title>
+                </div>
+                <div className="header-right">
+                    <Avatar icon={<UserOutlined />} className="admin-avatar" />
+                    <Text className="admin-name">Admin A</Text>
+                </div>
+            </Header>
 
-      <Content style={{ padding: "50px", textAlign: "center" }}>
-        <Paragraph style={{ fontSize: "16px", color: "#555" }}>
-          Manage tours, review bookings, and streamline operations with ease.
-          Use the options below to update tour details, verify payments, and
-          approve reservations efficiently.
-        </Paragraph>
+            {/* Content */}
+            <Content className="admin-content">
+                <Title level={2} className="admin-welcome-title">ยินดีต้อนรับสู่ระบบการจัดการทัวร์ของ Southex</Title>
+                <Text>
+                    คุณสามารถจัดการทัวร์ ตรวจสอบการจอง และทำให้การดำเนินงานเป็นไปอย่างราบรื่นได้ง่ายๆ<br />
+                    ลองใช้ตัวเลือกด้านล่างเพื่ออัปเดตรายละเอียดทัวร์, ยืนยันการชำระเงิน และอนุมัติการจองอย่างมีประสิทธิภาพ
+                </Text>
 
-        <Row gutter={[24, 24]} justify="center" style={{ marginTop: "30px" }}>
-          <Col xs={24} sm={12} md={8}>
-            <Card
-              hoverable
-              style={{ backgroundColor: "#d3ecec", padding: "20px" }}
-              cover={
-                <EditOutlined style={{ fontSize: "40px", margin: "20px 0" }} />
-              }
-            >
-              <Title level={3}>Manage Tour</Title>
-              <Paragraph>
-                Add, edit, and delete tours, set prices, and manage tour
-                details.
-              </Paragraph>
-            </Card>
-          </Col>
+                {/* Tour List Table */}
+                <div className="table-container">
+                    <Table columns={columns} dataSource={data} pagination={false} />
+                </div>
 
-          <Col xs={24} sm={12} md={8}>
-            <Card
-              hoverable
-              style={{ backgroundColor: "#d3ecec", padding: "20px" }}
-              cover={
-                <CheckCircleOutlined
-                  style={{ fontSize: "40px", margin: "20px 0" }}
-                />
-              }
-            >
-              <Title level={3}>Booking Approval</Title>
-              <Paragraph>
-                Review bookings, verify payments, and approve/reject
-                reservations.
-              </Paragraph>
-            </Card>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
-  );
+                <Button type="dashed" className="add-package-btn">เพิ่มแพ็คเกจ</Button>
+            </Content>
+        </Layout>
+    );
 };
 
 export default AdminDashboard;
