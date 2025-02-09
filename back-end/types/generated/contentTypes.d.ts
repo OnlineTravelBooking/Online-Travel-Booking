@@ -421,8 +421,11 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Date: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::travel-date.travel-date'
+    >;
     Description: Schema.Attribute.Blocks;
-    End: Schema.Attribute.Date;
     Image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -433,8 +436,8 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
       'api::package.package'
     > &
       Schema.Attribute.Private;
+    Price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Start: Schema.Attribute.Date & Schema.Attribute.Required;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
     Type: Schema.Attribute.Enumeration<['One day trip', 'Muti day trip']> &
       Schema.Attribute.Required;
@@ -468,6 +471,37 @@ export interface ApiPaymentPayment extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     Slip: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTravelDateTravelDate extends Struct.CollectionTypeSchema {
+  collectionName: 'travel_dates';
+  info: {
+    description: '';
+    displayName: 'TravelDate';
+    pluralName: 'travel-dates';
+    singularName: 'travel-date';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    End_Date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::travel-date.travel-date'
+    > &
+      Schema.Attribute.Private;
+    package: Schema.Attribute.Relation<'manyToOne', 'api::package.package'>;
+    publishedAt: Schema.Attribute.DateTime;
+    Start_Date: Schema.Attribute.Date & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -988,6 +1022,7 @@ declare module '@strapi/strapi' {
       'api::booking.booking': ApiBookingBooking;
       'api::package.package': ApiPackagePackage;
       'api::payment.payment': ApiPaymentPayment;
+      'api::travel-date.travel-date': ApiTravelDateTravelDate;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
