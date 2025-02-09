@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Descriptions } from "antd";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import Title from "antd/es/skeleton/Title";
@@ -19,6 +19,7 @@ export default function PackageCard() {
         Title: item.Title,
         Type: item.Type,
         urlImage: item.Image[0].url,
+        Description: item.Description,
       }));
       setDataSource(mapData);
     }
@@ -46,7 +47,15 @@ export default function PackageCard() {
               />
             }
             onClick={() => {
-              navigate("/detail");
+              navigate("/detail", {
+                state: {
+                  documentId: item.documentId,
+                  Title: item.Title,
+                  Price: item.Price,
+                  Type: item.Type,
+                  Description: item.Description,
+                },
+              });
             }}
           >
             <Meta

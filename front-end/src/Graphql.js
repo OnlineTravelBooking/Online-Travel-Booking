@@ -37,6 +37,7 @@ export const GET_PACKAGES = gql`
       Image {
         url
       }
+      Description
     }
   }
 `;
