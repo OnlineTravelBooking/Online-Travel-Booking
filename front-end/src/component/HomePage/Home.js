@@ -6,8 +6,10 @@ import PackageCard from "./PackageCard";
 
 const { Header } = Layout;
 export default function Home() {
+  const { Header } = Layout;
   const { isAuthenticated } = useAuth();
 
+  console.log("Auth: ", isAuthenticated);
   if (!isAuthenticated) {
     return (
       <div>
@@ -32,7 +34,7 @@ export default function Home() {
           </Header>
         </Layout>
         <div>
-          <h1>Home YAY!</h1>
+          <PackageCard />
         </div>
       </div>
     );

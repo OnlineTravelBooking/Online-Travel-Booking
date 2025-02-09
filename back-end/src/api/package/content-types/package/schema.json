@@ -49,6 +49,10 @@
       "relation": "oneToMany",
       "target": "api::travel-date.travel-date",
       "mappedBy": "package"
+    },
+    "Price": {
+      "type": "decimal",
+      "required": true
     }
   }
 }
