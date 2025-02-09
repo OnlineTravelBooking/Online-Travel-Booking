@@ -9,10 +9,7 @@ export default function Home() {
   return (
     <div>
       <UserHeader />
-      <div>
-        <h1>Home YAY!</h1>
-        <PackageCard />
-      </div>
+      <div>{<PackageCard /> ? <PackageCard /> : <h1>No Package Data</h1>}</div>
     </div>
   );
 }
