@@ -8,7 +8,7 @@ import { TRAVEL_DATE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import { ALL_IMAGES_PACKAGE } from "../../Graphql";
-
+import ImageSlider from "./ImageSlider";
 const { Option } = Select;
 
 export default function Detail() {
@@ -66,13 +66,10 @@ export default function Detail() {
 
   useEffect(() => {
     if (data_image?.packages[0].Image) {
-      const image = data_image?.packages[0].Image.map((item) => ({
-        url: item.url,
-      }));
-      setAllImages(image);
+      const imageUrls = data_image?.packages[0].Image.map((item) => item.url);
+      setAllImages(imageUrls);
     }
   }, [data_image]);
-
   return (
     <div>
       <UserHeader />
@@ -80,6 +77,9 @@ export default function Detail() {
         <div>{Title}</div>
         <div>
           <div>{Type}</div>
+          <div>
+            <ImageSlider allImages={allImages} />
+          </div>
           <BlocksRenderer content={Description} />
         </div>
         {/* ช่องเลือกวันที่ */}
