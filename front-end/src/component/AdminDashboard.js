@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Layout, Table, Typography, Avatar, Button, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -26,7 +27,7 @@ const columns = [
         render: () => (
             <>
                 <Button type="primary" style={{ marginRight: 8 }}>Approval</Button>
-                <Button type="default">ดูรายชื่อ</Button>
+                <Link to="/tour-list"><Button type="default">ดูรายชื่อ</Button></Link>
             </>
         ),
     },
@@ -54,6 +55,16 @@ const data = [
         name: "ทัวร์ลุง",
         type: "Multi Day Trip",
     },
+    {
+        key: "3",
+        name: "ทัวร์ภูเก็ต",
+        type: "One Day Trip",
+    },
+    {
+        key: "4",
+        name: "ทัวร์กระบี่",
+        type: "Multi Day Trip",
+    }
 ];
 
 const AdminDashboard = () => {
@@ -61,7 +72,7 @@ const AdminDashboard = () => {
         <Layout className="admin-layout">
             <Header className="admin-header">
                 <div className="header-left">
-                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo"/>
+                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo" />
                     <Title level={3} className="header-title">SOUTHEX</Title>
                 </div>
                 <div className="header-right">
@@ -70,7 +81,6 @@ const AdminDashboard = () => {
                 </div>
             </Header>
 
-            {/* Content */}
             <Content className="admin-content">
                 <Title level={2} className="admin-welcome-title">ยินดีต้อนรับสู่ระบบการจัดการทัวร์ของ Southex</Title>
                 <Text>
@@ -78,7 +88,6 @@ const AdminDashboard = () => {
                     ลองใช้ตัวเลือกด้านล่างเพื่ออัปเดตรายละเอียดทัวร์, ยืนยันการชำระเงิน และอนุมัติการจองอย่างมีประสิทธิภาพ
                 </Text>
 
-                {/* Tour List Table */}
                 <div className="table-container">
                     <Table columns={columns} dataSource={data} pagination={false} />
                 </div>
@@ -89,4 +98,26 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+const TourList = () => (
+    <Layout>
+        <Content style={{ padding: "20px" }}>
+            <Title level={2}>รายชื่อทัวร์</Title>
+            <Link to="/">
+                <Button type="primary" icon={<UserOutlined />}>กลับไปที่ Dashboard</Button>
+            </Link>
+        </Content>
+    </Layout>
+);
+
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<AdminDashboard />} />
+                <Route path="/tour-list" element={<TourList />} />
+            </Routes>
+        </Router>
+    );
+};
+
+export default App;
