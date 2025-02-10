@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Layout, Table, Typography, Avatar, Button, Tag } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -27,7 +26,7 @@ const columns = [
         render: () => (
             <>
                 <Button type="primary" style={{ marginRight: 8 }}>Approval</Button>
-                <Link to="/tour-list"><Button type="default">ดูรายชื่อ</Button></Link>
+                <Button type="default">ดูรายชื่อ</Button>
             </>
         ),
     },
@@ -67,7 +66,7 @@ const data = [
     }
 ];
 
-const AdminDashboard = () => {
+export default function AdminDashboard() {
     return (
         <Layout className="admin-layout">
             <Header className="admin-header">
@@ -92,32 +91,14 @@ const AdminDashboard = () => {
                     <Table columns={columns} dataSource={data} pagination={false} />
                 </div>
 
-                <Button type="dashed" className="add-package-btn">เพิ่มแพ็คเกจ</Button>
+                <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />}>
+                    เพิ่มแพ็คเกจ
+                </Button>
+                <div className="logo-container"></div>
             </Content>
         </Layout>
     );
 };
 
-const TourList = () => (
-    <Layout>
-        <Content style={{ padding: "20px" }}>
-            <Title level={2}>รายชื่อทัวร์</Title>
-            <Link to="/">
-                <Button type="primary" icon={<UserOutlined />}>กลับไปที่ Dashboard</Button>
-            </Link>
-        </Content>
-    </Layout>
-);
 
-const App = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<AdminDashboard />} />
-                <Route path="/tour-list" element={<TourList />} />
-            </Routes>
-        </Router>
-    );
-};
 
-export default App;

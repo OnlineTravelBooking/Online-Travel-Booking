@@ -5,8 +5,7 @@ import App from "./App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 
-import AdminDashboard from "./component/AdminDashboard";
-import Main from "./test/Main";
+import AdminDashboard from "./component/AdminPage/AdminDashboard";
 
 const client = new ApolloClient({
   uri: "http://localhost:1337/graphql",
