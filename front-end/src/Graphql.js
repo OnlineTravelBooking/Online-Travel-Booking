@@ -41,3 +41,26 @@ export const GET_PACKAGES = gql`
     }
   }
 `;
+
+export const TRAVEL_DATE = gql`
+  query TravelDates($filters: TravelDateFiltersInput) {
+    travelDates(filters: $filters) {
+      Start_Date
+      End_Date
+      package {
+        Title
+      }
+      documentId
+    }
+  }
+`;
+
+export const ALL_IMAGES_PACKAGE = gql`
+  query Image($filters: PackageFiltersInput) {
+    packages(filters: $filters) {
+      Image {
+        url
+      }
+    }
+  }
+`;

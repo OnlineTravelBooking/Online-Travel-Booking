@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
     "@apollo/client": "^3.12.9",
     "@strapi/blocks-react-renderer": "^1.0.2",
     "@shadcn/ui": "^0.0.4",
     "antd": "^5.23.4",
     "cra-template": "1.2.0",
-    "lucide-react": "^0.474.0",
+    "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "husky": "^9.1.7"
   }
 }
