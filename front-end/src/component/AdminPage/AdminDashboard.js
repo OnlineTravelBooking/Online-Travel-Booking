@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Table, Typography, Avatar, Button, Tag } from "antd";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -91,9 +92,11 @@ export default function AdminDashboard() {
                     <Table columns={columns} dataSource={data} pagination={false} />
                 </div>
 
-                <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />}>
-                    เพิ่มแพ็คเกจ
-                </Button>
+                <Link to="/add-package">
+                    <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} >
+                        เพิ่มแพ็คเกจ
+                    </Button>
+                </Link>
                 <div className="logo-container"></div>
             </Content>
         </Layout>

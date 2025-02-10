@@ -6,6 +6,7 @@ import Home from "./component/HomePage/Home";
 import AdminDashboard from "./component/AdminPage/AdminDashboard";
 import Detail from "./component/DetailPage/Detail";
 import EditTourList from "./component/AdminPage/EditTourList";
+import AddPackage from "./component/AdminPage/AddPackage";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -32,9 +33,14 @@ function App() {
           }
         />
         <Route
-          path="/tour-list"
+          path="/edit-tour-list"
           element={
             isAuthorized("admin") ? <EditTourList /> : <Navigate to="/" />
+          } />
+        <Route
+          path="/add-package"
+          element={
+            isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />
           } />
         <Route path="/detail" element={<Detail />} />
       </Routes>

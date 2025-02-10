@@ -7,13 +7,15 @@ const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
 export default function EditTourList() {
-    <Layout>
-        <Content style={{ padding: "20px" }}>
-            <Title level={2}>รายชื่อทัวร์</Title>
-            <Link to="/">
-                <Button type="primary" icon={<PlusOutlined />}>กลับไปที่ Dashboard</Button>
-            </Link>
-        </Content>
-    </Layout>
+    return (
+        <Layout>
+            <Content style={{ padding: "20px" }}>
+                <Title level={2}>รายชื่อทัวร์</Title>
+                <Link to="/">
+                    <Button type="primary" icon={<PlusOutlined />}>กลับไปที่ Dashboard</Button>
+                </Link>
+            </Content>
+        </Layout>
+    );
 }
 
