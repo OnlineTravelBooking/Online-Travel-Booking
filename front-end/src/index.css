@@ -44,15 +44,7 @@ body {
   margin-bottom: 15px;
 }
 
-.Inputusername {
-  width: 80%;
-  background-color: #D9D9D9;
-  border-radius: 20px;
-  box-shadow: 0px 1px #757474;
-  box-shadow: 0px 1px #757474;
-}
-
-.Inputpassword {
+.Input-login {
   width: 80%;
   background-color: #D9D9D9;
   border-radius: 20px;
@@ -96,6 +88,43 @@ body {
   color: #7b7575;
 }
 
+.formRegister {
+  scale: 1.2;
+  width: 300px;
+  padding: 10px;
+  background-color: #F6F4F0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005C78;
+  font-style: inherit;
+}
+
+.Input-Box{
+  display: flex;
+  flex-direction: column;
+}
+
+.Input-name{
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.Input-register{
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.button_Register{
+  width: 80%;
+  background-color: #005C78;
+  border-radius: 20px;
+}
 /*-------------------------- AdminDashboard.css -------------------------------*/
 
 
