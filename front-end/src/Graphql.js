@@ -54,3 +54,13 @@ export const TRAVEL_DATE = gql`
     }
   }
 `;
+
+export const ALL_IMAGES_PACKAGE = gql`
+  query Image($filters: PackageFiltersInput) {
+    packages(filters: $filters) {
+      Image {
+        url
+      }
+    }
+  }
+`;

@@ -13,6 +13,7 @@ export default function PackageCard() {
 
   useEffect(() => {
     if (data && data.packages) {
+      console.log("data:", data.packages);
       const mapData = data.packages.map((item) => ({
         documentId: item.documentId,
         Price: item.Price,
