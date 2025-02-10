@@ -2,13 +2,27 @@ import React, { useEffect, useState } from "react";
 import { UserHeader } from "../Header";
 import { useLocation } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { Button, DatePicker } from "antd";
+import { Button, Form, Select } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { TRAVEL_DATE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
 
+const { Option } = Select;
+const onFinish = (values) => {
+  console.log("Received values of form: ", values);
+};
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
 export default function Detail() {
   const location = useLocation();
   const { documentId, Title, Price, Type, Description } = location.state || {};
@@ -32,49 +46,62 @@ export default function Detail() {
   useEffect(() => {
     if (data?.travelDates) {
       const formattedDates = data.travelDates.map((date) => ({
-        Start_Date: dayjs(date.Start_Date, "DD/MM/YYYY"),
-        End_Date: dayjs(date.End_Date, "DD/MM/YYYY"),
+        Start_Date: date.Start_Date, //dayjs(date.Start_Date, "DD/MM/YYYY"),
+        End_Date: date.End_Date, //dayjs(date.End_Date, "DD/MM/YYYY"),
       }));
       setAvailableDates(formattedDates);
     }
   }, [data]);
-
-  const disabledDate = (current) => {
-    return !availableDates.some(({ Start_Date, End_Date }) => {
-      return (
-        current.isBetween(Start_Date, End_Date, "day", "[]") ||
-        current.isSame(Start_Date, "day") ||
-        current.isSame(End_Date, "day")
-      );
-    });
-  };
 
   return (
     <div>
       <UserHeader />
       <div>
         <div>{Title}</div>
+
         <div>
           <div>{Type}</div>
           <BlocksRenderer content={Description} />
         </div>
 
-        {/* Date Picker Section */}
-        <div style={{ margin: "16px 0" }}>
-          <DatePicker
-            format="YYYY-MM-DD"
-            onChange={setSelectedDate}
-            disabledDate={disabledDate}
-            placeholder="Select available date"
+        <div>
+          <Form
+            name="validate_other"
+            {...formItemLayout}
+            onFinish={onFinish}
+            initialValues={{
+              "input-number": 3,
+              "checkbox-group": ["A", "B"],
+              rate: 3.5,
+              "color-picker": null,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
           />
-          {selectedDate && (
-            <div style={{ marginTop: 8 }}>
-              Selected Date: {selectedDate.format("MMMM Do, YYYY")}
-            </div>
-          )}
+
+          <Form.Item
+            name="select"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "กรุณาเลือกวันเที่ยว",
+              },
+            ]}
+          >
+            <Select placeholder="เลือกวันเที่ยว">
+              {availableDates?.map((date) => (
+                <Option key={date.Start_Date} value={date.Start_Date}>
+                  {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
         </div>
 
         <div>{count}</div>
+
         <div>
           <Button
             type="primary"
