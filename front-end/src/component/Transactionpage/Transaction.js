@@ -3,8 +3,9 @@ import { UserHeader } from "../Header";
 import { useAuth } from "../../AuthContext";
 import { Layout, Typography, Avatar, Button, Tag, Upload, Steps } from "antd";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import { Header } from "antd/es/layout/layout";
 
-const { Content, Header } = Layout;
+const { Content } = Layout;
 
 export default function Transaction() {
   const paymentInfo = [
@@ -24,7 +25,7 @@ export default function Transaction() {
 
   return (
     <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
-      <Header className="admin-header">James</Header>
+      <UserHeader />
       <Content className="Box">
         <div className="Box-trip-data">
           <h2>รายละเอียดการจองของลูกค้า</h2>
