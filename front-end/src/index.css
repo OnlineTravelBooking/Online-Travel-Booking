@@ -44,15 +44,7 @@ body {
   margin-bottom: 15px;
 }
 
-.Inputusername {
-  width: 80%;
-  background-color: #D9D9D9;
-  border-radius: 20px;
-  box-shadow: 0px 1px #757474;
-  box-shadow: 0px 1px #757474;
-}
-
-.Inputpassword {
+.Input-login {
   width: 80%;
   background-color: #D9D9D9;
   border-radius: 20px;
@@ -96,6 +88,43 @@ body {
   color: #7b7575;
 }
 
+.formRegister {
+  scale: 1.2;
+  width: 300px;
+  padding: 10px;
+  background-color: #F6F4F0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005C78;
+  font-style: inherit;
+}
+
+.Input-Box{
+  display: flex;
+  flex-direction: column;
+}
+
+.Input-name{
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.Input-register{
+  width: 80%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  box-shadow: 0px 1px  #757474;
+}
+
+.button_Register{
+  width: 80%;
+  background-color: #005C78;
+  border-radius: 20px;
+}
 /*-------------------------- AdminDashboard.css -------------------------------*/
 
 
@@ -167,4 +196,93 @@ body {
 /* Button Styles */
 .add-package-btn {
   margin-top: 20px;
+}
+
+
+ /*------------------- Transaction Page -------------------------*/
+.Box {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow-y: auto;
+  height: 80vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 15px;
+  gap: 30px;
+}
+
+.Box-trip-data{
+  width: 70%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
+}
+
+.trip-data{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  padding-left: 20px;
+  margin-Top: -10px;
+}
+
+.Box-Qr-payment{
+  width: 70%;
+  align-items: center;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
+}
+
+.Qr-container {
+  display: flex;
+  align-items: center; 
+  margin-Top: -20px;
+}
+
+.Qr-payment{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Box-Upload-payment{
+  width: 70%;
+  border-radius: 15px;
+  background: #D9D9D9;  
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 20px ;
+}
+
+.Upload-payment{
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin-Top: 15px;
+}
+
+.summit-upload{
+  background-color: #4B6A5D;
+  color: #FFF0F0;
+  font-weight: 600;
+  font-size: large;
+  margin-bottom: 15px;
+}
+
+.Steps{
+  width: 80%;
+  justify-content: center;
+}
+
+.Step-Body{
+ color: #005C78;
+}
+
+.Back-button{
+  background-color: #4B6A5D;
+  color: #FFF0F0;
+  font-size: large  ;
 }

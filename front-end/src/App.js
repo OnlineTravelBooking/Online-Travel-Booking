@@ -5,6 +5,7 @@ import LoginScreen from "./component/LoginScreen";
 import Home from "./component/HomePage/Home";
 import AdminDashboard from "./component/AdminPage/AdminDashboard";
 import Detail from "./component/DetailPage/Detail";
+import Transaction from "./component/Transactionpage/Transaction";
 import EditTourList from "./component/AdminPage/EditTourList";
 import AddPackage from "./component/AdminPage/AddPackage";
 
@@ -43,6 +44,7 @@ function App() {
             isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />
           } />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/transaction" element={<Transaction />} />
       </Routes>
     </AuthProvider>
   );
