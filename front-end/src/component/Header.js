@@ -1,41 +1,66 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+
+const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
-  return (
-    <div className="container-fluid">
-      <div className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item
-            key="3"
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Login
-          </Menu.Item>
-        </Menu>
-      </div>
-    </div>
-  );
-};
+  const { isAuthenticated } = useAuth();
 
-export const LoggedIn = () => {
-  return (
-    <div className="container-fluid">
-      <div className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item>User</Menu.Item>
-        </Menu>
+  if (!isAuthenticated) {
+    return (
+      <div>
+        <Layout>
+          <Header>
+            <div className="container-fluid">
+              <div className="header">
+                <div className="logo" />
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                  defaultSelectedKeys={["2"]}
+                >
+                  <Menu.Item key="1">nav 1</Menu.Item>
+                  <Menu.Item key="2">nav 2</Menu.Item>
+                  <Menu.Item
+                    key="3"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Login
+                  </Menu.Item>
+                </Menu>
+              </div>
+            </div>
+          </Header>
+        </Layout>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <Layout>
+          <Header>
+            <div className="container-fluid">
+              <div className="header">
+                <div className="logo" />
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                  defaultSelectedKeys={["2"]}
+                >
+                  <Menu.Item key="1">nav 1</Menu.Item>
+                  <Menu.Item key="2">nav 2</Menu.Item>
+                  <Menu.Item>User</Menu.Item>
+                </Menu>
+              </div>
+            </div>
+          </Header>
+        </Layout>
+      </div>
+    );
+  }
 };

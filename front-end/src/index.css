@@ -2,9 +2,11 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  height: 100%;
   overflow-y: hidden;
   background-color: #F6F4F0;
 }
+
 
 #root {
   height: 100%;
@@ -39,12 +41,14 @@ body {
 
 .formLogin .ant-form-item {
   margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .Inputusername {
   width: 80%;
   background-color: #D9D9D9;
   border-radius: 20px;
+  box-shadow: 0px 1px #757474;
   box-shadow: 0px 1px #757474;
 }
 
@@ -53,15 +57,24 @@ body {
   background-color: #D9D9D9;
   border-radius: 20px;
   box-shadow: 0px 1px #757474;
+  box-shadow: 0px 1px #757474;
 }
 
 .button-Login {
+  width: 80%;
   width: 80%;
   background-color: #005C78;
   border-radius: 20px;
 }
 
 .Checkbox {
+  transform: scale(0.9);
+  width: 90%;
+  margin-top: -12px;
+  margin-bottom: -16px;
+  font-size: 12px;
+  font-weight: 450;
+  color: #7b7575;
   transform: scale(0.9);
   width: 90%;
   margin-top: -12px;
@@ -82,7 +95,6 @@ body {
   border-color: #005C78;
   color: #7b7575;
 }
-
 
 /*-------------------------- AdminDashboard.css -------------------------------*/
 
