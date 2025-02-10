@@ -18,7 +18,7 @@ const columns = [
         dataIndex: "type",
         key: "type",
         align: "center",
-        render: (type) => <Tag color="blue">{type}</Tag>,
+        render: (type) => (<Tag color={type === "One Day Trip" ? "red" : "blue"}>{type}</Tag>)
     },
     {
         title: "จัดการ",
