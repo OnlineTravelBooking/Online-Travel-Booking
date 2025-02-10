@@ -50,6 +50,7 @@ export const TRAVEL_DATE = gql`
       package {
         Title
       }
+      documentId
     }
   }
 `;

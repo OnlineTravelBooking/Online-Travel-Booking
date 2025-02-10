@@ -9,20 +9,7 @@ import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 
 const { Option } = Select;
-const onFinish = (values) => {
-  console.log("Received values of form: ", values);
-};
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
 export default function Detail() {
   const location = useLocation();
   const { documentId, Title, Price, Type, Description } = location.state || {};
@@ -44,42 +31,33 @@ export default function Detail() {
   });
 
   useEffect(() => {
+    console.log("data:", data);
     if (data?.travelDates) {
       const formattedDates = data.travelDates.map((date) => ({
-        Start_Date: date.Start_Date, //dayjs(date.Start_Date, "DD/MM/YYYY"),
-        End_Date: date.End_Date, //dayjs(date.End_Date, "DD/MM/YYYY"),
+        documentId: date.documentId,
+        Start_Date: date.Start_Date,
+        End_Date: date.End_Date,
       }));
       setAvailableDates(formattedDates);
     }
   }, [data]);
+
+  const handleDateChange = (key) => {
+    console.log(key);
+    setSelectedDate(key);
+  };
 
   return (
     <div>
       <UserHeader />
       <div>
         <div>{Title}</div>
-
         <div>
           <div>{Type}</div>
           <BlocksRenderer content={Description} />
         </div>
-
+        {/* ช่องเลือกวันที่ */}
         <div>
-          <Form
-            name="validate_other"
-            {...formItemLayout}
-            onFinish={onFinish}
-            initialValues={{
-              "input-number": 3,
-              "checkbox-group": ["A", "B"],
-              rate: 3.5,
-              "color-picker": null,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-          />
-
           <Form.Item
             name="select"
             hasFeedback
@@ -90,18 +68,18 @@ export default function Detail() {
               },
             ]}
           >
-            <Select placeholder="เลือกวันเที่ยว">
+            <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
               {availableDates?.map((date) => (
-                <Option key={date.Start_Date} value={date.Start_Date}>
+                <Option key={date.documentId}>
                   {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                  {date.End_Date &&
+                    ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
                 </Option>
               ))}
             </Select>
           </Form.Item>
         </div>
-
         <div>{count}</div>
-
         <div>
           <Button
             type="primary"
