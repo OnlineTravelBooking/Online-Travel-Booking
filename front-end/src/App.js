@@ -3,9 +3,11 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
 import LoginScreen from "./component/LoginScreen";
 import Home from "./component/HomePage/Home";
-import AdminDashboard from "./component/AdminDashboard";
+import AdminDashboard from "./component/AdminPage/AdminDashboard";
 import Detail from "./component/DetailPage/Detail";
 import Transaction from "./component/Transactionpage/Transaction";
+import EditTourList from "./component/AdminPage/EditTourList";
+import AddPackage from "./component/AdminPage/AddPackage";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -31,6 +33,16 @@ function App() {
             isAuthorized("admin") ? <AdminDashboard /> : <Navigate to="/" />
           }
         />
+        <Route
+          path="/edit-tour-list"
+          element={
+            isAuthorized("admin") ? <EditTourList /> : <Navigate to="/" />
+          } />
+        <Route
+          path="/add-package"
+          element={
+            isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />
+          } />
         <Route path="/detail" element={<Detail />} />
         <Route path="/transaction" element={<Transaction />} />
       </Routes>
@@ -39,3 +51,4 @@ function App() {
 }
 
 export default App;
+
