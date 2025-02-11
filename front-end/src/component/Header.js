@@ -7,13 +7,7 @@ const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuth();
-
-  const handleLogout = () => {
-    // Call logout function from AuthContext
-    sessionStorage.clear(); // ลบ sessionstorage
-    navigate("/login");
-  }
+  const { isAuthenticated, user, logout } = useAuth();
 
   if (!isAuthenticated) {
     return (
@@ -60,7 +54,6 @@ export const UserHeader = () => {
                 >
                   <Menu.Item key="1">nav 1</Menu.Item>
                   <Menu.Item key="2">nav 2</Menu.Item>
-                  <Menu.Item>User</Menu.Item>
                   <Menu.SubMenu
                     key="user"
                     title={
@@ -71,7 +64,7 @@ export const UserHeader = () => {
                     }
                     style={{ marginLeft: "auto" }} // Push to the right
                   >
-                    <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
+                    <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
                       Logout
                     </Menu.Item>
                   </Menu.SubMenu>

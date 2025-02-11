@@ -7,6 +7,8 @@ import React, {
   useContext,
 } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState(null);
-
+  const navigate = useNavigate();
   //Check for existing token
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -48,6 +50,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setData(null);
     setIsAuthenticated(false);
+    sessionStorage.clear()
+    navigate("/")
   }, []);
 
   // Memoize context value to prevent unneccessary re-renders
