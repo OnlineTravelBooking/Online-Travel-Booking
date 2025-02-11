@@ -7,7 +7,7 @@ const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, data, logout } = useAuth();
 
   if (!isAuthenticated) {
     return (
@@ -70,7 +70,7 @@ export const UserHeader = () => {
                     title={
                       <span>
                         <UserOutlined />{" "}
-                        {user?.username || "User"} {/* Display username or fallback to 'User' */}
+                        {data?.username || "User"} {/* Display username or fallback to 'User' */}
                       </span>
                     }
                   >

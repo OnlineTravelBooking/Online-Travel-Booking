@@ -6,10 +6,13 @@ import React, {
   useEffect,
   useContext,
 } from "react";
-
 import { useNavigate } from "react-router-dom";
 
+
+
 const AuthContext = createContext();
+
+
 
 export const AuthProvider = ({ children }) => {
   const [data, setData] = useState(null);
@@ -17,44 +20,50 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState(null);
   const navigate = useNavigate();
-  //Check for existing token
+
+
+
+  // ตรวจสอบ token และดึงข้อมูลผู้ใช้จาก sessionStorage
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const storedRole = sessionStorage.getItem("role");
-    if (token) {
-      const fetchUserData = async () => {
-        try {
-          setIsAuthenticated(true);
-          setRole(storedRole);
-        } catch (error) {
-          localStorage.removeItem("token");
-        }
-        setIsLoading(false);
-      };
-      fetchUserData();
-    } else {
-      setIsLoading(false);
+    const storedUserData = sessionStorage.getItem("userData");
+
+    if (token && storedUserData) {
+      setData(JSON.parse(storedUserData)); // ดึงข้อมูลผู้ใช้จาก sessionStorage
+      setRole(storedRole);
+      setIsAuthenticated(true);
     }
+    setIsLoading(false); // เปลี่ยนสถานะหลังจากตรวจสอบเสร็จ
   }, []);
 
-  //Login function
+
+
+  // ฟังก์ชันสำหรับ login
   const login = useCallback((userData, token, role) => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("role", role);
+    sessionStorage.setItem("userData", JSON.stringify(userData)); // เก็บข้อมูลผู้ใช้ใน sessionStorage
     setData(userData);
     setIsAuthenticated(true);
     setRole(role);
   }, []);
 
+
+
+
+  // ฟังก์ชัน logout
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
+    sessionStorage.clear();
     setData(null);
     setIsAuthenticated(false);
-    sessionStorage.clear()
-    navigate("/")
+    navigate("/");
   }, []);
 
-  // Memoize context value to prevent unneccessary re-renders
+
+
+
+  // Memoize context value
   const value = useMemo(
     () => ({
       data,
@@ -64,11 +73,13 @@ export const AuthProvider = ({ children }) => {
       logout,
       role,
     }),
-    [data, isAuthenticated, isLoading, login, logout]
+    [data, isAuthenticated, isLoading, login, logout, role]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
