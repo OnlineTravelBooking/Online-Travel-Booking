@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserHeader } from "../Header";
 import { useLocation } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { Button, Form, Select } from "antd";
+import { Button, Form, Select, Layout } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { TRAVEL_DATE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import ImageSlider from "./ImageSlider";
 const { Option } = Select;
+
+const { Content } = Layout;
 
 export default function Detail() {
   const location = useLocation();
@@ -70,10 +72,11 @@ export default function Detail() {
       setAllImages(imageUrls);
     }
   }, [data_image]);
+  console.log("james");
   return (
-    <div>
+    <Layout style={{ minHeight: "100vh", overflow: "auto" }}>
       <UserHeader />
-      <div>
+      <Content>
         <div>{Title}</div>
         <div>
           <div>{Type}</div>
@@ -123,7 +126,7 @@ export default function Detail() {
             onClick={() => setCount((count) => count + 1)}
           />
         </div>
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 }

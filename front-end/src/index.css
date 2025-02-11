@@ -3,7 +3,6 @@ body {
   padding: 0;
   height: 100%;
   height: 100%;
-  overflow-y: hidden;
   background-color: #F6F4F0;
 }
 
@@ -197,8 +196,6 @@ body {
 .add-package-btn {
   margin-top: 20px;
 }
-
-
  /*------------------- Transaction Page -------------------------*/
 .Box {
   display: flex;
@@ -285,4 +282,60 @@ body {
   background-color: #4B6A5D;
   color: #FFF0F0;
   font-size: large  ;
+}
+
+.img-slide {
+  display: block  ;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: auto;
+  position: relative;
+}
+
+.button-slide-left {
+  position: absolute;
+  top: 50%;
+  left: 360px;
+  transform: translateY(-50%);
+  z-Index: 10;
+  color: #ffffff;
+  background-color: #00000000;
+  width: 100px;
+  height: 450px;
+  display: flex;
+  align-Items: center;
+  justify-Content: center;
+  border: none !important;
+}
+ 
+.button-slide-right{
+  position: absolute;
+  top: 50%;
+  right: 360px;
+  transform: translateY(-50%);
+  z-Index: 10;
+  color: #ffffff;
+  background-color: #00000000;
+  width: 100px;
+  height: 450px;
+  display: flex;
+  align-Items: center;
+  justify-Content: center;
+  border: none !important;
+}
+
+.button-slide:hover {
+  background-color: #ddd4d43a !important;
+}
+
+
+
+.IMG{
+  position: relative;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-content: center;
 }

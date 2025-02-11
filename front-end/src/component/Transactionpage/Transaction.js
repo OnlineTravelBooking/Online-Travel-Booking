@@ -24,7 +24,7 @@ export default function Transaction() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
       <Content className="Box">
         <div className="Box-trip-data">
