@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { FormOutlined, FileTextOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
@@ -26,18 +26,27 @@ export const UserHeader = () => {
                   <Menu.Item key="2">nav 2</Menu.Item>
                   <Menu.Item
                     key="3"
+                    style={{ marginLeft: "auto" }}
                     onClick={() => {
                       navigate("/login");
                     }}
                   >
-                    Login
+                    <UserOutlined /> เข้าสู่ระบบ
+                  </Menu.Item>
+                  <Menu.Item
+                    key="4"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    <FormOutlined /> ลงทะเบียน
                   </Menu.Item>
                 </Menu>
               </div>
             </div>
           </Header>
         </Layout>
-      </div>
+      </div >
     );
   } else {
     return (
@@ -54,18 +63,19 @@ export const UserHeader = () => {
                 >
                   <Menu.Item key="1">nav 1</Menu.Item>
                   <Menu.Item key="2">nav 2</Menu.Item>
+                  <Menu.Item key="3" style={{ marginLeft: "auto" }} ><FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์</Menu.Item>
+                  <Menu.Item key="4" ><FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์</Menu.Item>
                   <Menu.SubMenu
                     key="user"
                     title={
                       <span>
-                        <UserOutlined />
+                        <UserOutlined />{" "}
                         {user?.username || "User"} {/* Display username or fallback to 'User' */}
                       </span>
                     }
-                    style={{ marginLeft: "auto" }} // Push to the right
                   >
                     <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
-                      Logout
+                      ออกจากระบบ
                     </Menu.Item>
                   </Menu.SubMenu>
                 </Menu>
