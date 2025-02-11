@@ -23,6 +23,11 @@ export const ROLE = gql`
       role {
         type
       }
+      documentId
+      username
+      email
+      Fname
+      Lname
     }
   }
 `;

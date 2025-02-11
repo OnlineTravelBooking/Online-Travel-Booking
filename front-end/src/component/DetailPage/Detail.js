@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { UserHeader } from "../Header";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
-import { TRAVEL_DATE } from "../../Graphql";
+import {
+  PlusOutlined,
+  MinusOutlined,
+  ConsoleSqlOutlined,
+} from "@ant-design/icons";
+import { TRAVEL_DATE, ALL_IMAGES_PACKAGE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
-import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import ImageSlider from "./ImageSlider";
+import { useAuth } from "../../AuthContext";
 const { Option } = Select;
 
 export default function Detail() {
+  const navigate = useNavigate();
   const location = useLocation();
+  const { data, isAuthenticated } = useAuth();
   const { documentId, Title, Price, Type, Description } = location.state || {};
   const [totalPrice, setTotalPrice] = useState(Price);
   const [count, setCount] = useState(1);
@@ -60,16 +66,18 @@ export default function Detail() {
   }, [data_date]);
 
   const handleDateChange = (key) => {
-    console.log(key);
-    setSelectedDate(key);
+    const showDate = availableDates.find((item) => item.documentId === key);
+    setSelectedDate(showDate);
   };
 
+  console.log("DATA:", selectedDate);
   useEffect(() => {
     if (data_image?.packages[0].Image) {
       const imageUrls = data_image?.packages[0].Image.map((item) => item.url);
       setAllImages(imageUrls);
     }
   }, [data_image]);
+  console.log("date", selectedDate);
   return (
     <div>
       <UserHeader />
@@ -122,6 +130,25 @@ export default function Detail() {
             icon={<PlusOutlined />}
             onClick={() => setCount((count) => count + 1)}
           />
+        </div>
+        <div>
+          <Button
+            type="primary"
+            onClick={() => {
+              isAuthenticated
+                ? navigate("/transaction", {
+                    state: {
+                      data: data,
+                      Title: Title,
+                      Price: totalPrice * count,
+                      selectedDate: selectedDate,
+                    },
+                  })
+                : navigate("/login");
+            }}
+          >
+            จองวันเที่ยว
+          </Button>
         </div>
       </div>
     </div>
