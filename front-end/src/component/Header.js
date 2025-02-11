@@ -2,12 +2,18 @@ import React from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
-
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+
+  const handleLogout = () => {
+    // Call logout function from AuthContext
+    sessionStorage.clear(); // ลบ sessionstorage
+    navigate("/login");
+  }
 
   if (!isAuthenticated) {
     return (
@@ -55,6 +61,20 @@ export const UserHeader = () => {
                   <Menu.Item key="1">nav 1</Menu.Item>
                   <Menu.Item key="2">nav 2</Menu.Item>
                   <Menu.Item>User</Menu.Item>
+                  <Menu.SubMenu
+                    key="user"
+                    title={
+                      <span>
+                        <UserOutlined />
+                        {user?.username || "User"} {/* Display username or fallback to 'User' */}
+                      </span>
+                    }
+                    style={{ marginLeft: "auto" }} // Push to the right
+                  >
+                    <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
+                      Logout
+                    </Menu.Item>
+                  </Menu.SubMenu>
                 </Menu>
               </div>
             </div>
