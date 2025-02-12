@@ -70,3 +70,20 @@ export const ALL_IMAGES_PACKAGE = gql`
     }
   }
 `;
+
+export const BOOKING = gql`
+  query Bookings($filters: BookingFiltersInput) {
+    bookings(filters: $filters) {
+      documentId
+      HowManyPeople
+      TotalPrice
+      package {
+        Title
+        Type
+      }
+      Status_booking
+      Start
+      End
+    }
+  }
+`;
