@@ -3,6 +3,8 @@ import { Form, Input, Select, Button, Upload, Typography, Card, Space, Layout, A
 import { UserOutlined, UploadOutlined, BoldOutlined, ItalicOutlined, UnderlineOutlined, StrikethroughOutlined, LinkOutlined, CodeOutlined, OrderedListOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
+import AdminHeader from "../Header/AdminHeader";
+
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -16,16 +18,7 @@ export default function AddTourPackage() {
 
     return (
         <Layout className="admin-layout" style={{ height: "100vh", overflow: "hidden" }}>
-            <Header className="admin-header">
-                <Space align="center" className="header-left">
-                    <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo" />
-                    <Title level={3} className="header-title">SOUTHEX</Title>
-                </Space>
-                <Space className="header-right">
-                    <Avatar icon={<UserOutlined />} className="admin-avatar" />
-                    <Text className="admin-name">Admin A</Text>
-                </Space>
-            </Header>
+            <AdminHeader />
 
             <Content className="content-container" style={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)", padding: 20 }}>
                 <Card className="add-tour-container" style={{ maxWidth: 600, margin: "auto", padding: 20 }}>

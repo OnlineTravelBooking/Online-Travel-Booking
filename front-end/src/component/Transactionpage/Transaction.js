@@ -98,8 +98,8 @@ export default function Transaction() {
     {
       label: "วันที่เดินทาง",
       value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${selectedDate.End_Date
-          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
-          : ""
+        ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+        : ""
         }`,
     },
     { label: "ทัวร์", value: Title },

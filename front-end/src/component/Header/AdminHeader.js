@@ -26,13 +26,16 @@ export default function AdminHeader() {
 
     return (
         <Header className="admin-header">
-            <div className="container-fluid">
-                <Menu mode="horizontal" className="admin-header" b>
+            <div className="container-fluid" style={{ display: "flex", alignItems: "center" }}>
+                <img src="/southtex_logo.png" alt="SOUTHEX" className="admin-logo" />
+                <Title level={3} className="header-title" style={{ margin: "0 16px", color: "black" }}>
+                    SOUTHEX
+                </Title>
+                <Menu mode="horizontal" className="admin-header" style={{ marginLeft: "auto" }}>
                     <Menu.SubMenu
-                        style={{ marginLeft: "auto" }}
                         key="user"
                         title={
-                            <span style={{ color: "white" }}  >
+                            <span style={{ color: "white" }}>
                                 <UserOutlined /> Admin: {adminName}
                             </span>
                         }
@@ -42,8 +45,8 @@ export default function AdminHeader() {
                         </Menu.Item>
                     </Menu.SubMenu>
                 </Menu>
-            </div >
-        </Header >
+            </div>
+        </Header>
     );
 }
 
