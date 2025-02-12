@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { UserHeader } from "../Header";
-import { useLocation, useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import {
   Form,
   message,
@@ -12,9 +9,17 @@ import {
   Layout,
   Steps,
 } from "antd";
+import { UserHeader } from "../Header";
+import { useLocation, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 
+message.config({
+  maxCount: 3,
+  duration: 3,
+  rtl: false,
+});
 const { Content } = Layout;
 export default function Transaction() {
   const [paymentStatus, setPaymentStatus] = useState(0);
@@ -25,9 +30,13 @@ export default function Transaction() {
   const { Option } = Select;
 
   const onFinish = async (values) => {
-    const loadingMessage = message.loading("กำลังอัพโหลดข้อมูล...", 0);
+    const hide = message.loading({
+      content: "กำลังอัพโหลดข้อมูล...",
+      duration: 0,
+    });
 
     if (!values.image || values.image.length === 0) {
+      hide();
       message.error("กรุณาเลือกรูปภาพ");
       return;
     }
@@ -57,16 +66,14 @@ export default function Transaction() {
           Status_booking: "pending",
         },
       };
-      console.log("bookingData:", bookingData);
-      console.log("slipId:", slipId);
-      console.log("uploadRes:", uploadRes);
+
       await axios.post("http://localhost:1337/api/bookings", bookingData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
 
-      loadingMessage();
+      hide();
 
       message.success({
         content: "ส่งข้อมูลสำเร็จ โปรดรอการตรวจสอบ",
@@ -74,7 +81,11 @@ export default function Transaction() {
       });
       setPaymentStatus(1);
     } catch (err) {
-      message.error("อัพโหลดล้มเหลว: " + err.message);
+      hide?.();
+      message.error({
+        content: "อัพโหลดล้มเหลว: " + err.message,
+        duration: 3,
+      });
     }
   };
   const paymentInfo = [
@@ -100,7 +111,7 @@ export default function Transaction() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
       <UserHeader />
       <Content className="Box">
         <div className="Box-trip-data">
