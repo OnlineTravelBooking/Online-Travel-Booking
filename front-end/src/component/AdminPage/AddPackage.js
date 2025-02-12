@@ -1,25 +1,26 @@
-import React from "react";
-import { Form, Input, Select, Button, Upload, Typography, Card, Space, Layout, Avatar } from "antd";
-import { UserOutlined, UploadOutlined, BoldOutlined, ItalicOutlined, UnderlineOutlined, StrikethroughOutlined, LinkOutlined, CodeOutlined, OrderedListOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Form, Input, Select, Button, Upload, Typography, Card, Space, Layout } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import AdminHeader from "../Header/AdminHeader";
 
-const { Header, Content } = Layout;
-const { Title, Text } = Typography;
+const { Content } = Layout;
+const { Title } = Typography;
 const { Option } = Select;
 
 export default function AddTourPackage() {
     const [form] = Form.useForm();
+    const [description, setDescription] = useState("");
 
     const onFinish = (values) => {
-        console.log("Submitted Values:", values);
+        console.log("Submitted Values:", { ...values, description });
     };
 
     return (
         <Layout className="admin-layout" style={{ height: "100vh", overflow: "hidden" }}>
             <AdminHeader />
-
             <Content className="content-container" style={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)", padding: 20 }}>
                 <Card className="add-tour-container" style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
                     <Title level={2} style={{ textAlign: "center" }}>สร้างแพ็คเกจทัวร์</Title>
@@ -35,18 +36,8 @@ export default function AddTourPackage() {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item name="description" label="คำอธิบาย" rules={[{ required: true, message: "Please enter description" }]}>
-                            <Space className="toolbar" wrap>
-                                <Button icon={<BoldOutlined />} />
-                                <Button icon={<ItalicOutlined />} />
-                                <Button icon={<UnderlineOutlined />} />
-                                <Button icon={<StrikethroughOutlined />} />
-                                <Button icon={<CodeOutlined />} />
-                                <Button icon={<LinkOutlined />} />
-                                <Button icon={<UnorderedListOutlined />} />
-                                <Button icon={<OrderedListOutlined />} />
-                            </Space>
-                            <Input.TextArea rows={4} placeholder="Enter description" style={{ marginTop: 10 }} />
+                        <Form.Item label="คำอธิบาย" rules={[{ required: true, message: "Please enter description" }]}>
+                            <ReactQuill value={description} onChange={setDescription} />
                         </Form.Item>
 
                         <Form.Item name="images" label="อัพโหลดรูปภาพ" valuePropName="fileList" getValueFromEvent={(e) => e.fileList} rules={[{ required: true, message: "Please upload images" }]}>
