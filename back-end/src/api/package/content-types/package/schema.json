@@ -53,6 +53,10 @@
     "Price": {
       "type": "decimal",
       "required": true
+    },
+    "MeetingPoint": {
+      "type": "string",
+      "required": true
     }
   }
 }

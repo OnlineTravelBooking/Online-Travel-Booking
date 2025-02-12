@@ -13,7 +13,6 @@ export default function PackageCard() {
 
   useEffect(() => {
     if (data && data.packages) {
-      console.log("data:", data.packages);
       const mapData = data.packages.map((item) => ({
         documentId: item.documentId,
         Price: item.Price,
@@ -21,11 +20,13 @@ export default function PackageCard() {
         Type: item.Type,
         urlImage: item.Image[0].url,
         Description: item.Description,
+        MeetingPoint: item.MeetingPoint,
       }));
       setDataSource(mapData);
     }
   }, [data]);
 
+  console.log("data:", dataSource);
   return (
     <Row gutter={[16, 16]} style={{ padding: "24px" }}>
       {dataSource.map((item) => (
@@ -54,6 +55,7 @@ export default function PackageCard() {
                   Price: item.Price,
                   Type: item.Type,
                   Description: item.Description,
+                  MeetingPoint: item.MeetingPoint,
                 },
               });
             }}
