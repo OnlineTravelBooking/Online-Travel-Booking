@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserHeader } from "../Header";
-import { useLocation } from "react-router-dom";
-import { Layout, Typography, Avatar, Button, Tag, Upload, Steps } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import {
+  Form,
+  message,
+  Select,
+  Button,
+  Upload,
+  Space,
+  Layout,
+  Steps,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 const { Content } = Layout;
-
 export default function Transaction() {
-  const { data, Title, Price, selectedDate } = useLocation().state;
+  const [paymentStatus, setPaymentStatus] = useState(0);
+  const navigate = useNavigate();
+  const { data, Title, Price, selectedDate, Type } = useLocation().state;
+  const [form] = Form.useForm();
+  const { Option } = Select;
+  const onFinish = (values) => {
+    try {
+      message.success("อัปโหลดสำเร็จ! กำลังตรวจสอบหลักฐาน");
+      setPaymentStatus(1);
+    } catch (err) {
+      message.error("อัปโหลดล้มเหลว: " + err.message);
+    }
+  };
   const paymentInfo = [
     { label: "ชื่อ-นามสกุล", value: "สมชาย แอ๊บแอ้" },
     { label: "เลขบัญชี", value: "123-4-56789-0" },
@@ -70,27 +91,60 @@ export default function Transaction() {
 
         <div className="Box-Upload-payment">
           <h2>อัปโหลดหลักฐานการชำระเงิน</h2>
-          <div className="Upload-payment">
-            <Button className="summit-upload" variant="solid">
-              Submit Payment Proof
-            </Button>
-          </div>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            scrollToFirstError
+          >
+            <Form.Item
+              name="images"
+              label="อัพโหลดรูปภาพ"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => e.fileList}
+              rules={[{ required: true, message: "Please upload images" }]}
+            >
+              <Upload
+                listType="picture-card"
+                beforeUpload={() => false}
+                multiple
+              >
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
+            </Form.Item>
+
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="submit">
+                  ยืนยันการอัปโหลด
+                </Button>
+              </Space>
+            </Form.Item>
+          </Form>
         </div>
+
         <div className="Steps">
           <h2>สถานะการชำระเงิน</h2>
           <Steps
+            current={paymentStatus}
             className="Step-Body"
             size="large"
-            current={1}
             items={[
-              { title: "Finished" },
-              { title: "In Progress" },
-              { title: "Waiting" },
+              { title: "รอการชำระเงิน" },
+              { title: "กำลังตรวจสอบ" },
+              { title: "ยืนยันสำเร็จ" },
             ]}
           />
         </div>
         <div>
-          <Button className="Back-button" variant="solid" size="large">
+          <Button
+            onClick={() => {
+              navigate("/");
+            }}
+            className="Back-button"
+            variant="solid"
+            size="large"
+          >
             ย้อนกลับไปน้าแรก
           </Button>
         </div>
