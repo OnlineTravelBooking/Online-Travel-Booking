@@ -388,6 +388,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    End: Schema.Attribute.Date;
     HowManyPeople: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -399,6 +400,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slip: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
+    Start: Schema.Attribute.Date & Schema.Attribute.Required;
     Status_booking: Schema.Attribute.Enumeration<
       ['pending', 'approved', 'rejected', 'completed']
     > &
