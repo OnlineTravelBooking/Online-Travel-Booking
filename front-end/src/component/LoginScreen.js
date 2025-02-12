@@ -41,23 +41,17 @@ export default function LoginScreen() {
           },
         },
       });
-
-      console.log("is Running");
     } catch (err) {
       console.error("Login failed:", err);
     }
   };
 
   useEffect(() => {
-    if (data_role?.usersPermissionsUsers?.length > 0) {
-      console.log(data_role);
+    if (data_role?.usersPermissionsUsers?.length > 0 && data?.login) {
       const roleType = data_role.usersPermissionsUsers[0].role.type;
-      setUserRole(roleType);
-
-      if (data?.login) {
-        const { jwt, user } = data.login;
-        login(user, jwt, roleType);
-      }
+      const { jwt } = data.login;
+      const user = data_role.usersPermissionsUsers[0];
+      login(user, jwt, roleType);
 
       // Use roleType directly for navigation:
       if (roleType === "user") {
@@ -66,7 +60,7 @@ export default function LoginScreen() {
         navigate("/admin");
       }
     }
-  }, [data_role, navigate]);
+  }, [data, data_role, navigate]);
 
   const { Content } = Layout;
 

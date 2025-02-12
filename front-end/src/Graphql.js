@@ -23,6 +23,11 @@ export const ROLE = gql`
       role {
         type
       }
+      documentId
+      username
+      email
+      Fname
+      Lname
     }
   }
 `;
@@ -38,6 +43,7 @@ export const GET_PACKAGES = gql`
         url
       }
       Description
+      MeetingPoint
     }
   }
 `;

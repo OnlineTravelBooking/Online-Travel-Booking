@@ -1,26 +1,32 @@
 import React from "react";
 import { UserHeader } from "../Header";
-import { useAuth } from "../../AuthContext";
+import { useLocation } from "react-router-dom";
 import { Layout, Typography, Avatar, Button, Tag, Upload, Steps } from "antd";
-import { UserOutlined, UploadOutlined } from "@ant-design/icons";
-import { Header } from "antd/es/layout/layout";
-
+import dayjs from "dayjs";
 const { Content } = Layout;
 
 export default function Transaction() {
+  const { data, Title, Price, selectedDate } = useLocation().state;
   const paymentInfo = [
-    { label: "ชื่อ-นามสกุล", value: "สมชาย ใจดี" },
+    { label: "ชื่อ-นามสกุล", value: "สมชาย แอ๊บแอ้" },
     { label: "เลขบัญชี", value: "123-4-56789-0" },
     { label: "ธนาคาร", value: "ไทยพาณิชย์ (SCB)" },
   ];
 
   const bookingDetails = [
-    { label: "Booking ID", value: "SONGKLA12345" },
-    { label: "ทัวร์", value: "Samila Beach Trip" },
-    { label: "ราคา", value: "1,700 บาท" },
-    { label: "ชื่อลูกค้า", value: "สมชาย แอ๊บแอ้" },
-    { label: "เบอร์โทร", value: "081-234-5678" },
-    { label: "อีเมล", value: "somchai.abae@example.com" },
+    { label: "Booking ID", value: data.documentId },
+    {
+      label: "วันที่เดินทาง",
+      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
+        selectedDate.End_Date
+          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+          : ""
+      }`,
+    },
+    { label: "ทัวร์", value: Title },
+    { label: "ราคา", value: Price },
+    { label: "ชื่อลูกค้า", value: `${data.Fname} ${data.Lname}` },
+    { label: "อีเมล", value: data.email },
   ];
 
   return (

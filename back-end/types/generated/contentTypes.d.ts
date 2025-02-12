@@ -436,6 +436,7 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
       'api::package.package'
     > &
       Schema.Attribute.Private;
+    MeetingPoint: Schema.Attribute.String & Schema.Attribute.Required;
     Price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
