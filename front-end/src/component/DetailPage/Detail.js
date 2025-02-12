@@ -107,17 +107,19 @@ export default function Detail() {
     message.error("กรุณาเลือกวันที่");
   };
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "auto" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
       <Content>
-        <div>{Title}</div>
+        <div className="Title-detail">{Title}</div>
         <div>
           <div>{Type}</div>
           <div>{MeetingPoint}</div>
           <div>
-            <ImageSlider allImages={allImages} />
+            <div>
+              <ImageSlider allImages={allImages} />
+            </div>
+            <BlocksRenderer content={Description} />
           </div>
-          <BlocksRenderer content={Description} />
         </div>
         {/* ช่องเลือกวันที่ */}
         <div>
