@@ -298,10 +298,12 @@ body {
 }
 
 .img-slide {
-  display: block;
+  display: flex;
   object-fit: contain;
   position: relative;
   border-radius: 20px;
+  max-width: 700px;
+
 }
 
 .button-slide-left {
@@ -311,13 +313,13 @@ body {
   transform: translateY(-50%);
   z-Index: 10;
   color: #ffffff;
-  background-color: #9d59597d !important;
-  width: 100px;
+  background-color: #635e5e6c !important;
+  width: 60px;
   height: 100px;
   display: flex;
   align-Items: center;
   justify-Content: center;
-  border-radius: 100%;
+  border-radius: 0%;
   border: none;
 }
  
@@ -328,10 +330,10 @@ body {
   transform: translateY(-50%);
   z-Index: 10;
   color: #ffffff;
-  background-color: #9d59597d !important;
-  width: 100px;
+  background-color: #635e5e6c !important;
+  width: 60px;
   height: 100px;
-  border-radius: 100%;
+  border-radius: 0%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,13 +341,13 @@ body {
 }
 
 .button-slide-left:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
+  background-color: #ffffff6f !important;
+  color: #635e5e6c !important;
 }
 
 .button-slide-right:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
+  background-color: #ffffff80 !important;
+  color: #635e5e6c !important;
 }
 
 .IMG {
@@ -359,6 +361,93 @@ body {
 
 .Detail {
   width: 500px;
-  max-height: 500px;
+  max-height: max-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 25px;
+  background-color: #a5adad;
+}
+
+.Detail-Tour {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius:0px 0px 20px 20px;
+  background-color: #4DA1A9;
+  color: #f6f4f0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.Detail-input{
+  justify-content: center;
+  align-items: center;
+  max-height: max-content;
+  margin-top: 25px;
+  background-color: #9b6969;
+}
+
+.Background-add{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: end;
+  padding: 10px ;
+  background-color: #757474;
+}
+
+.Add-Button{
+  transform: scale(0.7);
+  background-color: #005c78;
+}
+
+.title-input {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px !important;
+  margin: auto;
+  padding: 5px;
+  border-radius: 20px;
   background-color: #5ab1ae;
+  color: #f6f4f0;
+  max-width: 60%;
+  
+}
+
+.Day-Trip {
+  margin-top: 15px !important;
+  width: 80%;
+  margin: auto ;
+}
+
+.title-cost{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Pay-box {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px ;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.Cost{
+  font-size: 24px;
+  font-weight: 600;
+  color: #2E5077;
+}
+
+.pay-button{
+  background-color: #2E5077;
+  font-size: 18px;
+  font-weight: 400;
+  transform: scale(1.2);
+  width: 120px;
 }
