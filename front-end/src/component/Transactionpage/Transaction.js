@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-
+import "antd/dist/reset.css";
 message.config({
   maxCount: 3,
   duration: 3,
@@ -22,6 +22,8 @@ message.config({
 });
 const { Content } = Layout;
 export default function Transaction() {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [paymentStatus, setPaymentStatus] = useState(0);
   const navigate = useNavigate();
   const { data, Title, Price, selectedDate, people, packageId } =
@@ -36,7 +38,6 @@ export default function Transaction() {
     });
 
     if (!values.image || values.image.length === 0) {
-      hide();
       message.error("กรุณาเลือกรูปภาพ");
       return;
     }
@@ -117,6 +118,7 @@ export default function Transaction() {
     <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
       <UserHeader />
       <Content className="Box">
+        {contextHolder}
         <div className="Box-trip-data">
           <h2>รายละเอียดการจองของลูกค้า</h2>
           <div className="trip-data">

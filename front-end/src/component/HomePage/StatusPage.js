@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col, Tag, Timeline, Layout } from "antd";
+import { Card, Row, Col, Tag, Timeline, Layout, message } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import {
   ClockCircleOutlined,
@@ -10,6 +10,7 @@ import { UserHeader } from "../Header";
 import { useAuth } from "../../AuthContext";
 import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";
+import "antd/dist/reset.css";
 const bookings = [
   {
     id: 1,
@@ -26,22 +27,6 @@ export default function StatusPage() {
   const { data } = useAuth();
   const [bookings, setBookings] = useState([]);
   const { loading, error, data: data_booking } = useQuery(BOOKING);
-  console.log("asdf", data_booking.bookings);
-  useEffect(() => {
-    const mapData = data_booking.bookings.map((booking, index) => ({
-      id: index,
-      seats: booking.HowManyPeople,
-      status: booking.Status_booking,
-      price: booking.TotalPrice,
-      documentId: booking.documentId,
-      packageName: booking.package.Title,
-      Type: booking.package.Type,
-      date: booking.Start,
-      End: booking.End,
-      image: "https://picsum.photos/300/200?random=1",
-    }));
-    setBookings(mapData);
-  }, [data_booking]);
 
   const getStatusTag = (status) => {
     switch (status) {
@@ -68,6 +53,27 @@ export default function StatusPage() {
     }
   };
 
+  useEffect(() => {
+    if (data_booking) {
+      const mapData = data_booking.bookings.map((booking, index) => ({
+        id: index,
+        seats: booking.HowManyPeople,
+        status: booking.Status_booking,
+        price: booking.TotalPrice,
+        documentId: booking.documentId,
+        packageName: booking.package.Title,
+        Type: booking.package.Type,
+        Start: booking.Start,
+        End: booking.End,
+        image: "https://picsum.photos/300/200?random=1",
+      }));
+      setBookings(mapData);
+    }
+  }, [data_booking]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!data_booking) return <div>No data available</div>;
   return (
     <Layout>
       <Header>
@@ -93,7 +99,11 @@ export default function StatusPage() {
                   <Row gutter={[16, 16]}>
                     <Col span={24}>
                       <h2>{item.packageName}</h2>
-                      <p>Date: {new Date(item.date).toLocaleDateString()}</p>
+                      <p>
+                        Date: {new Date(item.Start).toLocaleDateString()}{" "}
+                        {item.End &&
+                          ` - ${new Date(item.End).toLocaleDateString()}`}
+                      </p>
                       <p>Price: ${item.price}</p>
                       <p>Seats: {item.seats}</p>
                       <div style={{ marginTop: "16px" }}>
