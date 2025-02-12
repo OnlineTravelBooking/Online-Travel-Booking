@@ -2,8 +2,6 @@ import React from "react";
 import { UserHeader } from "../Header";
 import { useLocation } from "react-router-dom";
 import { Layout, Typography, Avatar, Button, Tag, Upload, Steps } from "antd";
-import { UserOutlined, UploadOutlined } from "@ant-design/icons";
-import { Header } from "antd/es/layout/layout";
 import dayjs from "dayjs";
 const { Content } = Layout;
 

@@ -43,6 +43,7 @@ export const GET_PACKAGES = gql`
         url
       }
       Description
+      MeetingPoint
     }
   }
 `;

@@ -19,7 +19,8 @@ export default function Detail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { data, isAuthenticated } = useAuth();
-  const { documentId, Title, Price, Type, Description } = location.state || {};
+  const { documentId, Title, Price, Type, Description, MeetingPoint } =
+    location.state || {};
   const [totalPrice, setTotalPrice] = useState(Price);
   const [count, setCount] = useState(1);
   const [availableDates, setAvailableDates] = useState([]);
@@ -70,14 +71,13 @@ export default function Detail() {
     setSelectedDate(showDate);
   };
 
-  console.log("DATA:", selectedDate);
   useEffect(() => {
     if (data_image?.packages[0].Image) {
       const imageUrls = data_image?.packages[0].Image.map((item) => item.url);
       setAllImages(imageUrls);
     }
   }, [data_image]);
-  console.log("date", selectedDate);
+
   return (
     <div>
       <UserHeader />
@@ -85,6 +85,7 @@ export default function Detail() {
         <div>{Title}</div>
         <div>
           <div>{Type}</div>
+          <div>{MeetingPoint}</div>
           <div>
             <ImageSlider allImages={allImages} />
           </div>
