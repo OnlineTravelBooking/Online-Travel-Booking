@@ -9,7 +9,7 @@ import {
   Layout,
   Steps,
 } from "antd";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
