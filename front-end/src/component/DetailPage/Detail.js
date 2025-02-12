@@ -92,6 +92,8 @@ export default function Detail() {
                 Title: Title,
                 Price: totalPrice * count,
                 selectedDate: selectedDate,
+                people: count,
+                packageId: documentId,
               },
             })
           : navigate("/login");
