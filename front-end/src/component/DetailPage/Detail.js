@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserHeader } from "../UserHeader";
+import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message } from "antd";

@@ -9,7 +9,7 @@ import {
   Layout,
   Steps,
 } from "antd";
-import { UserHeader } from "../UserHeader";
+import { UserHeader } from "../Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
@@ -205,7 +205,7 @@ export default function Transaction() {
             variant="solid"
             size="large"
           >
-            ย้อนกลับไปน้าแรก
+            ย้อนกลับไปหน้าแรก
           </Button>
         </div>
       </Content>

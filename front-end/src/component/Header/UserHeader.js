@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../AuthContext";
 import {
   FormOutlined,
   FileTextOutlined,
@@ -12,23 +12,22 @@ const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, data } = useAuth();
   const [fullName, setFullName] = useState("User"); // ชื่อผู้ใช้
+
 
   // ดึงชื่อผู้ใช้จาก sessionStorage
   useEffect(() => {
-    const userDataString = sessionStorage.getItem("userData");
-    if (userDataString) {
+    if (data) {
       try {
-        const userData = JSON.parse(userDataString);
-        if (userData.Fname && userData.Lname) {
-          setFullName(`${userData.Fname} ${userData.Lname}`);
+        if (data.Fname && data.Lname) {
+          setFullName(`${data.Fname} ${data.Lname}`);
         }
       } catch (error) {
         console.error("Error parsing userData from sessionStorage:", error);
       }
     }
-  }, []);
+  }, [data]);
 
   if (!isAuthenticated) {
     return (
