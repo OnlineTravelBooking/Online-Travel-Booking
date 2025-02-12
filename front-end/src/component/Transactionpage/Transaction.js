@@ -9,7 +9,7 @@ import {
   Layout,
   Steps,
 } from "antd";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
@@ -101,11 +101,10 @@ export default function Transaction() {
   const bookingDetails = [
     {
       label: "วันที่เดินทาง",
-      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
-        selectedDate.End_Date
-          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
-          : ""
-      }`,
+      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${selectedDate.End_Date
+        ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+        : ""
+        }`,
     },
     { label: "ทัวร์", value: Title },
     { label: "ราคา", value: Price },
@@ -210,7 +209,7 @@ export default function Transaction() {
             variant="solid"
             size="large"
           >
-            ย้อนกลับไปน้าแรก
+            ย้อนกลับไปหน้าแรก
           </Button>
         </div>
       </Content>
