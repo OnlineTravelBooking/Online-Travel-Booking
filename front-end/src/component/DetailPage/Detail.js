@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserHeader } from "../Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { Button, Form, Select } from "antd";
+import { Button, Form, Select, message } from "antd";
 import {
   PlusOutlined,
   MinusOutlined,
@@ -18,6 +18,7 @@ const { Option } = Select;
 export default function Detail() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [form] = Form.useForm();
   const { data, isAuthenticated } = useAuth();
   const { documentId, Title, Price, Type, Description, MeetingPoint } =
     location.state || {};
@@ -78,6 +79,29 @@ export default function Detail() {
     }
   }, [data_image]);
 
+  const handleSubmit = () => {
+    form
+      .validateFields()
+      .then(() => {
+        isAuthenticated
+          ? navigate("/transaction", {
+              state: {
+                data: data,
+                Title: Title,
+                Price: totalPrice * count,
+                selectedDate: selectedDate,
+              },
+            })
+          : navigate("/login");
+      })
+      .catch((err) => {
+        console.log("Validation failed:", err);
+      });
+  };
+
+  const onFinishFailed = (err) => {
+    message.error("กรุณาเลือกวันที่");
+  };
   return (
     <div>
       <UserHeader />
@@ -93,63 +117,55 @@ export default function Detail() {
         </div>
         {/* ช่องเลือกวันที่ */}
         <div>
-          <Form.Item
-            name="select"
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "กรุณาเลือกวันเที่ยว",
-              },
-            ]}
+          <Form
+            form={form}
+            onFinish={handleSubmit}
+            onFinishFailed={onFinishFailed}
           >
-            <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
-              {availableDates?.map((date) => (
-                <Option key={date.documentId}>
-                  {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                  {date.End_Date &&
-                    ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </div>
-        <div>{count}</div>
-        <div>
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<MinusOutlined />}
-            onClick={() =>
-              count > 1 ? setCount((count) => count - 1) : setCount(1)
-            }
-          />
-          {count === 0 ? totalPrice : totalPrice * count}
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-            onClick={() => setCount((count) => count + 1)}
-          />
-        </div>
-        <div>
-          <Button
-            type="primary"
-            onClick={() => {
-              isAuthenticated
-                ? navigate("/transaction", {
-                    state: {
-                      data: data,
-                      Title: Title,
-                      Price: totalPrice * count,
-                      selectedDate: selectedDate,
-                    },
-                  })
-                : navigate("/login");
-            }}
-          >
-            จองวันเที่ยว
-          </Button>
+            <Form.Item
+              name="select"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "กรุณาเลือกวันเที่ยว",
+                },
+              ]}
+            >
+              <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
+                {availableDates?.map((date) => (
+                  <Option key={date.documentId}>
+                    {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                    {date.End_Date &&
+                      ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <div>{count}</div>
+            <div>
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<MinusOutlined />}
+                onClick={() =>
+                  count > 1 ? setCount((count) => count - 1) : setCount(1)
+                }
+              />
+              {count === 0 ? totalPrice : totalPrice * count}
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<PlusOutlined />}
+                onClick={() => setCount((count) => count + 1)}
+              />
+            </div>
+            <div>
+              <Button type="primary" htmlType="submit">
+                จองวันเที่ยว
+              </Button>
+            </div>
+          </Form>
         </div>
       </div>
     </div>
