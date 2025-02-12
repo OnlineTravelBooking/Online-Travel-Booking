@@ -64,9 +64,12 @@ export default function Transaction() {
           package: packageId,
           slip: slipId,
           Status_booking: "pending",
+          Start: selectedDate.Start_Date,
+          End: selectedDate.End_Date,
         },
       };
 
+      console.log("date", selectedDate);
       await axios.post("http://localhost:1337/api/bookings", bookingData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,

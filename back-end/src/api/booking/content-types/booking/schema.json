@@ -49,6 +49,13 @@
       ],
       "default": "pending",
       "required": true
+    },
+    "Start": {
+      "type": "date",
+      "required": true
+    },
+    "End": {
+      "type": "date"
     }
   }
 }
