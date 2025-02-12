@@ -396,8 +396,14 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     package: Schema.Attribute.Relation<'manyToOne', 'api::package.package'>;
-    payment: Schema.Attribute.Relation<'oneToOne', 'api::payment.payment'>;
     publishedAt: Schema.Attribute.DateTime;
+    slip: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    Status_booking: Schema.Attribute.Enumeration<
+      ['pending', 'approved', 'rejected', 'completed']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
     TotalPrice: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -442,36 +448,6 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
     Title: Schema.Attribute.String & Schema.Attribute.Required;
     Type: Schema.Attribute.Enumeration<['One day trip', 'Muti day trip']> &
       Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPaymentPayment extends Struct.CollectionTypeSchema {
-  collectionName: 'payments';
-  info: {
-    displayName: 'Payment';
-    pluralName: 'payments';
-    singularName: 'payment';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    amount: Schema.Attribute.Decimal;
-    booking: Schema.Attribute.Relation<'oneToOne', 'api::booking.booking'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::payment.payment'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    Slip: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1022,7 +998,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::booking.booking': ApiBookingBooking;
       'api::package.package': ApiPackagePackage;
-      'api::payment.payment': ApiPaymentPayment;
       'api::travel-date.travel-date': ApiTravelDateTravelDate;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

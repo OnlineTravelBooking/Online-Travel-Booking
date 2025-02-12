@@ -13,19 +13,68 @@ import {
   Steps,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
+
 const { Content } = Layout;
 export default function Transaction() {
   const [paymentStatus, setPaymentStatus] = useState(0);
   const navigate = useNavigate();
-  const { data, Title, Price, selectedDate, Type } = useLocation().state;
+  const { data, Title, Price, selectedDate, people, packageId } =
+    useLocation().state;
   const [form] = Form.useForm();
   const { Option } = Select;
-  const onFinish = (values) => {
+
+  const onFinish = async (values) => {
+    const loadingMessage = message.loading("กำลังอัพโหลดข้อมูล...", 0);
+
+    if (!values.image || values.image.length === 0) {
+      message.error("กรุณาเลือกรูปภาพ");
+      return;
+    }
+    const imageFile = values.image[0].originFileObj;
+    const formData = new FormData();
+    formData.append("files", imageFile);
+
     try {
-      message.success("อัปโหลดสำเร็จ! กำลังตรวจสอบหลักฐาน");
+      const uploadRes = await axios.post(
+        "http://localhost:1337/api/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
+      const slipId = uploadRes.data[0]?.id;
+
+      const bookingData = {
+        data: {
+          HowManyPeople: parseInt(people, 10),
+          TotalPrice: parseFloat(Price),
+          customer: data.documentId,
+          package: packageId,
+          slip: slipId,
+          Status_booking: "pending",
+        },
+      };
+      console.log("bookingData:", bookingData);
+      console.log("slipId:", slipId);
+      console.log("uploadRes:", uploadRes);
+      await axios.post("http://localhost:1337/api/bookings", bookingData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+
+      loadingMessage();
+
+      message.success({
+        content: "ส่งข้อมูลสำเร็จ โปรดรอการตรวจสอบ",
+        duration: 3,
+      });
       setPaymentStatus(1);
     } catch (err) {
-      message.error("อัปโหลดล้มเหลว: " + err.message);
+      message.error("อัพโหลดล้มเหลว: " + err.message);
     }
   };
   const paymentInfo = [
@@ -35,7 +84,6 @@ export default function Transaction() {
   ];
 
   const bookingDetails = [
-    { label: "Booking ID", value: data.documentId },
     {
       label: "วันที่เดินทาง",
       value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
@@ -48,6 +96,7 @@ export default function Transaction() {
     { label: "ราคา", value: Price },
     { label: "ชื่อลูกค้า", value: `${data.Fname} ${data.Lname}` },
     { label: "อีเมล", value: data.email },
+    { label: "จำนวน", value: `${people} คน` },
   ];
 
   return (
@@ -90,7 +139,7 @@ export default function Transaction() {
         </div>
 
         <div className="Box-Upload-payment">
-          <h2>อัปโหลดหลักฐานการชำระเงิน</h2>
+          <h2>อัพโหลดหลักฐานการชำระเงิน</h2>
           <Form
             form={form}
             layout="vertical"
@@ -98,7 +147,7 @@ export default function Transaction() {
             scrollToFirstError
           >
             <Form.Item
-              name="images"
+              name="image"
               label="อัพโหลดรูปภาพ"
               valuePropName="fileList"
               getValueFromEvent={(e) => e.fileList}
@@ -107,7 +156,7 @@ export default function Transaction() {
               <Upload
                 listType="picture-card"
                 beforeUpload={() => false}
-                multiple
+                multiple={false}
               >
                 <Button icon={<UploadOutlined />}>Upload</Button>
               </Upload>
@@ -116,7 +165,7 @@ export default function Transaction() {
             <Form.Item>
               <Space>
                 <Button type="primary" htmlType="submit">
-                  ยืนยันการอัปโหลด
+                  ยืนยันการอัพโหลด
                 </Button>
               </Space>
             </Form.Item>
