@@ -64,7 +64,11 @@ export const UserHeader = () => {
                   mode="horizontal"
                   defaultSelectedKeys={["2"]}
                 >
-                  <Menu.Item key="3" style={{ marginLeft: "auto" }}>
+                  <Menu.Item
+                    key="3"
+                    style={{ marginLeft: "auto" }}
+                    onClick={() => navigate("/status")}
+                  >
                     <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
                   </Menu.Item>
                   <Menu.SubMenu
