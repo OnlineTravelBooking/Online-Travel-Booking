@@ -26,7 +26,7 @@ export default function PackageCard() {
     }
   }, [data]);
 
-  console.log("data:", data.packages);
+  console.log("data:", dataSource);
   return (
     <Row gutter={[16, 16]} style={{ padding: "24px" }}>
       {dataSource.map((item) => (
