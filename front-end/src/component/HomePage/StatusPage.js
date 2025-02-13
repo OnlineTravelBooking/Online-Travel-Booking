@@ -6,7 +6,7 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../Header/UserHeader";
 import { useAuth } from "../../AuthContext";
 import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";

@@ -101,10 +101,11 @@ export default function Transaction() {
   const bookingDetails = [
     {
       label: "วันที่เดินทาง",
-      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${selectedDate.End_Date
-        ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
-        : ""
-        }`,
+      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
+        selectedDate.End_Date
+          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+          : ""
+      }`,
     },
     { label: "ทัวร์", value: Title },
     { label: "ราคา", value: Price },
@@ -114,12 +115,11 @@ export default function Transaction() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
       <UserHeader />
       <Content className="Box">
         {contextHolder}
         <div className="Box-trip-data">
-          <h2>รายละเอียดการจองของลูกค้า</h2>
           <div className="trip-data">
             {bookingDetails.map((item, index) => (
               <p key={index}>
