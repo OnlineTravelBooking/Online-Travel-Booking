@@ -117,12 +117,11 @@ export default function Transaction() {
   ];
   console.log("UPload", isUploaded);
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
       <UserHeader />
       <Content className="Box">
         {contextHolder}
         <div className="Box-trip-data">
-          <h2>รายละเอียดการจองของลูกค้า</h2>
           <div className="trip-data">
             {bookingDetails.map((item, index) => (
               <p key={index}>
