@@ -107,6 +107,7 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
+  console.log("James", Description);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
@@ -116,7 +117,6 @@ export default function Detail() {
         </div>
         <div>
           <div>{Type}</div>
-          <div>{MeetingPoint}</div>
           <div>
             <ImageSlider allImages={allImages} />
           </div>
@@ -134,7 +134,7 @@ export default function Detail() {
                 >
                   <div className="Background-add">
                     <Avatar shape="square" size={64} icon={<UserOutlined />} />
-                    จำนวนคน
+                    <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                     <div style={{ scale: "1.2" }}>
                       <Button
                         className="Add-Button"
@@ -157,6 +157,10 @@ export default function Detail() {
                       />
                     </div>
                   </div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
+                  {/* ช่องเลือกวันที่ */}
                   <div className="Day-Trip">
                     <Form.Item
                       name="select"
@@ -183,6 +187,14 @@ export default function Detail() {
                       </Select>
                     </Form.Item>
                   </div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
+                  <div className="Meeting-box">จุดนัดพบ</div>
+                  <div className="Meeting">{MeetingPoint}</div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
                   <div className="Pay-box">
                     <div className="Cost">
@@ -203,7 +215,6 @@ export default function Detail() {
             </Col>
           </Row>
         </div>
-        {/* ช่องเลือกวันที่ */}
       </Content>
     </Layout>
   );
