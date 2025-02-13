@@ -25,6 +25,7 @@ export default function Detail() {
   const { data, isAuthenticated } = useAuth();
   const { documentId, Title, Price, Type, Description, MeetingPoint } =
     location.state || {};
+  const formattedType = Type.replaceAll("_", " ");
   const [totalPrice, setTotalPrice] = useState(Price);
   const [count, setCount] = useState(1);
   const [availableDates, setAvailableDates] = useState([]);
@@ -108,7 +109,6 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
@@ -117,9 +117,11 @@ export default function Detail() {
           <div>{Title}</div>
         </div>
         <div>
-          <div>{Type}</div>
           <div>
             <ImageSlider allImages={allImages} />
+          </div>
+          <div className="Type-Trip-box">
+            <div className="Type-Trip">{formattedType}</div>
           </div>
           <Row>
             <Col span={15} className="Detail">
