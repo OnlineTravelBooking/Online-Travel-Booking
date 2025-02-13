@@ -9,7 +9,7 @@ import {
   Layout,
   Steps,
 } from "antd";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
@@ -115,12 +115,11 @@ export default function Transaction() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
       <UserHeader />
       <Content className="Box">
         {contextHolder}
         <div className="Box-trip-data">
-          <h2>รายละเอียดการจองของลูกค้า</h2>
           <div className="trip-data">
             {bookingDetails.map((item, index) => (
               <p key={index}>
@@ -210,7 +209,7 @@ export default function Transaction() {
             variant="solid"
             size="large"
           >
-            ย้อนกลับไปน้าแรก
+            ย้อนกลับไปหน้าแรก
           </Button>
         </div>
       </Content>
