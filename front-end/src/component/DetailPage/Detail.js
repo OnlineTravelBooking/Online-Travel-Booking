@@ -73,6 +73,7 @@ export default function Detail() {
   const handleDateChange = (key) => {
     const showDate = availableDates.find((item) => item.documentId === key);
     setSelectedDate(showDate);
+    form.setFieldsValue({ select: key });
   };
 
   useEffect(() => {
