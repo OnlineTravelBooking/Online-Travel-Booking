@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { Button, Form, Select, message } from "antd";
+import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
 import {
   PlusOutlined,
   MinusOutlined,
   ConsoleSqlOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
@@ -14,6 +15,8 @@ import dayjs from "dayjs";
 import ImageSlider from "./ImageSlider";
 import { useAuth } from "../../AuthContext";
 const { Option } = Select;
+
+const { Content } = Layout;
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -85,15 +88,15 @@ export default function Detail() {
       .then(() => {
         isAuthenticated
           ? navigate("/transaction", {
-            state: {
-              data: data,
-              Title: Title,
-              Price: totalPrice * count,
-              selectedDate: selectedDate,
-              people: count,
-              packageId: documentId,
-            },
-          })
+              state: {
+                data: data,
+                Title: Title,
+                Price: totalPrice * count,
+                selectedDate: selectedDate,
+                people: count,
+                packageId: documentId,
+              },
+            })
           : navigate("/login");
       })
       .catch((err) => {
@@ -104,72 +107,115 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
+  console.log("James", Description);
   return (
-    <div>
+    <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
-      <div>
-        <div>{Title}</div>
+      <Content style={{ display: "flex", flexDirection: "column" }}>
+        <div className="Title-detail">
+          <div>{Title}</div>
+        </div>
         <div>
           <div>{Type}</div>
-          <div>{MeetingPoint}</div>
           <div>
             <ImageSlider allImages={allImages} />
           </div>
-          <BlocksRenderer content={Description} />
+          <Row>
+            <Col span={15} className="Detail">
+              <div className="Detail-Tour">รายละเอียดทริปทัวร์</div>
+              <BlocksRenderer content={Description} />
+            </Col>
+            <Col span={7} className="Detail-input">
+              <div>
+                <Form
+                  form={form}
+                  onFinish={handleSubmit}
+                  onFinishFailed={onFinishFailed}
+                >
+                  <div className="Background-add">
+                    <Avatar shape="square" size={64} icon={<UserOutlined />} />
+                    <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
+                    <div style={{ scale: "1.2" }}>
+                      <Button
+                        className="Add-Button"
+                        type="primary"
+                        shape="circle"
+                        icon={<MinusOutlined />}
+                        onClick={() =>
+                          count > 1
+                            ? setCount((count) => count - 1)
+                            : setCount(1)
+                        }
+                      />
+                      {count}
+                      <Button
+                        className="Add-Button"
+                        type="primary"
+                        shape="circle"
+                        icon={<PlusOutlined />}
+                        onClick={() => setCount((count) => count + 1)}
+                      />
+                    </div>
+                  </div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
+                  {/* ช่องเลือกวันที่ */}
+                  <div className="Day-Trip">
+                    <Form.Item
+                      name="select"
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "กรุณาเลือกวันเที่ยว",
+                        },
+                      ]}
+                    >
+                      <div className="title-input">เลือกวันที่ต้องการจอง</div>
+                      <Select
+                        placeholder="เลือกวันเที่ยว"
+                        onChange={handleDateChange}
+                      >
+                        {availableDates?.map((date) => (
+                          <Option key={date.documentId}>
+                            {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                            {date.End_Date &&
+                              ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
+                  <div className="Meeting-box">จุดนัดพบ</div>
+                  <div className="Meeting">{MeetingPoint}</div>
+                  <div className="line">
+                    _______________________________________________________
+                  </div>
+                  <div className="title-cost">ราคาที่ต้องชำระ</div>
+                  <div className="Pay-box">
+                    <div className="Cost">
+                      THB {count === 0 ? totalPrice : totalPrice * count}
+                    </div>
+                    <div>
+                      <Button
+                        className="pay-button"
+                        type="primary"
+                        htmlType="submit"
+                      >
+                        ชำระเงิน
+                      </Button>
+                    </div>
+                  </div>
+                </Form>
+              </div>
+            </Col>
+          </Row>
         </div>
-        {/* ช่องเลือกวันที่ */}
-        <div>
-          <Form
-            form={form}
-            onFinish={handleSubmit}
-            onFinishFailed={onFinishFailed}
-          >
-            <Form.Item
-              name="select"
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณาเลือกวันเที่ยว",
-                },
-              ]}
-            >
-              <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
-                {availableDates?.map((date) => (
-                  <Option key={date.documentId}>
-                    {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                    {date.End_Date &&
-                      ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <div>{count}</div>
-            <div>
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<MinusOutlined />}
-                onClick={() =>
-                  count > 1 ? setCount((count) => count - 1) : setCount(1)
-                }
-              />
-              {count === 0 ? totalPrice : totalPrice * count}
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<PlusOutlined />}
-                onClick={() => setCount((count) => count + 1)}
-              />
-            </div>
-            <div>
-              <Button type="primary" htmlType="submit">
-                จองวันเที่ยว
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 }
