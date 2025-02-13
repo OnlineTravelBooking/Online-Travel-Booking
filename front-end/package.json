@@ -13,6 +13,7 @@
     "lucide-react": "^0.475.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1",
     "tailwindcss": "^4.0.4"
@@ -44,5 +45,8 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "husky": "^9.1.7"
+  },
+  "overrides": {
+    "react-refresh": "0.11.0"
   }
 }
