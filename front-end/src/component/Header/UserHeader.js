@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Layout } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import {
   FormOutlined,
   FileTextOutlined,
   LogoutOutlined,
   UserOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, logout, data } = useAuth();
   const [fullName, setFullName] = useState("User"); // ชื่อผู้ใช้
 
@@ -63,9 +65,19 @@ export const UserHeader = () => {
                 <Menu.Item
                   key="3"
                   style={{ marginLeft: "auto" }}
-                  onClick={() => navigate("/status")}
+                  onClick={() =>
+                    navigate(location.pathname === "/status" ? "/" : "/status")
+                  }
                 >
-                  <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
+                  {location.pathname === "/status" ? (
+                    <>
+                      <HomeOutlined /> Home
+                    </>
+                  ) : (
+                    <>
+                      <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
+                    </>
+                  )}
                 </Menu.Item>
                 <Menu.SubMenu
                   key="user"
