@@ -123,6 +123,7 @@ body {
   background-color: #005c78;
   border-radius: 20px;
 }
+
 /*-------------------------- AdminDashboard.css -------------------------------*/
 
 /* Layout Styles */
@@ -135,10 +136,7 @@ body {
 /* Header Styles */
 .admin-header {
   background: #5ab1ae;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
+  color: #ffffff;
 }
 
 .header-left {
@@ -162,11 +160,6 @@ body {
 }
 
 .admin-avatar {
-  margin-left: 10px;
-}
-
-.admin-name {
-  color: white;
   margin-left: 10px;
 }
 
@@ -284,6 +277,7 @@ body {
 .ant-message {
   z-index: 10000 !important;
 }
+
 .ant-message-notice-content {
   background: rgba(255, 255, 255, 0.95) !important;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12) !important;

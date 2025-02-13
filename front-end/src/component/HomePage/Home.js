@@ -1,5 +1,5 @@
 import React from "react";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../Header/UserHeader";
 import { useAuth } from "../../AuthContext";
 import PackageCard from "./PackageCard";
 

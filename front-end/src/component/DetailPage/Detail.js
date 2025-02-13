@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserHeader } from "../Header";
+import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
@@ -88,15 +88,15 @@ export default function Detail() {
       .then(() => {
         isAuthenticated
           ? navigate("/transaction", {
-              state: {
-                data: data,
-                Title: Title,
-                Price: totalPrice * count,
-                selectedDate: selectedDate,
-                people: count,
-                packageId: documentId,
-              },
-            })
+            state: {
+              data: data,
+              Title: Title,
+              Price: totalPrice * count,
+              selectedDate: selectedDate,
+              people: count,
+              packageId: documentId,
+            },
+          })
           : navigate("/login");
       })
       .catch((err) => {
