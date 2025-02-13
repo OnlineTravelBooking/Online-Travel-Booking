@@ -117,7 +117,7 @@ export default function Transaction() {
   ];
   console.log("UPload", isUploaded);
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
       <Content className="Box">
         {contextHolder}
