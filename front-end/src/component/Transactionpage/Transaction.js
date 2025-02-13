@@ -25,6 +25,7 @@ export default function Transaction() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [paymentStatus, setPaymentStatus] = useState(0);
+  const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
   const { data, Title, Price, selectedDate, people, packageId } =
     useLocation().state;
@@ -38,6 +39,7 @@ export default function Transaction() {
     });
 
     if (!values.image || values.image.length === 0) {
+      hide();
       message.error("กรุณาเลือกรูปภาพ");
       return;
     }
@@ -70,7 +72,6 @@ export default function Transaction() {
         },
       };
 
-      console.log("date", selectedDate);
       await axios.post("http://localhost:1337/api/bookings", bookingData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -78,6 +79,7 @@ export default function Transaction() {
       });
 
       hide();
+      setIsUploaded(true);
 
       message.success({
         content: "ส่งข้อมูลสำเร็จ โปรดรอการตรวจสอบ",
@@ -101,10 +103,11 @@ export default function Transaction() {
   const bookingDetails = [
     {
       label: "วันที่เดินทาง",
-      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${selectedDate.End_Date
-        ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
-        : ""
-        }`,
+      value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
+        selectedDate.End_Date
+          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+          : ""
+      }`,
     },
     { label: "ทัวร์", value: Title },
     { label: "ราคา", value: Price },
@@ -112,7 +115,7 @@ export default function Transaction() {
     { label: "อีเมล", value: data.email },
     { label: "จำนวน", value: `${people} คน` },
   ];
-
+  console.log("UPload", isUploaded);
   return (
     <Layout style={{ minHeight: "100vh", overflow: "visible" }}>
       <UserHeader />
@@ -170,17 +173,35 @@ export default function Transaction() {
             >
               <Upload
                 listType="picture-card"
-                beforeUpload={() => false}
+                beforeUpload={(file) => {
+                  if (isUploaded) {
+                    return Upload.LIST_IGNORE;
+                  }
+                  const isImage = file.type.startsWith("image/");
+                  if (!isImage) {
+                    message.error("You can only upload image files!");
+                  }
+                  return isImage || Upload.LIST_IGNORE;
+                }}
                 multiple={false}
+                disabled={isUploaded}
               >
-                <Button icon={<UploadOutlined />}>Upload</Button>
+                <Button icon={<UploadOutlined />} disabled={isUploaded}>
+                  Upload
+                </Button>
               </Upload>
             </Form.Item>
 
             <Form.Item>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  ยืนยันการอัพโหลด
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    backgroundColor: isUploaded ? "#d9d9d9" : undefined,
+                  }}
+                >
+                  {isUploaded ? "อัพโหลดแล้ว" : "ยืนยันการอัพโหลด"}
                 </Button>
               </Space>
             </Form.Item>
