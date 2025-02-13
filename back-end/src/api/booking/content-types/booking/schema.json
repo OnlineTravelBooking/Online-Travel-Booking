@@ -30,11 +30,32 @@
       "target": "api::package.package",
       "inversedBy": "bookings"
     },
-    "payment": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::payment.payment",
-      "mappedBy": "booking"
+    "slip": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "Status_booking": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "completed"
+      ],
+      "default": "pending",
+      "required": true
+    },
+    "Start": {
+      "type": "date",
+      "required": true
+    },
+    "End": {
+      "type": "date"
     }
   }
 }

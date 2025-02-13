@@ -1,13 +1,288 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  height: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  background-color: #f6f4f0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  height: 100%;
+}
+
+.formLogin {
+  scale: 1.2;
+  width: 300px;
+  padding: 10px;
+  background-color: #f6f4f0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005c78;
+  font-style: inherit;
+}
+
+.login-Title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2e5077;
+  margin-bottom: -12px;
+}
+
+.login-Subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.formLogin .ant-form-item {
+  margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.Input-login {
+  width: 80%;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  box-shadow: 0px 1px #757474;
+  box-shadow: 0px 1px #757474;
+}
+
+.button-Login {
+  width: 80%;
+  width: 80%;
+  background-color: #005c78;
+  border-radius: 20px;
+}
+
+.Checkbox {
+  transform: scale(0.9);
+  width: 90%;
+  margin-top: -12px;
+  margin-bottom: -16px;
+  font-size: 12px;
+  font-weight: 450;
+  color: #7b7575;
+  transform: scale(0.9);
+  width: 90%;
+  margin-top: -12px;
+  margin-bottom: -16px;
+  font-size: 12px;
+  font-weight: 450;
+  color: #7b7575;
+}
+
+.Register-container {
+  margin-top: -12px;
+}
+
+.button-Register {
+  width: 80%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border-color: #005c78;
+  color: #7b7575;
+}
+
+.formRegister {
+  scale: 1.2;
+  width: 300px;
+  padding: 10px;
+  background-color: #f6f4f0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 7px 10px #005c78;
+  font-style: inherit;
+}
+
+.Input-Box {
+  display: flex;
+  flex-direction: column;
+}
+
+.Input-name {
+  width: 80%;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  box-shadow: 0px 1px #757474;
+}
+
+.Input-register {
+  width: 80%;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  box-shadow: 0px 1px #757474;
+}
+
+.button_Register {
+  width: 80%;
+  background-color: #005c78;
+  border-radius: 20px;
+}
+
+/*-------------------------- AdminDashboard.css -------------------------------*/
+
+/* Layout Styles */
+.admin-layout {
+  min-height: 100vh;
+  background-size: cover;
+  background-image: url("http://localhost:3000/admin_dashboard_background.jpg");
+}
+
+/* Header Styles */
+.admin-header {
+  background: #5ab1ae;
+  color: #ffffff;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  margin-left: 10px;
+  color: white;
+}
+
+.admin-logo {
+  height: 40px;
+  border-radius: 10%;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.admin-avatar {
+  margin-left: 10px;
+}
+
+/* Content Styles */
+.admin-content {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.admin-welcome-title {
+  color: #5ab1ae;
+}
+
+/* Table Styles */
+.table-container {
+  margin: 20px auto;
+  max-width: 800px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.add-package-btn {
+  margin-top: 20px;
+}
+
+/*------------------- Transaction Page -------------------------*/
+.Box {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow-y: auto;
+  height: 80vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 15px;
+  gap: 30px;
+}
+
+.Box-trip-data {
+  width: 70%;
+  border-radius: 15px;
+  background: #d9d9d9;
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
+}
+
+.trip-data {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-left: 20px;
+  margin-top: -10px;
+}
+
+.Box-Qr-payment {
+  width: 70%;
+  align-items: center;
+  border-radius: 15px;
+  background: #d9d9d9;
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 15px;
+}
+
+.Qr-container {
+  display: flex;
+  align-items: center;
+  margin-top: -20px;
+}
+
+.Qr-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Box-Upload-payment {
+  width: 70%;
+  border-radius: 15px;
+  background: #d9d9d9;
+  box-shadow: 0px 2px 5px #75747480;
+  padding-left: 20px;
+}
+
+.Upload-payment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.summit-upload {
+  background-color: #4b6a5d;
+  color: #fff0f0;
+  font-weight: 600;
+  font-size: large;
+  margin-bottom: 15px;
+}
+
+.Steps {
+  width: 80%;
+  justify-content: center;
+}
+
+.Step-Body {
+  color: #005c78;
+}
+
+.Back-button {
+  background-color: #4b6a5d;
+  color: #fff0f0;
+  font-size: large;
+}
+
+.ant-message {
+  z-index: 10000 !important;
+}
+
+.ant-message-notice-content {
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12) !important;
+  padding: 12px 24px !important;
 }
