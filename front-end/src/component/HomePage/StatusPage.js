@@ -10,15 +10,12 @@ import { UserHeader } from "../Header/UserHeader";
 import { useAuth } from "../../AuthContext";
 import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";
-import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import "antd/dist/reset.css";
 
 export default function StatusPage() {
-  const { loading, error, data: data_booking } = useQuery(BOOKING);
-  const { data: data_image } = useQuery(ALL_IMAGES_PACKAGE);
   const { data } = useAuth();
   const [bookings, setBookings] = useState([]);
-  const [image, setImage] = useState([]);
+  const { loading, error, data: data_booking } = useQuery(BOOKING);
 
   const getStatusTag = (status) => {
     switch (status) {
@@ -44,30 +41,25 @@ export default function StatusPage() {
         return <Tag color="default">Unknown</Tag>;
     }
   };
-  console.log(data_booking);
-  console.log("image", data_image);
+
   useEffect(() => {
-    if (data_booking && data_image) {
-      const mapData = data_booking.bookings.map((booking, index) => {
-        const packageImage = data_image.packages.find(
-          (item) => item.documentId === booking.package.documentId
-        );
-        return {
-          id: index,
-          seats: booking.HowManyPeople,
-          status: booking.Status_booking,
-          price: booking.TotalPrice,
-          documentId: booking.documentId,
-          packageName: booking.package.Title,
-          Type: booking.package.Type,
-          Start: booking.Start,
-          End: booking.End,
-          image: `http://localhost:1337${packageImage.Image[0].url}`,
-        };
-      });
+    if (data_booking) {
+      const mapData = data_booking.bookings.map((booking, index) => ({
+        id: index,
+        seats: booking.HowManyPeople,
+        status: booking.Status_booking,
+        price: booking.TotalPrice,
+        documentId: booking.documentId,
+        packageName: booking.package.Title,
+        Type: booking.package.Type,
+        Start: booking.Start,
+        End: booking.End,
+        image: "https://picsum.photos/300/200?random=1",
+      }));
       setBookings(mapData);
     }
-  }, [data_booking, data_image]);
+  }, [data_booking]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!data_booking) return <div>No data available</div>;

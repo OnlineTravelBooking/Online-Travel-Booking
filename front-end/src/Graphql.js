@@ -67,7 +67,6 @@ export const ALL_IMAGES_PACKAGE = gql`
       Image {
         url
       }
-      documentId
     }
   }
 `;
@@ -81,7 +80,6 @@ export const BOOKING = gql`
       package {
         Title
         Type
-        documentId
       }
       Status_booking
       Start
