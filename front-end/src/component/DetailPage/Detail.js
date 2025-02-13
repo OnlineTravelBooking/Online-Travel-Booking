@@ -88,15 +88,15 @@ export default function Detail() {
       .then(() => {
         isAuthenticated
           ? navigate("/transaction", {
-            state: {
-              data: data,
-              Title: Title,
-              Price: totalPrice * count,
-              selectedDate: selectedDate,
-              people: count,
-              packageId: documentId,
-            },
-          })
+              state: {
+                data: data,
+                Title: Title,
+                Price: totalPrice * count,
+                selectedDate: selectedDate,
+                people: count,
+                packageId: documentId,
+              },
+            })
           : navigate("/login");
       })
       .catch((err) => {
