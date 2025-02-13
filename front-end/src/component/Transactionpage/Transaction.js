@@ -135,7 +135,7 @@ export default function Transaction() {
           <h2>การชำระเงินด้วย QR Code</h2>
           <div className="Qr-container">
             <img
-              src="/qrcode-placeholder.png"
+              src="/qr_code.jpg"
               alt="QR Code"
               style={{ width: "200px", margin: "20px 0" }}
             />

@@ -73,6 +73,7 @@ export default function Detail() {
   const handleDateChange = (key) => {
     const showDate = availableDates.find((item) => item.documentId === key);
     setSelectedDate(showDate);
+    form.setFieldsValue({ select: key });
   };
 
   useEffect(() => {
@@ -107,7 +108,7 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
-  console.log("James", Description);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
