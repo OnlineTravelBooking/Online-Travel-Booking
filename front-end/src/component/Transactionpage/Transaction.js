@@ -120,7 +120,6 @@ export default function Transaction() {
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
       <Content className="Box">
-        {contextHolder}
         <div className="Box-trip-data">
           <div className="trip-data">
             {bookingDetails.map((item, index) => (
@@ -132,10 +131,12 @@ export default function Transaction() {
         </div>
 
         <div className="Box-Qr-payment">
-          <h2>การชำระเงินด้วย QR Code</h2>
+          <div className="Qr-header">
+            <h2>การชำระเงินด้วย QR Code</h2>
+          </div>
           <div className="Qr-container">
             <img
-              src="/qrcode-placeholder.png"
+              src="/qr_code.jpg"
               alt="QR Code"
               style={{ width: "200px", margin: "20px 0" }}
             />
@@ -156,44 +157,48 @@ export default function Transaction() {
         </div>
 
         <div className="Box-Upload-payment">
-          <h2>อัพโหลดหลักฐานการชำระเงิน</h2>
+          <div className="Upload-header">
+            <h2>อัพโหลดหลักฐานการชำระเงิน</h2>
+          </div>
           <Form
             form={form}
             layout="vertical"
             onFinish={onFinish}
             scrollToFirstError
           >
-            <Form.Item
-              name="image"
-              label="อัพโหลดรูปภาพ"
-              valuePropName="fileList"
-              getValueFromEvent={(e) => e.fileList}
-              rules={[{ required: true, message: "Please upload images" }]}
-            >
-              <Upload
-                listType="picture-card"
-                beforeUpload={(file) => {
-                  if (isUploaded) {
-                    return Upload.LIST_IGNORE;
-                  }
-                  const isImage = file.type.startsWith("image/");
-                  if (!isImage) {
-                    message.error("You can only upload image files!");
-                  }
-                  return isImage || Upload.LIST_IGNORE;
-                }}
-                multiple={false}
-                disabled={isUploaded}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Form.Item
+                name="image"
+                label="อัพโหลดรูปภาพ"
+                valuePropName="fileList"
+                getValueFromEvent={(e) => e.fileList}
+                rules={[{ required: true, message: "Please upload images" }]}
               >
-                <Button icon={<UploadOutlined />} disabled={isUploaded}>
-                  Upload
-                </Button>
-              </Upload>
-            </Form.Item>
-
+                <Upload
+                  listType="picture-card"
+                  beforeUpload={(file) => {
+                    if (isUploaded) {
+                      return Upload.LIST_IGNORE;
+                    }
+                    const isImage = file.type.startsWith("image/");
+                    if (!isImage) {
+                      message.error("You can only upload image files!");
+                    }
+                    return isImage || Upload.LIST_IGNORE;
+                  }}
+                  multiple={false}
+                  disabled={isUploaded}
+                >
+                  <Button icon={<UploadOutlined />} disabled={isUploaded}>
+                    Upload
+                  </Button>
+                </Upload>
+              </Form.Item>
+            </div>
             <Form.Item>
-              <Space>
+              <Space style={{ display: "flex", justifyContent: "center" }}>
                 <Button
+                  className="Button-summit"
                   type="primary"
                   htmlType="submit"
                   style={{
