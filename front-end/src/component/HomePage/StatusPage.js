@@ -11,17 +11,6 @@ import { useAuth } from "../../AuthContext";
 import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import "antd/dist/reset.css";
-const bookings = [
-  {
-    id: 1,
-    packageName: "Bali Adventure Tour",
-    date: "2023-08-15",
-    price: 499,
-    seats: 2,
-    image: "https://picsum.photos/300/200?random=1",
-    status: "approved",
-  },
-];
 
 export default function StatusPage() {
   const { data } = useAuth();
