@@ -15,7 +15,6 @@ export const UserHeader = () => {
   const { isAuthenticated, logout, data } = useAuth();
   const [fullName, setFullName] = useState("User"); // ชื่อผู้ใช้
 
-
   // ดึงชื่อผู้ใช้จาก sessionStorage
   useEffect(() => {
     if (data) {
@@ -37,7 +36,11 @@ export const UserHeader = () => {
             <div className="header">
               <div className="logo" />
               <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-                <Menu.Item key="3" style={{ marginLeft: "auto" }} onClick={() => navigate("/login")}>
+                <Menu.Item
+                  key="3"
+                  style={{ marginLeft: "auto" }}
+                  onClick={() => navigate("/login")}
+                >
                   <UserOutlined /> เข้าสู่ระบบ
                 </Menu.Item>
                 <Menu.Item key="4" onClick={() => navigate("/login")}>
@@ -57,7 +60,11 @@ export const UserHeader = () => {
             <div className="header">
               <div className="logo" />
               <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-                <Menu.Item key="3" style={{ marginLeft: "auto" }}>
+                <Menu.Item
+                  key="3"
+                  style={{ marginLeft: "auto" }}
+                  onClick={() => navigate("/status")}
+                >
                   <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
                 </Menu.Item>
                 <Menu.SubMenu
@@ -68,7 +75,11 @@ export const UserHeader = () => {
                     </span>
                   }
                 >
-                  <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
+                  <Menu.Item
+                    key="logout"
+                    icon={<LogoutOutlined />}
+                    onClick={logout}
+                  >
                     ออกจากระบบ
                   </Menu.Item>
                 </Menu.SubMenu>
