@@ -14,7 +14,7 @@ import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import "antd/dist/reset.css";
 
 export default function StatusPage() {
-  const { loading, error, data: data_booking } = useQuery(BOOKING);
+  const { loading, error, data: data_booking, refetch } = useQuery(BOOKING);
   const { data: data_image } = useQuery(ALL_IMAGES_PACKAGE);
   const { data } = useAuth();
   const [bookings, setBookings] = useState([]);
@@ -67,6 +67,7 @@ export default function StatusPage() {
       });
       setBookings(mapData);
     }
+    refetch();
   }, [data_booking, data_image]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
