@@ -194,8 +194,10 @@ body {
   justify-content: start;
   align-items: center;
   height: 108vh;
+  height: 108vh;
   padding-left: 5%;
   padding-right: 5%;
+  padding-top: 50px;
   padding-top: 50px;
   gap: 30px;
 }
