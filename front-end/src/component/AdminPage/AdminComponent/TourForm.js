@@ -258,11 +258,10 @@ export default function TourForm() {
                                 <label htmlFor="type">ประเภทแพ็คเกจทัวร์</label>
                                 <Radio.Group
                                     block
-                                    onChange={handleRadioChange} // Use handleRadioChange for radio button selection
-                                    value={formData.type}
+                                    onChange={handleRadioChange}
+                                    defaultValue="day_trip"  // Set the default value here
                                     optionType="button"
                                     buttonStyle="solid"
-                                    defaultValue="day_trip"
                                 >
                                     <Radio value="day_trip">Day Trip</Radio>
                                     <Radio value="multi_day_trip">Multi Day Trip</Radio>
