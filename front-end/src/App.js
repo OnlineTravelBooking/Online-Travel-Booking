@@ -9,6 +9,7 @@ import Transaction from "./component/Transactionpage/Transaction";
 import EditTourList from "./component/AdminPage/EditTourList";
 import AddPackage from "./component/AdminPage/AddPackage";
 import StatusPage from "./component/HomePage/StatusPage";
+import TourForm from "./component/AdminPage/AdminComponent/TourForm";
 function App() {
   const token = sessionStorage.getItem("token");
   const role = sessionStorage.getItem("role");
@@ -41,7 +42,7 @@ function App() {
         />
         <Route
           path="/add-package"
-          element={isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />}
+          element={isAuthorized("admin") ? <TourForm /> : <Navigate to="/" />}
         />
         <Route path="/detail" element={<Detail />} />
         <Route path="/transaction" element={<Transaction />} />
