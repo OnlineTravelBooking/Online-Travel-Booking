@@ -20,7 +20,7 @@ const { Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
 
-export default function AddTourPackage() {
+export default function AddPackage() {
   const [form] = Form.useForm();
   const [description, setDescription] = useState("");
 

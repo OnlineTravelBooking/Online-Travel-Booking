@@ -26,6 +26,9 @@ export default function PackageCard() {
     }
   }, [data]);
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   console.log("data:", dataSource);
   return (
     <Row gutter={[16, 16]} style={{ padding: "24px" }}>
