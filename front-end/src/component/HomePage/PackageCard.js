@@ -25,8 +25,12 @@ export default function PackageCard() {
       setDataSource(mapData);
     }
   }, [data]);
-
-  console.log("data:", dataSource);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <Row gutter={[16, 16]} style={{ padding: "24px" }}>
       {dataSource.map((item) => (

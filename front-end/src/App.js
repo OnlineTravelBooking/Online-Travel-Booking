@@ -9,6 +9,8 @@ import Transaction from "./component/Transactionpage/Transaction";
 import EditTourList from "./component/AdminPage/EditTourList";
 import AddPackage from "./component/AdminPage/AddPackage";
 import StatusPage from "./component/HomePage/StatusPage";
+import ApprovePage from "./component/AdminPage/ApprovePage";
+
 function App() {
   const token = sessionStorage.getItem("token");
   const role = sessionStorage.getItem("role");
@@ -46,6 +48,7 @@ function App() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/status" element={<StatusPage />} />
+        <Route path="/admin/approve" element={<ApprovePage />} />
       </Routes>
     </AuthProvider>
   );
