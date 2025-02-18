@@ -14,10 +14,7 @@ export default function LoginScreen() {
   const [userRole, setUserRole] = useState(null);
   const [isregister, setIsRegister] = useState(false);
 
-  const [
-    getRole,
-    { loading: loading_role, error: error_role, data: data_role },
-  ] = useLazyQuery(ROLE);
+  const [getRole, { loading: loading_role, error: error_role, data: data_role }] = useLazyQuery(ROLE);
 
   const [loginMutation, { loading, error, data }] = useMutation(MUTATION_LOGIN);
 
@@ -87,10 +84,7 @@ export default function LoginScreen() {
           }}
         >
           {isregister ? (
-            <RegisterForm
-              setIsRegister={setIsRegister}
-              handleSubmit={handleSubmit}
-            />
+            <RegisterForm setIsRegister={setIsRegister} handleSubmit={handleSubmit} />
           ) : (
             <Form
               className="formLogin"
@@ -114,11 +108,7 @@ export default function LoginScreen() {
                   },
                 ]}
               >
-                <Input
-                  className="Input-login"
-                  placeholder="Username"
-                  prefix={<UserOutlined />}
-                />
+                <Input className="Input-login" placeholder="Username" prefix={<UserOutlined />} />
               </Form.Item>
               <Form.Item
                 name="password"
@@ -138,32 +128,15 @@ export default function LoginScreen() {
                 />
               </Form.Item>
               <Form.Item wrapperCol={{ span: 24 }}>
-                <Button
-                  className="button-Login"
-                  type="primary"
-                  htmlType="submit"
-                  loading={loading}
-                >
+                <Button className="button-Login" type="primary" htmlType="submit" loading={loading}>
                   Login
                 </Button>
               </Form.Item>
-              <Form.Item
-                className="Checkbox"
-                name="remember"
-                valuePropName="checked"
-                wrapperCol={{ span: 24 }}
-              >
+              <Form.Item className="Checkbox" name="remember" valuePropName="checked" wrapperCol={{ span: 24 }}>
                 <Checkbox className="Checkbox">Remember me</Checkbox>
               </Form.Item>
-              <Form.Item
-                wrapperCol={{ span: 24 }}
-                className="Register-container"
-              >
-                <Button
-                  type="primary"
-                  className="button-Register"
-                  onClick={() => setIsRegister(true)}
-                >
+              <Form.Item wrapperCol={{ span: 24 }} className="Register-container">
+                <Button type="primary" className="button-Register" onClick={() => setIsRegister(true)}>
                   Register New Account
                 </Button>
               </Form.Item>
