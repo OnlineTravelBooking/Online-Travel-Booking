@@ -1,8 +1,8 @@
-import React from "react";
-import { Layout, Table, Typography, Button, Tag } from "antd";
+import React, { useState } from "react";
+import { Layout, Table, Typography, Button, Tag, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import AdminHeader from "../Header/AdminHeader";
+import TourForm from "./AdminComponent/TourForm.js";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -53,6 +53,8 @@ const data = [
 ];
 
 export default function AdminDashboard() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <Layout className="admin-layout">
             <AdminHeader />
@@ -68,11 +70,19 @@ export default function AdminDashboard() {
                     <Table columns={columns} dataSource={data} pagination={false} />
                 </div>
 
-                <Link to="/add-package">
-                    <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} >
-                        เพิ่มแพ็คเกจ
-                    </Button>
-                </Link>
+                <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
+                    เพิ่มแพ็คเกจ
+                </Button>
+
+                <Modal
+                    open={isModalOpen}
+                    onCancel={() => setIsModalOpen(false)}
+                    footer={null}
+                    width={"80%"}
+                >
+                    <TourForm />
+                </Modal>
+
                 <div className="logo-container"></div>
             </Content>
         </Layout>

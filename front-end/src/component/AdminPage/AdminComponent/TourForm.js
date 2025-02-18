@@ -1,84 +1,80 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import "./TourForm.css"
+import { useState } from "react";
+import axios from "axios";
+import "./TourForm.css";
 
 export default function TourForm() {
-    const [images, setImages] = useState([])
-    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    const [images, setImages] = useState([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
         title: "",
         type: "",
         description: "",
         price: "",
         meetingPoint: "",
-    })
-    const [errors, setErrors] = useState({})
-    const [isUploading, setIsUploading] = useState(false)
+    });
+    const [errors, setErrors] = useState({});
+    const [isUploading, setIsUploading] = useState(false);
 
     const validateForm = () => {
-        const newErrors = {}
+        const newErrors = {};
         if (!formData.title || formData.title.length < 2) {
-            newErrors.title = "Title must be at least 2 characters"
+            newErrors.title = "Title must be at least 2 characters";
         }
         if (!formData.type) {
-            newErrors.type = "Please select a tour type"
+            newErrors.type = "Please select a tour type";
         }
         if (!formData.description || formData.description.length < 10) {
-            newErrors.description = "Description must be at least 10 characters"
+            newErrors.description = "Description must be at least 10 characters";
         }
         if (!formData.price || isNaN(formData.price) || Number(formData.price) <= 0) {
-            newErrors.price = "Please enter a valid price"
+            newErrors.price = "Please enter a valid price";
         }
         if (!formData.meetingPoint) {
-            newErrors.meetingPoint = "Please enter a meeting point"
+            newErrors.meetingPoint = "Please enter a meeting point";
         }
         if (images.length === 0) {
-            newErrors.images = "Please upload at least one image"
+            newErrors.images = "Please upload at least one image";
         }
-        setErrors(newErrors)
-        return Object.keys(newErrors).length === 0
-    }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const showToast = (message, type = "success") => {
-        const toast = document.createElement("div")
-        toast.className = `toast ${type}`
-        toast.textContent = message
-        document.body.appendChild(toast)
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
         setTimeout(() => {
-            toast.classList.add("show")
-        }, 100)
+            toast.classList.add("show");
+        }, 100);
         setTimeout(() => {
-            toast.classList.remove("show")
+            toast.classList.remove("show");
             setTimeout(() => {
-                document.body.removeChild(toast)
-            }, 300)
-        }, 3000)
-    }
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    };
 
-    const handleImageUpload = async (e) => {
+    const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
-        setIsUploading(true);
-        const uploadedImages = [];
+        const uploadedImages = files.map((file) => ({
+            file,
+            url: URL.createObjectURL(file), // แค่สร้าง preview
+        }));
 
-        try {
-            // เก็บภาพไว้ใน state images แต่ยังไม่ส่งไปที่ API
-            files.forEach((file) => {
-                uploadedImages.push({
-                    file,
-                    url: URL.createObjectURL(file), // ใช้ local URL ก่อน
-                });
-            });
+        setImages((prev) => [...prev, ...uploadedImages]);
+        showToast("Images added to preview");
+    };
 
-            setImages((prev) => [...prev, ...uploadedImages]);
-            showToast("Images uploaded successfully");
-        } catch (error) {
-            console.error("Upload error:", error);
-            showToast("Failed to upload images", "error");
-        } finally {
-            setIsUploading(false);
+    // ฟังก์ชันสำหรับลบรูปภาพที่เลือก
+    const removeImage = (index) => {
+        setImages((prev) => prev.filter((_, i) => i !== index));
+        if (currentImageIndex >= index && currentImageIndex > 0) {
+            setCurrentImageIndex(currentImageIndex - 1);
         }
     };
 
@@ -89,70 +85,84 @@ export default function TourForm() {
             return;
         }
 
+        setIsUploading(true);
+
         try {
-            const submitData = new FormData();
+            // อัพโหลดรูปภาพทั้งหมดก่อน
+            const imageUploadPromises = images.map(async (image) => {
+                const formData = new FormData();
+                formData.append("files", image.file);
 
-            // Append form data
-            Object.entries(formData).forEach(([key, value]) => {
-                submitData.append(key, value);
+                const response = await axios.post("http://localhost:1337/api/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    },
+                });
+
+                return response.data[0].id; // ได้ ID ของรูปภาพจาก Strapi
             });
 
-            // Append images เมื่อกดยืนยันแล้ว
-            images.forEach((image, index) => {
-                submitData.append(`image${index}`, image.file);
+            const imageIds = await Promise.all(imageUploadPromises);
+
+            // เตรียมข้อมูลที่ต้องส่งไปยัง Strapi
+            const payload = {
+                data: {
+                    Title: formData.title,
+                    Type: formData.type,
+                    Description: formData.description,
+                    Price: parseFloat(formData.price),
+                    MeetingPoint: formData.meetingPoint,
+                    images: imageIds, // ใช้ ID ของรูปภาพที่อัปโหลด
+                },
+            };
+
+            const response = await axios.post("http://localhost:1337/api/packages", payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
             });
 
-            // Replace with your actual API endpoint
-            const response = await fetch("/api/tours", {
-                method: "POST",
-                body: submitData,
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to create tour package");
+            if (response.status === 200) {
+                showToast("Tour package created successfully");
+                setFormData({ title: "", type: "", description: "", price: "", meetingPoint: "" });
+                setImages([]);
+                setCurrentImageIndex(0);
+            } else {
+                showToast("Failed to create tour package", "error");
             }
-
-            showToast("Tour package created successfully");
-
-            // Reset form
-            setFormData({
-                title: "",
-                type: "",
-                description: "",
-                price: "",
-                meetingPoint: "",
-            });
-            setImages([]);
-            setCurrentImageIndex(0);
         } catch (error) {
-            console.error("Submission error:", error);
+            console.error("Error submitting form:", error);
             showToast("Failed to create tour package", "error");
+        } finally {
+            setIsUploading(false);
         }
     };
 
 
 
+
+
     const handleInputChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value,
-        }))
-        // Clear error when user starts typing
+        }));
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
                 [name]: "",
-            }))
+            }));
         }
-    }
+    };
 
     return (
         <div className="container">
             <div className="card">
                 <div className="header">
                     <h1>สร้างแพ็คเกจทัวร์</h1>
-                    <p>Create a new tour package</p>
                 </div>
 
                 <div className="content">
@@ -208,15 +218,16 @@ export default function TourForm() {
                         {images.length > 0 && (
                             <div className="thumbnail-container">
                                 {images.map((image, index) => (
-                                    <div
-                                        key={index}
-                                        className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
-                                        onClick={() => setCurrentImageIndex(index)}
-                                    >
-                                        <img src={image.url || "/placeholder.svg"} alt={`Preview ${index + 1}`} />
+                                    <div key={index} className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}>
+                                        <img src={image.url} alt={`Preview ${index + 1}`} onClick={() => setCurrentImageIndex(index)} />
+                                        <button className="delete-button" onClick={() => removeImage(index)}>
+                                            ×
+                                        </button>
                                     </div>
                                 ))}
                             </div>
+
+
                         )}
                         {errors.images && <span className="error">{errors.images}</span>}
                     </div>
@@ -303,6 +314,5 @@ export default function TourForm() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
