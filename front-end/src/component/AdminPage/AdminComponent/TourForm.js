@@ -262,6 +262,7 @@ export default function TourForm() {
                                     value={formData.type}
                                     optionType="button"
                                     buttonStyle="solid"
+                                    defaultValue="day_trip"
                                 >
                                     <Radio value="day_trip">Day Trip</Radio>
                                     <Radio value="multi_day_trip">Multi Day Trip</Radio>
