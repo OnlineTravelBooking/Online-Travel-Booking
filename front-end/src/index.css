@@ -194,8 +194,10 @@ body {
   justify-content: start;
   align-items: center;
   height: 108vh;
+  height: 108vh;
   padding-left: 5%;
   padding-right: 5%;
+  padding-top: 50px;
   padding-top: 50px;
   gap: 30px;
 }
@@ -506,3 +508,60 @@ body {
   margin-right: 80px;
 }
 
+.Package {
+  display: flex;
+  justify-content: start;
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.Card-package {
+  width: 80%;
+  height: 60%;
+ 
+}
+
+.carousel {
+  color: #005c78;
+}
+
+
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon{
+  transform: scale(1.5);
+  color: #ffffff;
+  background-color: transparent;
+  width: 80px;
+  height: 120px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: none;
+  transition: all 0.5s ease; 
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  color: #ffffff !important;
+  transform: scale(2);
+}
+
+.Search-carousel{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 80%;
+  max-width: 600px;
+}
+
+.Input-search{
+  height: 50px;
+  border-radius: 20px;
+  background-color: #c8c9caaf;
+  border-color: whitesmoke;
+}
