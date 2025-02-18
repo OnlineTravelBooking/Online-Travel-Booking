@@ -7,9 +7,10 @@ import AdminDashboard from "./component/AdminPage/AdminDashboard";
 import Detail from "./component/DetailPage/Detail";
 import Transaction from "./component/Transactionpage/Transaction";
 import EditTourList from "./component/AdminPage/EditTourList";
-import AddPackage from "./component/AdminPage/AddPackage";
+import AddPackage from "./component/AdminPage/CreatePackage";
 import StatusPage from "./component/HomePage/StatusPage";
 import ApprovePage from "./component/AdminPage/ApprovePage";
+import CreatePackage from "./component/AdminPage/CreatePackage";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -30,9 +31,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route
-          path="/admin"
+          path="/admin/create-package"
           element={
-            isAuthorized("admin") ? <AdminDashboard /> : <Navigate to="/" />
+            isAuthorized("admin") ? <CreatePackage /> : <Navigate to="/" />
           }
         />
         <Route

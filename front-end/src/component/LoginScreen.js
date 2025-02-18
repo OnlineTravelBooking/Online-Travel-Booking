@@ -57,7 +57,7 @@ export default function LoginScreen() {
       if (roleType === "user") {
         navigate("/");
       } else if (roleType === "admin") {
-        navigate("/admin");
+        navigate("/admin/create-package");
       }
     }
   }, [data, data_role, navigate]);

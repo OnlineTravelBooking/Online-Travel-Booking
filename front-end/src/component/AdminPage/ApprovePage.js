@@ -1,3 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ApprovePage() {}
+export default function ApprovePage() {
+  return <div>ApprovePage YAY!</div>;
+}
