@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const { Header, Content, Footer } = Layout;
 
-export default function ApprovePage() {
+export default function VerifyPage() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -23,7 +23,7 @@ export default function ApprovePage() {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div>ApprovePage Content Here!</div>
+            <div>Verify YAY!</div>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
