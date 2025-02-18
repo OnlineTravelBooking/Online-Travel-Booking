@@ -508,8 +508,54 @@ body {
 
 .Package {
   display: flex;
-  gap: 20px;
+  justify-content: start;
   margin-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.Card-package {
+  width: 80%;
+  height: 60%;
+ 
+}
+
+.carousel {
+  color: #005c78;
+}
+
+.carousel-control-prev-icon{
+  
+  color: #ffffff;
+  background-color: none !important;
+  width: 60px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0%;
+  border: none;
+}
+
+.carousel-control-next-icon{
+  
+  color: #ffffff;
+  background-color: none !important;
+  width: 60px;
+  height: 100px;
+  border-radius: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+ 
+.carousel-control-next-icon:hover {
+  background-color: #ffffff6f !important;
+  color: #635e5e6c !important;
+}
+
+.carousel-control-prev-icon:hover {
+  background-color: #ffffff80 !important;
+  color: #635e5e6c !important;
 }

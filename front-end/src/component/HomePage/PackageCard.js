@@ -42,8 +42,8 @@ export default function PackageCard() {
             }}
             whileHover={{
               scale: 1.05,
-              x: [0, -10, 10, -10, 10, 0],
-              rotate: [0, -1, 1, -1, 1, 0],
+              x: [0, -10, 10, 0],
+              rotate: [0, -1, 1, 0],
               transition: {
                 duration: 0.5,
               },
@@ -55,17 +55,14 @@ export default function PackageCard() {
           >
             <Card
               hoverable
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
+              className="Card-package"
               cover={
                 <img
                   alt={item.Title}
                   src={`http://localhost:1337${item.urlImage}`}
                   style={{
-                    height: "200px",
-                    objectFit: "cover",
+                    height: "170px",
+                    objectFit: "contain",
                   }}
                 />
               }

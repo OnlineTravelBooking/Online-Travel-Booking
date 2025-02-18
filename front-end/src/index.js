@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import AdminDashboard from "./component/AdminPage/AdminDashboard";
 import AddPackage from "./component/AdminPage/AddPackage";
@@ -23,7 +24,6 @@ root.render(
     </React.StrictMode>
   </ApolloProvider>
 );
-
 
 /* root.render(
   <AdminDashboard />
