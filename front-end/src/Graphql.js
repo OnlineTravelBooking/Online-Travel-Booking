@@ -44,6 +44,9 @@ export const GET_PACKAGES = gql`
       }
       Description
       MeetingPoint
+      bookings {
+        documentId
+      }
     }
   }
 `;
