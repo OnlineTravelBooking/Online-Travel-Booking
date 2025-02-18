@@ -1,5 +1,5 @@
 "use client";
-
+import { Radio } from "antd";
 import { useState } from "react";
 import axios from "axios";
 import "./TourForm.css";
@@ -142,7 +142,13 @@ export default function TourForm() {
 
 
 
-
+    const handleRadioChange = (e) => {
+        const { value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            type: value,  // Update the formData with selected radio button value
+        }));
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -248,15 +254,22 @@ export default function TourForm() {
                                 {errors.title && <span className="error">{errors.title}</span>}
                             </div>
 
-                            <div className="form-group">
+                            <div>
                                 <label htmlFor="type">ประเภทแพ็คเกจทัวร์</label>
-                                <select id="type" name="type" value={formData.type} onChange={handleInputChange}>
-                                    <option value="">Select tour type</option>
-                                    <option value="day_trip">Day Trip</option>
-                                    <option value="multi_day_trip">Multi Day Trip</option>
-                                </select>
+                                <Radio.Group
+                                    block
+                                    onChange={handleRadioChange} // Use handleRadioChange for radio button selection
+                                    value={formData.type}
+                                    optionType="button"
+                                    buttonStyle="solid"
+                                >
+                                    <Radio value="day_trip">Day Trip</Radio>
+                                    <Radio value="multi_day_trip">Multi Day Trip</Radio>
+                                </Radio.Group>
                                 {errors.type && <span className="error">{errors.type}</span>}
                             </div>
+
+
 
                             <div className="form-group">
                                 <label htmlFor="description">คำอธิบาย</label>
