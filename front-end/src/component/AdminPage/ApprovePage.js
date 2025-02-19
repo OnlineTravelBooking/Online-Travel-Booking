@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, theme } from "antd";
 import Sidebar from "./Sidebar";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 export default function ApprovePage() {
   const {

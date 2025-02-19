@@ -1,18 +1,28 @@
-import React from "react";
-import { Layout, theme, Row, Col, Card } from "antd";
+import React, { useState } from "react";
+import { Layout, theme, Row, Col, Card, message, Modal, Collapse, List, Button, Input } from "antd";
 import Sidebar from "./Sidebar";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+
 const { Header, Content } = Layout;
 const { Meta } = Card;
+const { Panel } = Collapse;
+const { TextArea } = Input;
+
 export default function VerifyPage() {
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [comment, setComment] = useState("");
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer, borderRadiusLG }, // สีพื้นหลัง container, ขนาดความโค้งของขอบ
   } = theme.useToken();
+
   //ดึง package มา
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
+
   //กรองเฉพาะที่มีการ booking
   const packageWithBooking = data_package?.packages?.filter((pkg) => pkg.bookings && pkg.bookings.length > 0) || [];
 
@@ -22,7 +32,39 @@ export default function VerifyPage() {
   if (error_package) {
     return <div>Error: {error_package.message}</div>;
   }
-  console.log("img", packageWithBooking);
+
+  const groupBookingByDate = (bookings) => {
+    return bookings?.reduce((acc, booking) => {
+      const data = booking.selectedDate;
+      if (!acc[data]) acc[data] = [];
+      acc[data].push(booking);
+      return acc;
+    }, {});
+  };
+
+  const handleCardClick = (pkg) => {
+    setSelectedPackage(pkg);
+    setIsModalOpen(true);
+  };
+
+  const handleApprove = (bookingId) => {
+    message.success(`Booking ${bookingId} approved!`);
+  };
+
+  const handleReject = (bookingId) => {
+    if (!comment) {
+      message.error("Please provide a rejection reason");
+    }
+    message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
+    setComment("");
+    setSelectedBooking(null);
+  };
+
+  const handleViewImage = (booking) => {
+    setSelectedBooking(booking);
+    setIsImageModalOpen(true);
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -50,7 +92,7 @@ export default function VerifyPage() {
                         style={{ height: "200px", objectFit: "cover" }}
                       />
                     }
-                    onClick={() => navigate("/admin/approve", { state: { ...item } })}
+                    onClick={() => handleCardClick(item)}
                   >
                     <Meta
                       title={item.Title}
@@ -65,7 +107,79 @@ export default function VerifyPage() {
                 </Col>
               ))}
             </Row>
-            <div>Verify YAY!</div>
+            {/* Booking Details Modal */}
+            <Modal
+              title={`Bookings for ${selectedPackage?.Title}`}
+              open={isModalOpen}
+              onCancel={() => setIsModalOpen(false)}
+              footer={null}
+              width={800}
+            >
+              <Collapse accordion>
+                {Object.entries(groupBookingByDate(selectedPackage?.bookings) || []).map(([date, bookings]) => (
+                  <Panel header={date} key={date}>
+                    <List
+                      dataSource={bookings}
+                      renderItem={(booking) => (
+                        <List.Item
+                          actions={[
+                            <Button type="link" onClick={() => handleViewImage(booking)}>
+                              View Images
+                            </Button>,
+                            selectedBooking?.id === booking.id ? (
+                              <>
+                                <TextArea
+                                  placeholder="Rejection reason"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                  rows={2}
+                                />
+                                <Button danger onClick={() => handleReject(booking.id)}>
+                                  Confirm Reject
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                <Button type="primary" onClick={() => handleApprove(booking.id)}>
+                                  Approve
+                                </Button>
+                                <Button danger onClick={() => setSelectedBooking(booking)}>
+                                  Reject
+                                </Button>
+                              </>
+                            ),
+                          ]}
+                        >
+                          <List.Item.Meta
+                            title={booking.customer?.name}
+                            description={`Participants: ${booking.participants}`}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </Panel>
+                ))}
+              </Collapse>
+            </Modal>
+            {/* Image View Modal */}
+            <Modal
+              title="Uploaded Images"
+              open={isImageModalOpen}
+              onCancel={() => setIsImageModalOpen(false)}
+              footer={null}
+            >
+              <Row gutter={[16, 16]}>
+                {selectedBooking?.images?.map((image, index) => (
+                  <Col span={8} key={index}>
+                    <img
+                      src={`http://localhost:1337${image.url}`}
+                      alt={`Upload ${index + 1}`}
+                      style={{ width: "100%", height: "100px", objectFit: "cover" }}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Modal>
           </div>
         </Content>
       </Layout>
