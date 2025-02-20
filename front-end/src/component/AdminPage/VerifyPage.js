@@ -5,6 +5,7 @@ import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import BookingDetailsModal from "./Modal/BookingDetailsModal";
 import ImageViewModal from "./Modal/ImageViewModal";
+import moment from "moment";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -32,7 +33,9 @@ export default function VerifyPage() {
   const groupBookingByDate = (pkg) => {
     if (!pkg?.bookings) return {};
     return pkg.bookings.reduce((acc, { End, Start, ...booking }) => {
-      const dateRange = End ? `${Start} - ${End}` : Start;
+      const formattedStart = moment(Start).format("DD/MM/YYYY");
+      const formattedEnd = End ? moment(End).format("DD/MM/YYYY") : null;
+      const dateRange = formattedEnd ? `${formattedStart} - ${formattedEnd}` : formattedStart;
       acc[dateRange] = acc[dateRange] || [];
       acc[dateRange].push(booking);
       return acc;

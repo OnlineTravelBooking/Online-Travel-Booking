@@ -3,12 +3,7 @@ import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
-import {
-  PlusOutlined,
-  MinusOutlined,
-  ConsoleSqlOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, ConsoleSqlOutlined, UserOutlined } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
@@ -25,8 +20,7 @@ export default function Detail() {
   const location = useLocation();
   const [form] = Form.useForm();
   const { data, isAuthenticated } = useAuth();
-  const { documentId, Title, Price, Type, Description, MeetingPoint } =
-    location.state || {};
+  const { documentId, Title, Price, Type, Description, MeetingPoint } = location.state || {};
   const formattedType = Type.replaceAll("_", " ");
   const [totalPrice, setTotalPrice] = useState(Price);
   const [count, setCount] = useState(1);
@@ -69,6 +63,8 @@ export default function Detail() {
         Start_Date: date.Start_Date,
         End_Date: date.End_Date,
       }));
+      // Sort dates in ascending order
+      formattedDates.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
       setAvailableDates(formattedDates);
     }
   }, [data_date]);
@@ -132,11 +128,7 @@ export default function Detail() {
             </Col>
             <Col span={7} className="Detail-input">
               <div>
-                <Form
-                  form={form}
-                  onFinish={handleSubmit}
-                  onFinishFailed={onFinishFailed}
-                >
+                <Form form={form} onFinish={handleSubmit} onFinishFailed={onFinishFailed}>
                   <div className="Background-add">
                     <Avatar shape="square" size={64} icon={<UserOutlined />} />
                     <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
@@ -146,11 +138,7 @@ export default function Detail() {
                         type="primary"
                         shape="circle"
                         icon={<MinusOutlined />}
-                        onClick={() =>
-                          count > 1
-                            ? setCount((count) => count - 1)
-                            : setCount(1)
-                        }
+                        onClick={() => (count > 1 ? setCount((count) => count - 1) : setCount(1))}
                       />
                       {count}
                       <Button
@@ -162,9 +150,7 @@ export default function Detail() {
                       />
                     </div>
                   </div>
-                  <div className="line">
-                    _______________________________________________________
-                  </div>
+                  <div className="line">_______________________________________________________</div>
                   {/* ช่องเลือกวันที่ */}
                   <div className="Day-Trip">
                     <Form.Item
@@ -178,39 +164,25 @@ export default function Detail() {
                       ]}
                     >
                       <div className="title-input">เลือกวันที่ต้องการจอง</div>
-                      <Select
-                        placeholder="เลือกวันเที่ยว"
-                        onChange={handleDateChange}
-                      >
+                      <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
                         {availableDates?.map((date) => (
                           <Option key={date.documentId}>
                             {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                            {date.End_Date &&
-                              ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+                            {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
                           </Option>
                         ))}
                       </Select>
                     </Form.Item>
                   </div>
-                  <div className="line">
-                    _______________________________________________________
-                  </div>
+                  <div className="line">_______________________________________________________</div>
                   <div className="Meeting-box">จุดนัดพบ</div>
                   <div className="Meeting">{MeetingPoint}</div>
-                  <div className="line">
-                    _______________________________________________________
-                  </div>
+                  <div className="line">_______________________________________________________</div>
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
                   <div className="Pay-box">
-                    <div className="Cost">
-                      THB {count === 0 ? totalPrice : totalPrice * count}
-                    </div>
+                    <div className="Cost">THB {count === 0 ? totalPrice : totalPrice * count}</div>
                     <div>
-                      <Button
-                        className="pay-button"
-                        type="primary"
-                        htmlType="submit"
-                      >
+                      <Button className="pay-button" type="primary" htmlType="submit">
                         ชำระเงิน
                       </Button>
                     </div>
