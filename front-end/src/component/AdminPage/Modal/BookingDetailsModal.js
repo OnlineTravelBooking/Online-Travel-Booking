@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal, Collapse, List, Button, Input } from "antd";
+import { Modal, Collapse, List, Button, Input, Space } from "antd";
+import { EyeOutlined, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 const { Panel } = Collapse;
@@ -37,31 +38,54 @@ export default function BookingDetailsModal({
                   renderItem={(booking) => (
                     <List.Item
                       actions={[
-                        <Button type="link" onClick={() => handleViewImage(booking)}>
-                          View Images
-                        </Button>,
-                        selectedBooking?.documentId === booking.documentId ? (
-                          <>
-                            <TextArea
-                              placeholder="Rejection reason"
-                              value={comment}
-                              onChange={(e) => setComment(e.target.value)}
-                              rows={2}
-                            />
-                            <Button danger onClick={() => handleReject(booking.documentId)}>
-                              Confirm Reject
-                            </Button>
-                          </>
-                        ) : (
-                          <>
-                            <Button type="primary" onClick={() => handleApprove(booking.documentId)}>
-                              Approve
-                            </Button>
-                            <Button danger onClick={() => setSelectedBooking(booking)}>
-                              Reject
-                            </Button>
-                          </>
-                        ),
+                        <Space>
+                          <Button type="link" icon={<EyeOutlined />} onClick={() => handleViewImage(booking)}>
+                            View
+                          </Button>
+                          {selectedBooking?.documentId === booking.documentId ? (
+                            <>
+                              <TextArea
+                                placeholder="Rejection reason"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                rows={2}
+                              />
+                              <Button
+                                danger
+                                icon={<CloseOutlined />}
+                                shape="round"
+                                style={{ backgroundColor: "#ff4d4f", color: "#fff" }}
+                                onClick={() => handleReject(booking.documentId)}
+                              >
+                                Confirm Reject
+                              </Button>
+                              <Button shape="round" onClick={() => setSelectedBooking(null)}>
+                                Cancel
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                type="primary"
+                                icon={<CheckOutlined />}
+                                shape="round"
+                                style={{ backgroundColor: "#52c41a", color: "#fff" }}
+                                onClick={() => handleApprove(booking.documentId)}
+                              >
+                                Approve
+                              </Button>
+                              <Button
+                                danger
+                                icon={<CloseOutlined />}
+                                shape="round"
+                                style={{ backgroundColor: "#ff4d4f", color: "#fff" }}
+                                onClick={() => setSelectedBooking(booking)}
+                              >
+                                Reject
+                              </Button>
+                            </>
+                          )}
+                        </Space>,
                       ]}
                     >
                       <List.Item.Meta

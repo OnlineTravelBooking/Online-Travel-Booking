@@ -18,6 +18,7 @@ export default function VerifyPage() {
   const [comment, setComment] = useState("");
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [viewingBooking, setViewingBooking] = useState(null);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -62,9 +63,10 @@ export default function VerifyPage() {
   };
 
   const handleViewImage = (booking) => {
-    setSelectedBooking(booking);
+    setViewingBooking(booking);
     setIsImageModalOpen(true);
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -116,7 +118,7 @@ export default function VerifyPage() {
             <ImageViewModal
               isImageModalOpen={isImageModalOpen}
               setIsImageModalOpen={setIsImageModalOpen}
-              selectedBooking={selectedBooking}
+              selectedBooking={viewingBooking}
             />
           </div>
         </Content>
