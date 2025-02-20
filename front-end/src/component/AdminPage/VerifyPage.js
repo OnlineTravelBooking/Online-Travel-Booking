@@ -3,6 +3,8 @@ import { Layout, theme, Row, Col, Card, message, Modal, Collapse, List, Button, 
 import Sidebar from "./Sidebar";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
+import BookingDetailsModal from "./Modal/BookingDetailsModal";
+import ImageViewModal from "./Modal/ImageViewModal";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -60,7 +62,6 @@ export default function VerifyPage() {
     setSelectedBooking(booking);
     setIsImageModalOpen(true);
   };
-  console.log("selectPack:", selectedBooking);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -78,7 +79,7 @@ export default function VerifyPage() {
                       <img
                         alt={item.Title}
                         src={`http://localhost:1337${item.Image[0].url}`}
-                        style={{ height: "200px", objectFit: "cover" }}
+                        style={{ width: "100%", height: "auto" }}
                       />
                     }
                     onClick={() => handleCardClick(item)}
@@ -118,102 +119,5 @@ export default function VerifyPage() {
         </Content>
       </Layout>
     </Layout>
-  );
-}
-
-function BookingDetailsModal({
-  isModalOpen,
-  selectedPackage,
-  setIsModalOpen,
-  groupBookingByDate,
-  selectedBooking,
-  setSelectedBooking,
-  comment,
-  setComment,
-  handleApprove,
-  handleReject,
-  handleViewImage,
-}) {
-  return (
-    <Modal
-      title={`Bookings for ${selectedPackage?.Title}`}
-      open={isModalOpen}
-      onCancel={() => setIsModalOpen(false)}
-      footer={null}
-      width={800}
-    >
-      <Collapse accordion>
-        {Object.entries(groupBookingByDate(selectedPackage) || []).map(([date, bookings]) => {
-          return (
-            <Panel header={date} key={date}>
-              <List
-                dataSource={bookings}
-                renderItem={(booking) => (
-                  <List.Item
-                    actions={[
-                      <Button type="link" onClick={() => handleViewImage(booking)}>
-                        View Images
-                      </Button>,
-                      selectedBooking?.id === booking.documentId ? (
-                        <>
-                          <TextArea
-                            placeholder="Rejection reason"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            rows={2}
-                          />
-                          <Button danger onClick={() => handleReject(booking.id)}>
-                            Confirm Reject
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Button type="primary" onClick={() => handleApprove(booking.id)}>
-                            Approve
-                          </Button>
-                          <Button danger onClick={() => setSelectedBooking(booking)}>
-                            Reject
-                          </Button>
-                        </>
-                      ),
-                    ]}
-                  >
-                    <List.Item.Meta
-                      title={`${booking.customer?.Fname} ${booking.customer?.Lname}`}
-                      description={
-                        <>
-                          <div>Participants: {booking.participants}</div>
-                          <div>Status: {booking.Status_booking}</div>
-                          <div>Email: {booking.customer?.email}</div>
-                          {booking.End && <div>End Date: {booking.End}</div>}
-                        </>
-                      }
-                    />
-                  </List.Item>
-                )}
-              />
-            </Panel>
-          );
-        })}
-      </Collapse>
-    </Modal>
-  );
-}
-
-function ImageViewModal({ isImageModalOpen, setIsImageModalOpen, selectedBooking }) {
-  return (
-    <Modal title="Uploaded Images" open={isImageModalOpen} onCancel={() => setIsImageModalOpen(false)} footer={null}>
-      <Row gutter={[16, 16]}>
-        {selectedBooking?.map((image, index) => (
-          <Col span={8} key={index}>
-            <img
-              src={`http://localhost:1337${image.slip.url}`}
-              alt={`Upload ${index + 1}`}
-              style={{ width: "100%", height: "100px", objectFit: "cover" }}
-            />
-          </Col>
-        ))}
-      </Row>
-    </Modal>
   );
 }

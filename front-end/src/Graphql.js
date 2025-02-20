@@ -55,6 +55,7 @@ export const GET_PACKAGES = gql`
           documentId
         }
         Status_booking
+        HowManyPeople
       }
       Image {
         url
