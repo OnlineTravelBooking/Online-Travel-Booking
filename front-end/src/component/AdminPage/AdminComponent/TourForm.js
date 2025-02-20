@@ -3,13 +3,14 @@ import { Radio, Space, Button, Dropdown, Menu, DatePicker } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { DeleteOutlined, PlusOutlined, DownOutlined } from "@ant-design/icons";
-import ReactQuill from "react-quill"; // เพิ่ม Rich Text Editor
-import "react-quill/dist/quill.snow.css"; // CSS สำหรับ ReactQuill
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import axios from "axios"; // เพิ่ม axios
 import "./TourForm.css";
 
 const { RangePicker } = DatePicker;
 
-export default function TourForm({ onClose }) { // เพิ่ม prop onClose เพื่อปิด popup
+export default function TourForm({ onClose }) {
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
@@ -23,28 +24,16 @@ export default function TourForm({ onClose }) { // เพิ่ม prop onClose 
     });
     const [errors, setErrors] = useState({});
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [isUploading, setIsUploading] = useState(false); // รักษาไว้ตามคำสั่ง
+    const [isUploading, setIsUploading] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
-        if (!formData.title || formData.title.length < 2) {
-            newErrors.title = "Title must be at least 2 characters";
-        }
-        if (!formData.type) {
-            newErrors.type = "Please select a tour type";
-        }
-        if (!formData.description || formData.description.length < 10) {
-            newErrors.description = "Description must be at least 10 characters";
-        }
-        if (!formData.price || isNaN(formData.price) || Number(formData.price) <= 0) {
-            newErrors.price = "Please enter a valid price";
-        }
-        if (!formData.meetingPoint) {
-            newErrors.meetingPoint = "Please enter a meeting point";
-        }
-        if (images.length === 0) {
-            newErrors.images = "Please upload at least one image";
-        }
+        if (!formData.title || formData.title.length < 2) newErrors.title = "Title must be at least 2 characters";
+        if (!formData.type) newErrors.type = "Please select a tour type";
+        if (!formData.description || formData.description.length < 10) newErrors.description = "Description must be at least 10 characters";
+        if (!formData.price || isNaN(formData.price) || Number(formData.price) <= 0) newErrors.price = "Please enter a valid price";
+        if (!formData.meetingPoint) newErrors.meetingPoint = "Please enter a meeting point";
+        if (images.length === 0) newErrors.images = "Please upload at least one image";
         if ((formData.type === "day_trip" && formData.dates.length === 0) ||
             (formData.type === "multi_day_trip" && formData.ranges.length === 0)) {
             newErrors.dates = "Please select at least one date or date range";
@@ -83,31 +72,105 @@ export default function TourForm({ onClose }) { // เพิ่ม prop onClose 
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
             showToast("Please fix the errors in the form", "error");
             return;
         }
-        // แสดงข้อมูลใน console เพื่อเตรียม POST
-        console.log("Form Data to be submitted:", {
-            ...formData,
-            images: images.map(img => img.file) // ส่งเฉพาะ file objects
-        });
-        showToast("Tour package data prepared successfully");
-        // Reset form
-        setFormData({
-            title: "",
-            type: "day_trip",
-            description: "",
-            price: "",
-            meetingPoint: "",
-            dates: [],
-            ranges: []
-        });
-        setImages([]);
-        setCurrentImageIndex(0);
-        onClose(); // ปิด popup
+
+        setIsUploading(true);
+        const token = sessionStorage.getItem("token");
+
+        try {
+            // 1. POST รูปภาพขึ้นไปก่อน
+            const imageUploadPromises = images.map(async (image) => {
+                const imageFormData = new FormData();
+                imageFormData.append("files", image.file);
+
+                const response = await axios.post("http://localhost:1337/api/upload", imageFormData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                return response.data[0].id; // ดึง ID รูปภาพ
+            });
+
+            const imageIds = await Promise.all(imageUploadPromises);
+            showToast("Images uploaded successfully");
+
+            // 2. POST package
+            const packagePayload = {
+                data: {
+                    Title: formData.title,
+                    Type: formData.type,
+                    Description: formData.description, // Rich Text ส่งเป็น HTML string
+                    Price: parseFloat(formData.price),
+                    MeetingPoint: formData.meetingPoint,
+                    images: imageIds,
+                },
+            };
+
+            const packageResponse = await axios.post("http://localhost:1337/api/packages", packagePayload, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const packageId = packageResponse.data.data.id; // ดึง ID ของ package
+            showToast("Package created successfully");
+
+            // 3. POST travel dates
+            const datePayloads = formData.type === "day_trip"
+                ? formData.dates.map(date => ({
+                    data: {
+                        start_date: date.format("YYYY-MM-DD"),
+                        end_date: null,
+                        package: packageId,
+                    },
+                }))
+                : formData.ranges.map(range => ({
+                    data: {
+                        start_date: range[0].format("YYYY-MM-DD"),
+                        end_date: range[1].format("YYYY-MM-DD"),
+                        package: packageId,
+                    },
+                }));
+
+            const dateUploadPromises = datePayloads.map(payload =>
+                axios.post("http://localhost:1337/api/travel-dates", payload, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            );
+
+            await Promise.all(dateUploadPromises);
+            showToast("Travel dates created successfully");
+
+            // Reset form หลังสำเร็จทั้งหมด
+            setFormData({
+                title: "",
+                type: "day_trip",
+                description: "",
+                price: "",
+                meetingPoint: "",
+                dates: [],
+                ranges: []
+            });
+            setImages([]);
+            setCurrentImageIndex(0);
+            onClose(); // ปิด popup
+
+        } catch (error) {
+            console.error("Error during submission:", error);
+            showToast(`Failed to create package: ${error.message}`, "error");
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     const handleRadioChange = (e) => {
@@ -132,7 +195,7 @@ export default function TourForm({ onClose }) { // เพิ่ม prop onClose 
         }
     };
 
-    const handleDescriptionChange = (value) => { // เพิ่มสำหรับ Rich Text
+    const handleDescriptionChange = (value) => {
         setFormData((prev) => ({
             ...prev,
             description: value,
@@ -309,13 +372,13 @@ export default function TourForm({ onClose }) { // เพิ่ม prop onClose 
 
                             <div className="form-group">
                                 <label>ประเภทแพ็คเกจทัวร์</label>
-                                <div className="radio-group-full"> {/* เพิ่ม div เพื่อควบคุมความยาว */}
+                                <div className="radio-group-full">
                                     <Radio.Group
                                         value={formData.type}
                                         onChange={handleRadioChange}
                                         optionType="button"
                                         buttonStyle="solid"
-                                        className="full-width-radio" // เพิ่ม className
+                                        className="full-width-radio"
                                     >
                                         <Radio value="day_trip">Day Trip</Radio>
                                         <Radio value="multi_day_trip">Multi Day Trip</Radio>
@@ -390,7 +453,7 @@ export default function TourForm({ onClose }) { // เพิ่ม prop onClose 
                                 <button
                                     type="button"
                                     className="secondary-button"
-                                    onClick={onClose} // ปิด popup แทนการเปลี่ยน route
+                                    onClick={onClose}
                                     disabled={isUploading}
                                 >
                                     ยกเลิก
