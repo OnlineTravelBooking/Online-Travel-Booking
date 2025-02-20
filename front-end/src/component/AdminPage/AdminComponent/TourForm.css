@@ -380,3 +380,48 @@ textarea {
     background: rgba(255, 0, 0, 0.8);
     /* สีแดงโปร่งใสเมื่อโฮเวอร์ */
 }
+
+.quill-editor-container {
+    border: 1px solid #ccc;
+    /* ขอบกล่อง */
+    border-radius: 8px;
+    /* ขอบมน */
+    padding: 10px;
+    /* ระยะห่างภายใน */
+    margin-top: 10px;
+    /* ระยะห่างบน */
+}
+
+.quill-editor-container .ql-container {
+    border: 1px solid #ccc;
+    /* ขอบกล่อง */
+    border-radius: 0px;
+    /* ขอบมน */
+    padding: 10px;
+    /* ระยะห่างภายใน */
+    font-family: 'Noto Sans', sans-serif;
+    font-style: normal;
+    /* ห้ามตัวเอียง */
+}
+
+.quill-editor-container .ql-editor {
+    padding: 10px;
+    /* ระยะห่างภายในของ editor */
+    border-radius: 8px;
+    /* ขอบมนภายใน */
+    font-family: 'Noto Sans', sans-serif;
+    font-style: normal;
+    /* ห้ามตัวเอียง */
+}
+
+
+
+
+.scrollable-dropdown {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.scrollable-dropdown.scroll-active {
+  padding-right: 8px;
+}

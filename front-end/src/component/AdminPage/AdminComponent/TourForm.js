@@ -1,21 +1,29 @@
 "use client";
-import { Radio } from "antd";
+import { Radio, Space, Button, Dropdown, Menu, DatePicker } from "antd";
 import { useState } from "react";
-import axios from "axios";
+import dayjs from "dayjs";
+import { DeleteOutlined, PlusOutlined, DownOutlined } from "@ant-design/icons";
+import ReactQuill from "react-quill"; // เพิ่ม Rich Text Editor
+import "react-quill/dist/quill.snow.css"; // CSS สำหรับ ReactQuill
 import "./TourForm.css";
 
-export default function TourForm() {
+const { RangePicker } = DatePicker;
+
+export default function TourForm({ onClose }) { // เพิ่ม prop onClose เพื่อปิด popup
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
         title: "",
-        type: "",
+        type: "day_trip",
         description: "",
         price: "",
         meetingPoint: "",
+        dates: [],
+        ranges: []
     });
     const [errors, setErrors] = useState({});
-    const [isUploading, setIsUploading] = useState(false);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [isUploading, setIsUploading] = useState(false); // รักษาไว้ตามคำสั่ง
 
     const validateForm = () => {
         const newErrors = {};
@@ -37,6 +45,10 @@ export default function TourForm() {
         if (images.length === 0) {
             newErrors.images = "Please upload at least one image";
         }
+        if ((formData.type === "day_trip" && formData.dates.length === 0) ||
+            (formData.type === "multi_day_trip" && formData.ranges.length === 0)) {
+            newErrors.dates = "Please select at least one date or date range";
+        }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -46,31 +58,24 @@ export default function TourForm() {
         toast.className = `toast ${type}`;
         toast.textContent = message;
         document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.classList.add("show");
-        }, 100);
+        setTimeout(() => toast.classList.add("show"), 100);
         setTimeout(() => {
             toast.classList.remove("show");
-            setTimeout(() => {
-                document.body.removeChild(toast);
-            }, 300);
+            setTimeout(() => document.body.removeChild(toast), 300);
         }, 3000);
     };
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
-
         const uploadedImages = files.map((file) => ({
             file,
-            url: URL.createObjectURL(file), // แค่สร้าง preview
+            url: URL.createObjectURL(file),
         }));
-
         setImages((prev) => [...prev, ...uploadedImages]);
         showToast("Images added to preview");
     };
 
-    // ฟังก์ชันสำหรับลบรูปภาพที่เลือก
     const removeImage = (index) => {
         setImages((prev) => prev.filter((_, i) => i !== index));
         if (currentImageIndex >= index && currentImageIndex > 0) {
@@ -78,76 +83,42 @@ export default function TourForm() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (!validateForm()) {
             showToast("Please fix the errors in the form", "error");
             return;
         }
-
-        setIsUploading(true);
-
-        try {
-            // อัพโหลดรูปภาพทั้งหมดก่อน
-            const imageUploadPromises = images.map(async (image) => {
-                const formData = new FormData();
-                formData.append("files", image.file);
-
-                const response = await axios.post("http://localhost:1337/api/upload", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                    },
-                });
-
-                return response.data[0].id; // ได้ ID ของรูปภาพจาก Strapi
-            });
-
-            const imageIds = await Promise.all(imageUploadPromises);
-
-            // เตรียมข้อมูลที่ต้องส่งไปยัง Strapi
-            const payload = {
-                data: {
-                    Title: formData.title,
-                    Type: formData.type,
-                    Description: formData.description,
-                    Price: parseFloat(formData.price),
-                    MeetingPoint: formData.meetingPoint,
-                    images: imageIds, // ใช้ ID ของรูปภาพที่อัปโหลด
-                },
-            };
-
-            const response = await axios.post("http://localhost:1337/api/packages", payload, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                },
-            });
-
-            if (response.status === 200) {
-                showToast("Tour package created successfully");
-                setFormData({ title: "", type: "", description: "", price: "", meetingPoint: "" });
-                setImages([]);
-                setCurrentImageIndex(0);
-            } else {
-                showToast("Failed to create tour package", "error");
-            }
-        } catch (error) {
-            console.error("Error submitting form:", error);
-            showToast("Failed to create tour package", "error");
-        } finally {
-            setIsUploading(false);
-        }
+        // แสดงข้อมูลใน console เพื่อเตรียม POST
+        console.log("Form Data to be submitted:", {
+            ...formData,
+            images: images.map(img => img.file) // ส่งเฉพาะ file objects
+        });
+        showToast("Tour package data prepared successfully");
+        // Reset form
+        setFormData({
+            title: "",
+            type: "day_trip",
+            description: "",
+            price: "",
+            meetingPoint: "",
+            dates: [],
+            ranges: []
+        });
+        setImages([]);
+        setCurrentImageIndex(0);
+        onClose(); // ปิด popup
     };
-
-
 
     const handleRadioChange = (e) => {
         const { value } = e.target;
         setFormData((prev) => ({
             ...prev,
-            type: value,  // Update the formData with selected radio button value
+            type: value,
+            dates: [],
+            ranges: []
         }));
+        setDropdownVisible(false);
     };
 
     const handleInputChange = (e) => {
@@ -157,11 +128,97 @@ export default function TourForm() {
             [name]: value,
         }));
         if (errors[name]) {
-            setErrors((prev) => ({
-                ...prev,
-                [name]: "",
-            }));
+            setErrors((prev) => ({ ...prev, [name]: "" }));
         }
+    };
+
+    const handleDescriptionChange = (value) => { // เพิ่มสำหรับ Rich Text
+        setFormData((prev) => ({
+            ...prev,
+            description: value,
+        }));
+        if (errors.description && value.length >= 10) {
+            setErrors((prev) => ({ ...prev, description: "" }));
+        }
+    };
+
+    const isDuplicate = (newValue, values, index, isRange = false) => {
+        if (!newValue) return false;
+        return isRange
+            ? values.some((r, i) => i !== index && r.length === 2 && (
+                (newValue[0].isBefore(r[1]) && newValue[1].isAfter(r[0])) ||
+                newValue[0].isSame(r[0], 'day') || newValue[1].isSame(r[1], 'day')
+            ))
+            : values.some((d, i) => i !== index && d && d.isSame(newValue, 'day'));
+    };
+
+    const updateItem = (key, value, index) => {
+        if (isDuplicate(value, formData[key], index, key === "ranges")) return;
+        setFormData(prev => ({
+            ...prev,
+            [key]: prev[key].map((item, i) => i === index ? value : item)
+        }));
+        if (errors.dates) {
+            setErrors((prev) => ({ ...prev, dates: "" }));
+        }
+    };
+
+    const addItem = (key) => setFormData(prev => ({
+        ...prev,
+        [key]: [...prev[key], key === "ranges" ? [] : null]
+    }));
+
+    const removeItem = (key, index) => setFormData(prev => ({
+        ...prev,
+        [key]: prev[key].filter((_, i) => i !== index)
+    }));
+
+    const renderMenu = (isDayTrip) => {
+        const key = isDayTrip ? "dates" : "ranges";
+        const items = formData[key];
+        return (
+            <div className={`scrollable-dropdown ${items.length > 3 ? 'scroll-active' : ''}`}>
+                <Menu onClick={e => e.domEvent.stopPropagation()}>
+                    {items.map((item, index) => (
+                        <Menu.Item key={index}>
+                            <Space>
+                                {isDayTrip ? (
+                                    <DatePicker
+                                        value={item}
+                                        onChange={date => updateItem(key, date, index)}
+                                        format="YYYY-MM-DD"
+                                        size="large"
+                                    />
+                                ) : (
+                                    <RangePicker
+                                        value={item}
+                                        onChange={ranges => updateItem(key, ranges, index)}
+                                        format="YYYY-MM-DD"
+                                        size="large"
+                                    />
+                                )}
+                                <Button
+                                    type="danger"
+                                    icon={<DeleteOutlined />}
+                                    onClick={() => removeItem(key, index)}
+                                />
+                            </Space>
+                        </Menu.Item>
+                    ))}
+                    <Menu.Divider />
+                    <Menu.Item key="add">
+                        <Button
+                            type="dashed"
+                            onClick={() => addItem(key)}
+                            block
+                            icon={<PlusOutlined />}
+                        >
+                            เพิ่ม{isDayTrip ? "วันที่" : "ช่วงวันที่"}
+                        </Button>
+                    </Menu.Item>
+                </Menu>
+            </div>
+        );
     };
 
     return (
@@ -172,7 +229,6 @@ export default function TourForm() {
                 </div>
 
                 <div className="content">
-                    {/* Image Upload Section */}
                     <div className="image-section">
                         <div className="image-preview">
                             {images.length > 0 ? (
@@ -232,13 +288,10 @@ export default function TourForm() {
                                     </div>
                                 ))}
                             </div>
-
-
                         )}
                         {errors.images && <span className="error">{errors.images}</span>}
                     </div>
 
-                    {/* Form Section */}
                     <div className="form-section">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
@@ -254,31 +307,52 @@ export default function TourForm() {
                                 {errors.title && <span className="error">{errors.title}</span>}
                             </div>
 
-                            <div>
-                                <label htmlFor="type">ประเภทแพ็คเกจทัวร์</label>
-                                <Radio.Group
-                                    block
-                                    onChange={handleRadioChange}
-                                    defaultValue="day_trip"  // Set the default value here
-                                    optionType="button"
-                                    buttonStyle="solid"
-                                >
-                                    <Radio value="day_trip">Day Trip</Radio>
-                                    <Radio value="multi_day_trip">Multi Day Trip</Radio>
-                                </Radio.Group>
+                            <div className="form-group">
+                                <label>ประเภทแพ็คเกจทัวร์</label>
+                                <div className="radio-group-full"> {/* เพิ่ม div เพื่อควบคุมความยาว */}
+                                    <Radio.Group
+                                        value={formData.type}
+                                        onChange={handleRadioChange}
+                                        optionType="button"
+                                        buttonStyle="solid"
+                                        className="full-width-radio" // เพิ่ม className
+                                    >
+                                        <Radio value="day_trip">Day Trip</Radio>
+                                        <Radio value="multi_day_trip">Multi Day Trip</Radio>
+                                    </Radio.Group>
+                                </div>
                                 {errors.type && <span className="error">{errors.type}</span>}
                             </div>
 
-
+                            <div className="form-group">
+                                <Dropdown
+                                    overlay={renderMenu(formData.type === "day_trip")}
+                                    trigger={["click"]}
+                                    visible={dropdownVisible}
+                                    onVisibleChange={setDropdownVisible}
+                                >
+                                    <Button size="large">
+                                        เลือก{formData.type === "day_trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                                    </Button>
+                                </Dropdown>
+                                {errors.dates && <span className="error">{errors.dates}</span>}
+                            </div>
 
                             <div className="form-group">
                                 <label htmlFor="description">คำอธิบาย</label>
-                                <textarea
-                                    id="description"
-                                    name="description"
+                                <ReactQuill
                                     value={formData.description}
-                                    onChange={handleInputChange}
+                                    onChange={handleDescriptionChange}
                                     placeholder="Enter tour description"
+                                    modules={{
+                                        toolbar: [
+                                            [{ header: [1, 2, false] }],
+                                            ['bold', 'italic', 'underline'],
+                                            ['link', 'image'],
+                                            [{ list: 'ordered' }, { list: 'bullet' }],
+                                            ['clean']
+                                        ],
+                                    }}
                                 />
                                 {errors.description && <span className="error">{errors.description}</span>}
                             </div>
@@ -316,7 +390,7 @@ export default function TourForm() {
                                 <button
                                     type="button"
                                     className="secondary-button"
-                                    onClick={() => (window.location.href = "/admin")}
+                                    onClick={onClose} // ปิด popup แทนการเปลี่ยน route
                                     disabled={isUploading}
                                 >
                                     ยกเลิก
