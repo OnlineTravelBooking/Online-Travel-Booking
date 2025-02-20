@@ -137,7 +137,7 @@ export default function TourForm() {
                 },
             });
 
-            const packageId = packageResponse.data.data.id;
+            const packageId = packageResponse.data.data.id - 1;
             showToast("Package created successfully");
 
             // 3. POST travel dates
@@ -146,7 +146,7 @@ export default function TourForm() {
                     data: {
                         package: packageId,
                         Start_Date: date.format("YYYY-MM-DD"),
-                        End_Date: date.format("YYYY-MM-DD"), // เท่ากับ Start_Date ตาม POSTMAN
+                        End_Date: date.format("YYYY-MM-DD"),
                     },
                 }))
                 : formData.ranges.map(range => ({
