@@ -17,29 +17,22 @@ export default function VerifyPage() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   const {
-    token: { colorBgContainer, borderRadiusLG }, // สีพื้นหลัง container, ขนาดความโค้งของขอบ
+    token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  //ดึง package มา
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
-  //กรองเฉพาะที่มีการ booking
   const packageWithBooking = data_package?.packages?.filter((pkg) => pkg.bookings && pkg.bookings.length > 0) || [];
 
-  if (loading_package) {
-    return <div>Loading...</div>;
-  }
-  if (error_package) {
-    return <div>Error: {error_package.message}</div>;
-  }
+  if (loading_package) return <div>Loading...</div>;
+  if (error_package) return <div>Error: {error_package.message}</div>;
 
   const groupBookingByDate = (pkg) => {
-    console.log("Package Data:", pkg);
-    if (!pkg || !pkg.bookings) return {};
-    return pkg.bookings.reduce((acc, booking) => {
-      const date = booking.Start;
-      if (!acc[date]) acc[date] = [];
-      acc[date].push(booking);
+    if (!pkg?.bookings) return {};
+    return pkg.bookings.reduce((acc, { End, Start, ...booking }) => {
+      const dateRange = End ? `${Start} - ${End}` : Start;
+      acc[dateRange] = acc[dateRange] || [];
+      acc[dateRange].push(booking);
       return acc;
     }, {});
   };
@@ -67,21 +60,14 @@ export default function VerifyPage() {
     setSelectedBooking(booking);
     setIsImageModalOpen(true);
   };
-
+  console.log("selectPack:", selectedBooking);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "0 16px" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
+          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG }}>
             <Row gutter={[16, 16]} style={{ padding: "24px" }}>
               {packageWithBooking.map((item) => (
                 <Col xs={24} sm={12} md={8} lg={6} key={item.documentId}>
@@ -110,88 +96,124 @@ export default function VerifyPage() {
                 </Col>
               ))}
             </Row>
-            {/* Booking Details Modal */}
-            <Modal
-              title={`Bookings for ${selectedPackage?.Title}`}
-              open={isModalOpen}
-              onCancel={() => setIsModalOpen(false)}
-              footer={null}
-              width={800}
-            >
-              <Collapse accordion>
-                {Object.entries(groupBookingByDate(selectedPackage) || []).map(([date, bookings]) => (
-                  <Panel header={date} key={date}>
-                    <List
-                      dataSource={bookings}
-                      renderItem={(booking) => (
-                        <List.Item
-                          actions={[
-                            <Button type="link" onClick={() => handleViewImage(booking)}>
-                              View Images
-                            </Button>,
-                            selectedBooking?.id === booking.documentId ? (
-                              <>
-                                <TextArea
-                                  placeholder="Rejection reason"
-                                  value={comment}
-                                  onChange={(e) => setComment(e.target.value)}
-                                  rows={2}
-                                />
-                                <Button danger onClick={() => handleReject(booking.id)}>
-                                  Confirm Reject
-                                </Button>
-                              </>
-                            ) : (
-                              <>
-                                <Button type="primary" onClick={() => handleApprove(booking.id)}>
-                                  Approve
-                                </Button>
-                                <Button danger onClick={() => setSelectedBooking(booking)}>
-                                  Reject
-                                </Button>
-                              </>
-                            ),
-                          ]}
-                        >
-                          <List.Item.Meta
-                            title={`${booking.customer?.Fname} ${booking.customer?.Lname}`}
-                            description={
-                              <>
-                                <div>Participants: {booking.participants}</div>
-                                <div>Status: {booking.Status_booking}</div>
-                                <div>Email: {booking.customer?.email}</div>
-                              </>
-                            }
-                          />
-                        </List.Item>
-                      )}
-                    />
-                  </Panel>
-                ))}
-              </Collapse>
-            </Modal>
-            {/* Image View Modal */}
-            <Modal
-              title="Uploaded Images"
-              open={isImageModalOpen}
-              onCancel={() => setIsImageModalOpen(false)}
-              footer={null}
-            >
-              <Row gutter={[16, 16]}>
-                {selectedBooking?.images?.map((image, index) => (
-                  <Col span={8} key={index}>
-                    <img
-                      src={`http://localhost:1337${image.url}`}
-                      alt={`Upload ${index + 1}`}
-                      style={{ width: "100%", height: "100px", objectFit: "cover" }}
-                    />
-                  </Col>
-                ))}
-              </Row>
-            </Modal>
+            <BookingDetailsModal
+              isModalOpen={isModalOpen}
+              selectedPackage={selectedPackage}
+              setIsModalOpen={setIsModalOpen}
+              groupBookingByDate={groupBookingByDate}
+              selectedBooking={selectedBooking}
+              setSelectedBooking={setSelectedBooking}
+              comment={comment}
+              setComment={setComment}
+              handleApprove={handleApprove}
+              handleReject={handleReject}
+              handleViewImage={handleViewImage}
+            />
+            <ImageViewModal
+              isImageModalOpen={isImageModalOpen}
+              setIsImageModalOpen={setIsImageModalOpen}
+              selectedBooking={selectedBooking}
+            />
           </div>
         </Content>
       </Layout>
     </Layout>
+  );
+}
+
+function BookingDetailsModal({
+  isModalOpen,
+  selectedPackage,
+  setIsModalOpen,
+  groupBookingByDate,
+  selectedBooking,
+  setSelectedBooking,
+  comment,
+  setComment,
+  handleApprove,
+  handleReject,
+  handleViewImage,
+}) {
+  return (
+    <Modal
+      title={`Bookings for ${selectedPackage?.Title}`}
+      open={isModalOpen}
+      onCancel={() => setIsModalOpen(false)}
+      footer={null}
+      width={800}
+    >
+      <Collapse accordion>
+        {Object.entries(groupBookingByDate(selectedPackage) || []).map(([date, bookings]) => {
+          return (
+            <Panel header={date} key={date}>
+              <List
+                dataSource={bookings}
+                renderItem={(booking) => (
+                  <List.Item
+                    actions={[
+                      <Button type="link" onClick={() => handleViewImage(booking)}>
+                        View Images
+                      </Button>,
+                      selectedBooking?.id === booking.documentId ? (
+                        <>
+                          <TextArea
+                            placeholder="Rejection reason"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            rows={2}
+                          />
+                          <Button danger onClick={() => handleReject(booking.id)}>
+                            Confirm Reject
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button type="primary" onClick={() => handleApprove(booking.id)}>
+                            Approve
+                          </Button>
+                          <Button danger onClick={() => setSelectedBooking(booking)}>
+                            Reject
+                          </Button>
+                        </>
+                      ),
+                    ]}
+                  >
+                    <List.Item.Meta
+                      title={`${booking.customer?.Fname} ${booking.customer?.Lname}`}
+                      description={
+                        <>
+                          <div>Participants: {booking.participants}</div>
+                          <div>Status: {booking.Status_booking}</div>
+                          <div>Email: {booking.customer?.email}</div>
+                          {booking.End && <div>End Date: {booking.End}</div>}
+                        </>
+                      }
+                    />
+                  </List.Item>
+                )}
+              />
+            </Panel>
+          );
+        })}
+      </Collapse>
+    </Modal>
+  );
+}
+
+function ImageViewModal({ isImageModalOpen, setIsImageModalOpen, selectedBooking }) {
+  return (
+    <Modal title="Uploaded Images" open={isImageModalOpen} onCancel={() => setIsImageModalOpen(false)} footer={null}>
+      <Row gutter={[16, 16]}>
+        {selectedBooking?.map((image, index) => (
+          <Col span={8} key={index}>
+            <img
+              src={`http://localhost:1337${image.slip.url}`}
+              alt={`Upload ${index + 1}`}
+              style={{ width: "100%", height: "100px", objectFit: "cover" }}
+            />
+          </Col>
+        ))}
+      </Row>
+    </Modal>
   );
 }
