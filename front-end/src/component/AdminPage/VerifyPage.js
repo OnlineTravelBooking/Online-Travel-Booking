@@ -33,11 +33,13 @@ export default function VerifyPage() {
     return <div>Error: {error_package.message}</div>;
   }
 
-  const groupBookingByDate = (bookings) => {
-    return bookings?.reduce((acc, booking) => {
-      const data = booking.selectedDate;
-      if (!acc[data]) acc[data] = [];
-      acc[data].push(booking);
+  const groupBookingByDate = (pkg) => {
+    console.log("Package Data:", pkg);
+    if (!pkg || !pkg.bookings) return {};
+    return pkg.bookings.reduce((acc, booking) => {
+      const date = booking.Start;
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(booking);
       return acc;
     }, {});
   };
@@ -54,6 +56,7 @@ export default function VerifyPage() {
   const handleReject = (bookingId) => {
     if (!comment) {
       message.error("Please provide a rejection reason");
+      return;
     }
     message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
     setComment("");
@@ -116,7 +119,7 @@ export default function VerifyPage() {
               width={800}
             >
               <Collapse accordion>
-                {Object.entries(groupBookingByDate(selectedPackage?.bookings) || []).map(([date, bookings]) => (
+                {Object.entries(groupBookingByDate(selectedPackage) || []).map(([date, bookings]) => (
                   <Panel header={date} key={date}>
                     <List
                       dataSource={bookings}
@@ -126,7 +129,7 @@ export default function VerifyPage() {
                             <Button type="link" onClick={() => handleViewImage(booking)}>
                               View Images
                             </Button>,
-                            selectedBooking?.id === booking.id ? (
+                            selectedBooking?.id === booking.documentId ? (
                               <>
                                 <TextArea
                                   placeholder="Rejection reason"
@@ -151,8 +154,14 @@ export default function VerifyPage() {
                           ]}
                         >
                           <List.Item.Meta
-                            title={booking.customer?.name}
-                            description={`Participants: ${booking.participants}`}
+                            title={`${booking.customer?.Fname} ${booking.customer?.Lname}`}
+                            description={
+                              <>
+                                <div>Participants: {booking.participants}</div>
+                                <div>Status: {booking.Status_booking}</div>
+                                <div>Email: {booking.customer?.email}</div>
+                              </>
+                            }
                           />
                         </List.Item>
                       )}

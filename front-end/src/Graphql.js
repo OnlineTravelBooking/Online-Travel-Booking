@@ -39,13 +39,25 @@ export const GET_PACKAGES = gql`
       Title
       Type
       Price
-      Image {
-        url
-      }
       Description
       MeetingPoint
       bookings {
         documentId
+        Start
+        End
+        slip {
+          url
+        }
+        customer {
+          email
+          Fname
+          Lname
+          documentId
+        }
+        Status_booking
+      }
+      Image {
+        url
       }
     }
   }
