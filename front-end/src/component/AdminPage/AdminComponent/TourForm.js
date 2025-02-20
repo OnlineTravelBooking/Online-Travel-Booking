@@ -5,17 +5,17 @@ import dayjs from "dayjs";
 import { DeleteOutlined, PlusOutlined, DownOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios"; // เพิ่ม axios
+import axios from "axios";
 import "./TourForm.css";
 
 const { RangePicker } = DatePicker;
 
-export default function TourForm({ onClose }) {
+export default function TourForm() {
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
         title: "",
-        type: "day_trip",
+        type: "One Day Trip",
         description: "",
         price: "",
         meetingPoint: "",
@@ -34,8 +34,8 @@ export default function TourForm({ onClose }) {
         if (!formData.price || isNaN(formData.price) || Number(formData.price) <= 0) newErrors.price = "Please enter a valid price";
         if (!formData.meetingPoint) newErrors.meetingPoint = "Please enter a meeting point";
         if (images.length === 0) newErrors.images = "Please upload at least one image";
-        if ((formData.type === "day_trip" && formData.dates.length === 0) ||
-            (formData.type === "multi_day_trip" && formData.ranges.length === 0)) {
+        if ((formData.type === "One Day Trip" && formData.dates.length === 0) ||
+            (formData.type === "Multi Day Trip" && formData.ranges.length === 0)) {
             newErrors.dates = "Please select at least one date or date range";
         }
         setErrors(newErrors);
@@ -72,6 +72,24 @@ export default function TourForm({ onClose }) {
         }
     };
 
+    const convertHtmlToPostmanFormat = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const paragraphs = Array.from(doc.body.children).map(p => ({
+            type: "paragraph",
+            children: [
+                {
+                    type: "text",
+                    text: p.textContent || ""
+                }
+            ]
+        }));
+        return paragraphs.length > 0 ? paragraphs : [{
+            type: "paragraph",
+            children: [{ type: "text", text: "" }]
+        }];
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
@@ -83,7 +101,7 @@ export default function TourForm({ onClose }) {
         const token = sessionStorage.getItem("token");
 
         try {
-            // 1. POST รูปภาพขึ้นไปก่อน
+            // 1. POST รูปภาพ
             const imageUploadPromises = images.map(async (image) => {
                 const imageFormData = new FormData();
                 imageFormData.append("files", image.file);
@@ -94,7 +112,7 @@ export default function TourForm({ onClose }) {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                return response.data[0].id; // ดึง ID รูปภาพ
+                return response.data[0].id;
             });
 
             const imageIds = await Promise.all(imageUploadPromises);
@@ -105,10 +123,10 @@ export default function TourForm({ onClose }) {
                 data: {
                     Title: formData.title,
                     Type: formData.type,
-                    Description: formData.description, // Rich Text ส่งเป็น HTML string
+                    Description: convertHtmlToPostmanFormat(formData.description),
                     Price: parseFloat(formData.price),
                     MeetingPoint: formData.meetingPoint,
-                    images: imageIds,
+                    Image: imageIds.length === 1 ? imageIds[0] : imageIds,
                 },
             };
 
@@ -119,23 +137,23 @@ export default function TourForm({ onClose }) {
                 },
             });
 
-            const packageId = packageResponse.data.data.id; // ดึง ID ของ package
+            const packageId = packageResponse.data.data.id;
             showToast("Package created successfully");
 
             // 3. POST travel dates
-            const datePayloads = formData.type === "day_trip"
+            const datePayloads = formData.type === "One Day Trip"
                 ? formData.dates.map(date => ({
                     data: {
-                        start_date: date.format("YYYY-MM-DD"),
-                        end_date: null,
                         package: packageId,
+                        Start_Date: date.format("YYYY-MM-DD"),
+                        End_Date: date.format("YYYY-MM-DD"), // เท่ากับ Start_Date ตาม POSTMAN
                     },
                 }))
                 : formData.ranges.map(range => ({
                     data: {
-                        start_date: range[0].format("YYYY-MM-DD"),
-                        end_date: range[1].format("YYYY-MM-DD"),
                         package: packageId,
+                        Start_Date: range[0].format("YYYY-MM-DD"),
+                        End_Date: range[1].format("YYYY-MM-DD"),
                     },
                 }));
 
@@ -151,10 +169,10 @@ export default function TourForm({ onClose }) {
             await Promise.all(dateUploadPromises);
             showToast("Travel dates created successfully");
 
-            // Reset form หลังสำเร็จทั้งหมด
+            // Reset form
             setFormData({
                 title: "",
-                type: "day_trip",
+                type: "One Day Trip",
                 description: "",
                 price: "",
                 meetingPoint: "",
@@ -163,10 +181,9 @@ export default function TourForm({ onClose }) {
             });
             setImages([]);
             setCurrentImageIndex(0);
-            onClose(); // ปิด popup
 
         } catch (error) {
-            console.error("Error during submission:", error);
+            console.error("Error during submission:", error.response?.data || error.message);
             showToast(`Failed to create package: ${error.message}`, "error");
         } finally {
             setIsUploading(false);
@@ -380,8 +397,8 @@ export default function TourForm({ onClose }) {
                                         buttonStyle="solid"
                                         className="full-width-radio"
                                     >
-                                        <Radio value="day_trip">Day Trip</Radio>
-                                        <Radio value="multi_day_trip">Multi Day Trip</Radio>
+                                        <Radio value="One Day Trip">One Day Trip</Radio>
+                                        <Radio value="Multi Day Trip">Multi Day Trip</Radio>
                                     </Radio.Group>
                                 </div>
                                 {errors.type && <span className="error">{errors.type}</span>}
@@ -389,13 +406,13 @@ export default function TourForm({ onClose }) {
 
                             <div className="form-group">
                                 <Dropdown
-                                    overlay={renderMenu(formData.type === "day_trip")}
+                                    overlay={renderMenu(formData.type === "One Day Trip")}
                                     trigger={["click"]}
                                     visible={dropdownVisible}
                                     onVisibleChange={setDropdownVisible}
                                 >
                                     <Button size="large">
-                                        เลือก{formData.type === "day_trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
                                     </Button>
                                 </Dropdown>
                                 {errors.dates && <span className="error">{errors.dates}</span>}
@@ -453,7 +470,6 @@ export default function TourForm({ onClose }) {
                                 <button
                                     type="button"
                                     className="secondary-button"
-                                    onClick={onClose}
                                     disabled={isUploading}
                                 >
                                     ยกเลิก

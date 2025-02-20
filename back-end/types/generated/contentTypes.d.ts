@@ -448,7 +448,7 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
     Price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Type: Schema.Attribute.Enumeration<['One day trip', 'Muti day trip']> &
+    Type: Schema.Attribute.Enumeration<['One Day Trip', 'Multi Day Trip']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
