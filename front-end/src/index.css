@@ -567,12 +567,22 @@ body {
   border-color: whitesmoke;
 }
 
-.Home{
-  background-color: #4b6a5d;
-}
+
 
 .Filter-Box {
+  display: flex;
+  justify-content: center;
+  align-items: start;
   width: 100%;
   height: 100%;
-  background-color: #e5e5e5;
+  background-color: #F5F5F5;
+}
+
+.Filter-form {
+  margin-top: 20px;
+  width: 90%;
+  padding: 10px;
+  background-color: #5AB1AE;
+  border-radius: 10px;
+  
 }
