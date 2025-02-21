@@ -21,7 +21,7 @@ export default function Slide() {
       className="carousel slide"
       data-bs-ride="carousel"
       data-bs-interval="3000"
-      data-bs-pause="false"
+      data-bs-pause="hover"
     >
       <div className="Search-carousel">
         <Input

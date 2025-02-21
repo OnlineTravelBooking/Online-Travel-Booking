@@ -3,7 +3,7 @@ body {
   padding: 0;
   height: 100%;
   height: 100%;
-  background-color: #e5e5e5;
+  background-color: #e5e5e5 ;
 }
 
 #root {
@@ -200,6 +200,7 @@ body {
   padding-top: 50px;
   padding-top: 50px;
   gap: 30px;
+  background-color: #e5e5e5;
 }
 
 .Box-trip-data {
@@ -564,4 +565,54 @@ body {
   border-radius: 20px;
   background-color: #c8c9caaf;
   border-color: whitesmoke;
+}
+
+.Filter-Box {
+  padding: 16px !important;
+  background-color: #f0f2f5 !important;
+  height: fit-content !important;
+}
+
+.Filter-form {
+  padding: 20px;
+  background-color: #5ab1ae !important;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.Filter-form .ant-form-item-label > label {
+  color: white !important;
+  font-weight: 500;
+}
+
+.Filter-form .ant-checkbox-wrapper {
+  color: white !important;
+}
+
+.Filter-form .ant-picker {
+  width: 100%;
+}
+
+.ant-slider-track {
+  background-color: #005c78 !important;
+}
+
+.ant-slider-handle {
+  border-color: #005c78 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #005c78;
+  border-color: #005c78;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ant-checkbox-wrapper {
+  color: white !important;
+  margin-left: 0 !important;
 }

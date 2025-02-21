@@ -116,6 +116,7 @@ export default function Transaction() {
     { label: "จำนวน", value: `${people} คน` },
   ];
   console.log("UPload", isUploaded);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
