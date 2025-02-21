@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     setData(null);
     setIsAuthenticated(false);
     setRole(null);
-    navigate("/");
+    navigate("/login");
   }, []);
 
   // Memoize context value

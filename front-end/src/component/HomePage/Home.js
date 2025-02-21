@@ -15,8 +15,6 @@ const footerStyle = {
 };
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
-
   return (
     <Layout>
       <Header>
@@ -29,9 +27,7 @@ export default function Home() {
         <Sider width="20%">
           <SiderFilter />
         </Sider>
-        <Content>
-          {<PackageCard /> ? <PackageCard /> : <h1>No Package Data</h1>}
-        </Content>
+        <Content>{<PackageCard /> ? <PackageCard /> : <h1>No Package Data</h1>}</Content>
       </Layout>
       <Footer style={footerStyle}>Footer</Footer>
     </Layout>

@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
-import {
-  FormOutlined,
-  FileTextOutlined,
-  LogoutOutlined,
-  UserOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
+import { FormOutlined, FileTextOutlined, LogoutOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
@@ -37,11 +31,7 @@ export const UserHeader = () => {
           <div className="header">
             <div className="logo" />
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-              <Menu.Item
-                key="3"
-                style={{ marginLeft: "auto" }}
-                onClick={() => navigate("/login")}
-              >
+              <Menu.Item key="3" style={{ marginLeft: "auto" }} onClick={() => navigate("/login")}>
                 <UserOutlined /> เข้าสู่ระบบ
               </Menu.Item>
               <Menu.Item key="4" onClick={() => navigate("/login")}>
@@ -60,9 +50,7 @@ export const UserHeader = () => {
           <Menu.Item
             key="3"
             style={{ marginLeft: "auto" }}
-            onClick={() =>
-              navigate(location.pathname === "/status" ? "/" : "/status")
-            }
+            onClick={() => navigate(location.pathname === "/status" ? "/" : "/status")}
           >
             {location.pathname === "/status" ? (
               <>
