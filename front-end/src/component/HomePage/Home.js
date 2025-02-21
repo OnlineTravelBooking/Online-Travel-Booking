@@ -16,7 +16,7 @@ const footerStyle = {
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
-  console.log("Auth: ", isAuthenticated);
+
   return (
     <Layout>
       <Header>

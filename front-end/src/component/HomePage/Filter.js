@@ -1,52 +1,63 @@
 import React, { useState } from "react";
 import {
   Button,
-  Cascader,
+  Checkbox,
+  Slider,
   DatePicker,
   Form,
-  Input,
   InputNumber,
-  Mentions,
-  Segmented,
-  Select,
-  TreeSelect,
-  Radio,
   Layout,
+  Space,
 } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
-const { Sider } = Layout;
 const { RangePicker } = DatePicker;
-const { Option } = Select;
+const { Sider } = Layout;
 
 export default function SiderFilter() {
   const [form] = Form.useForm();
-  const variant = Form.useWatch("variant", form);
+
   return (
-    <div className="Filter-Box">
-      <Form
-        form={form}
-        variant={variant || "filled"}
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          variant: "filled",
-        }}
-        className="Filter-form"
-      >
-        <Form.Item label="Input" name="Input">
-          <Input />
+    <Sider className="Filter-Box" width="100%">
+      <Form form={form} className="Filter-form" layout="vertical">
+        <h2 style={{ color: "white", textAlign: "center" }}>
+          <FilterOutlined /> ค้นหาทริป
+        </h2>
+
+        <Form.Item label="ประเภททริป" name="types">
+          <Checkbox.Group>
+            <Space direction="vertical">
+              <Checkbox value="One day trip">ทริปวันเดียว</Checkbox>
+              <Checkbox value="Multi day trip">ทริปหลายวัน</Checkbox>
+            </Space>
+          </Checkbox.Group>
         </Form.Item>
-        <Radio>One day trip</Radio>
-        <Radio>Muti day trip</Radio>
-        <Form.Item label="DatePicker" name="DatePicker">
-          <DatePicker />
+
+        <Form.Item label="ช่วงราคา (บาท)" name="priceRange">
+          <Slider
+            range
+            min={0}
+            max={20000}
+            step={100}
+            defaultValue={[0, 20000]}
+          />
         </Form.Item>
-        <Form.Item label="RangePicker" name="RangePicker">
-          <RangePicker />
+
+        <Form.Item label="วันที่เดินทาง" name="travelDate">
+          <RangePicker
+            style={{ width: "100%" }}
+            placeholder={["เริ่มต้น", "สิ้นสุด"]}
+          />
         </Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          style={{ backgroundColor: "#005c78", fontWeight: "bold" }}
+        >
+          กรองผลลัพธ์
+        </Button>
       </Form>
-    </div>
+    </Sider>
   );
 }

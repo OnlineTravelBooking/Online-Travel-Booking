@@ -567,22 +567,52 @@ body {
   border-color: whitesmoke;
 }
 
-
-
 .Filter-Box {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  width: 100%;
-  height: 100%;
-  background-color: #F5F5F5;
+  padding: 16px !important;
+  background-color: #f0f2f5 !important;
+  height: fit-content !important;
 }
 
 .Filter-form {
-  margin-top: 20px;
-  width: 90%;
-  padding: 10px;
-  background-color: #5AB1AE;
+  padding: 20px;
+  background-color: #5ab1ae !important;
   border-radius: 10px;
-  
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.Filter-form .ant-form-item-label > label {
+  color: white !important;
+  font-weight: 500;
+}
+
+.Filter-form .ant-checkbox-wrapper {
+  color: white !important;
+}
+
+.Filter-form .ant-picker {
+  width: 100%;
+}
+
+.ant-slider-track {
+  background-color: #005c78 !important;
+}
+
+.ant-slider-handle {
+  border-color: #005c78 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #005c78;
+  border-color: #005c78;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ant-checkbox-wrapper {
+  color: white !important;
+  margin-left: 0 !important;
 }

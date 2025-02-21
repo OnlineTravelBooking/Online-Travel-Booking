@@ -6,7 +6,6 @@ import Title from "antd/es/skeleton/Title";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { spaceChildren } from "antd/es/button";
-
 const { Meta } = Card;
 
 export default function PackageCard() {
