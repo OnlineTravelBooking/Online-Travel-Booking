@@ -34,15 +34,35 @@ export default function SiderFilter() {
         </Form.Item>
 
         <Form.Item label="ช่วงราคา (บาท)" name="priceRange">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <InputNumber
+              placeholder="ราคาต่ำสุด"
+              min={0}
+              style={{ width: "40%" }}
+            />
+            <div
+              style={{
+                width: "25px",
+                height: "2px",
+                backgroundColor: "#005C78",
+                margin: "0 10px",
+              }}
+            ></div>
+            <InputNumber
+              placeholder="ราคาสูงสุด"
+              min={0}
+              style={{ width: "40%" }}
+            />
+          </div>
           <Slider
             range
             min={0}
             max={20000}
             step={100}
             defaultValue={[0, 20000]}
+            style={{ marginBottom: -10 }}
           />
         </Form.Item>
-
         <Form.Item label="วันที่เดินทาง" name="travelDate">
           <RangePicker
             style={{ width: "100%" }}
@@ -53,7 +73,10 @@ export default function SiderFilter() {
           type="primary"
           htmlType="submit"
           block
-          style={{ backgroundColor: "#005c78", fontWeight: "bold" }}
+          style={{
+            backgroundColor: "#005c78",
+            fontWeight: "bold",
+          }}
         >
           กรองผลลัพธ์
         </Button>
