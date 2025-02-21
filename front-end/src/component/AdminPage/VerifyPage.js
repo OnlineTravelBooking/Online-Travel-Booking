@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Layout, theme, Row, Col, Card, message, Modal, Collapse, List, Button, Input } from "antd";
 import Sidebar from "./Sidebar";
 import { GET_PACKAGES } from "../../Graphql";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import BookingDetailsModal from "./Modal/BookingDetailsModal";
 import ImageViewModal from "./Modal/ImageViewModal";
 import moment from "moment";
+import { UPDATE_STATUS } from "../../Graphql";
+import { useAuth } from "../../AuthContext";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -19,12 +21,12 @@ export default function VerifyPage() {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [viewingBooking, setViewingBooking] = useState(null);
-
+  const [updateStatus] = useMutation(UPDATE_STATUS);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
+  const { loading: loading_package, error: error_package, data: data_package, refetch } = useQuery(GET_PACKAGES);
 
   const packageWithBooking = data_package?.packages?.filter((pkg) => pkg.bookings && pkg.bookings.length > 0) || [];
 
@@ -48,18 +50,53 @@ export default function VerifyPage() {
     setIsModalOpen(true);
   };
 
-  const handleApprove = (bookingId) => {
-    message.success(`Booking ${bookingId} approved!`);
+  const handleApprove = async (bookingId) => {
+    try {
+      await updateStatus({
+        variables: {
+          documentId: bookingId,
+          data: {
+            Status_booking: "approved",
+          },
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        },
+      });
+      await refetch();
+      message.success(`Booking ${bookingId} approved!`);
+    } catch (err) {
+      message.error(`Failed to approve booking: ${err.message}`);
+    }
   };
 
-  const handleReject = (bookingId) => {
+  const handleReject = async (bookingId) => {
     if (!comment) {
       message.error("Please provide a rejection reason");
       return;
     }
-    message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
-    setComment("");
-    setSelectedBooking(null);
+    try {
+      await updateStatus({
+        variables: {
+          documentId: bookingId,
+          data: {
+            Status_booking: "rejected",
+            RejectionReason: comment,
+          },
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        },
+      });
+      await refetch();
+      message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
+      setComment("");
+      setSelectedBooking(null);
+    } catch (error) {}
   };
 
   const handleViewImage = (booking) => {

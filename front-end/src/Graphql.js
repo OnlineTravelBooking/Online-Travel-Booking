@@ -105,3 +105,12 @@ export const BOOKING = gql`
     }
   }
 `;
+
+export const UPDATE_STATUS = gql`
+  mutation Mutation($documentId: ID!, $data: BookingInput!) {
+    updateBooking(documentId: $documentId, data: $data) {
+      Status_booking
+      RejectionReason
+    }
+  }
+`;

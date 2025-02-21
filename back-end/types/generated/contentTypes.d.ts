@@ -398,6 +398,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     package: Schema.Attribute.Relation<'manyToOne', 'api::package.package'>;
     publishedAt: Schema.Attribute.DateTime;
+    RejectionReason: Schema.Attribute.Text;
     slip: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
     Start: Schema.Attribute.Date & Schema.Attribute.Required;
