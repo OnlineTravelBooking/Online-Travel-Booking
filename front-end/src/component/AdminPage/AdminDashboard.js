@@ -80,7 +80,7 @@ export default function AdminDashboard() {
                     footer={null}
                     width={"80%"}
                 >
-                    <TourForm />
+                    <TourForm onClose={() => setIsModalOpen(false)} />
                 </Modal>
 
                 <div className="logo-container"></div>

@@ -10,7 +10,7 @@ import "./TourForm.css";
 
 const { RangePicker } = DatePicker;
 
-export default function TourForm() {
+export default function TourForm({ onClose }) {
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
@@ -75,20 +75,83 @@ export default function TourForm() {
     const convertHtmlToPostmanFormat = (html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-        const paragraphs = Array.from(doc.body.children).map(p => ({
-            type: "paragraph",
-            children: [
-                {
-                    type: "text",
-                    text: p.textContent || ""
-                }
-            ]
-        }));
-        return paragraphs.length > 0 ? paragraphs : [{
+        const elements = Array.from(doc.body.childNodes); // ใช้ childNodes เพื่อรวม text nodes
+
+        const processNode = (node) => {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                return [{ type: "text", text: node.textContent.trim() }];
+            }
+            if (node.nodeType !== Node.ELEMENT_NODE) return [];
+
+            const children = [];
+            const processChildNodes = (childNodes) => {
+                return Array.from(childNodes).flatMap((child) => {
+                    if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+                        return [{ type: "text", text: child.textContent.trim() }];
+                    }
+                    if (child.nodeType !== Node.ELEMENT_NODE) return [];
+
+                    const childContent = processChildNodes(child.childNodes);
+                    const textNode = childContent.length > 0 ? childContent : [{ type: "text", text: child.textContent || "" }];
+
+                    if (child.tagName === "A") {
+                        return [{
+                            type: "link",
+                            url: child.getAttribute("href") || "",
+                            children: textNode
+                        }];
+                    }
+
+                    const applyStyles = (node) => {
+                        return textNode.map((node) => {
+                            if (child.tagName === "B" || child.tagName === "STRONG") node.bold = true;
+                            if (child.tagName === "I" || child.tagName === "EM") node.italic = true;
+                            if (child.tagName === "U") node.underline = true;
+                            if (child.tagName === "CODE") node.code = true;
+                            if (child.tagName === "STRIKE" || child.tagName === "S") node.strikethrough = true;
+                            return node;
+                        });
+                    };
+
+                    return applyStyles(child);
+                });
+            };
+
+            const tagName = node.tagName?.toUpperCase();
+            if (tagName === "H1" || tagName === "H2") {
+                return {
+                    type: "heading",
+                    level: tagName === "H1" ? 1 : 2,
+                    children: processChildNodes(node.childNodes)
+                };
+            }
+            if (tagName === "P") {
+                return {
+                    type: "paragraph",
+                    children: processChildNodes(node.childNodes)
+                };
+            }
+            if (tagName === "UL" || tagName === "OL") {
+                return {
+                    type: "list",
+                    format: tagName === "UL" ? "unordered" : "ordered",
+                    children: Array.from(node.children).map((li) => ({
+                        type: "list-item",
+                        children: processChildNodes(li.childNodes)
+                    }))
+                };
+            }
+
+            return { type: "paragraph", children: processChildNodes(node.childNodes) };
+        };
+
+        const jsonContent = elements.flatMap(processNode).filter(block => block.children.length > 0);
+
+        return jsonContent.length > 0 ? jsonContent : [{
             type: "paragraph",
             children: [{ type: "text", text: "" }]
         }];
-    };
+    };;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -471,6 +534,7 @@ export default function TourForm() {
                                     type="button"
                                     className="secondary-button"
                                     disabled={isUploading}
+                                    onClick={onClose}
                                 >
                                     ยกเลิก
                                 </button>
