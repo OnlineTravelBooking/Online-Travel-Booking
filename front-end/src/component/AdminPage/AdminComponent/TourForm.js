@@ -72,7 +72,7 @@ export default function TourForm({ onClose }) {
         }
     };
 
-    const convertHtmlToPostmanFormat = (html) => {
+    const convertHtmlToJSONFormat = (html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const elements = Array.from(doc.body.childNodes); // ใช้ childNodes เพื่อรวม text nodes
@@ -186,7 +186,7 @@ export default function TourForm({ onClose }) {
                 data: {
                     Title: formData.title,
                     Type: formData.type,
-                    Description: convertHtmlToPostmanFormat(formData.description),
+                    Description: convertHtmlToJSONFormat(formData.description),
                     Price: parseFloat(formData.price),
                     MeetingPoint: formData.meetingPoint,
                     Image: imageIds.length === 1 ? imageIds[0] : imageIds,
@@ -423,9 +423,22 @@ export default function TourForm({ onClose }) {
                         {images.length > 0 && (
                             <div className="thumbnail-container">
                                 {images.map((image, index) => (
-                                    <div key={index} className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}>
-                                        <img src={image.url} alt={`Preview ${index + 1}`} onClick={() => setCurrentImageIndex(index)} />
-                                        <button className="delete-button" onClick={() => removeImage(index)}>
+                                    <div
+                                        key={index}
+                                        className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+                                    >
+                                        <img
+                                            src={image.url}
+                                            alt={`Preview ${index + 1}`}
+                                            onClick={() => setCurrentImageIndex(index)}
+                                        />
+                                        <button
+                                            className="delete-button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                removeImage(index);
+                                            }}
+                                        >
                                             ×
                                         </button>
                                     </div>
@@ -489,9 +502,9 @@ export default function TourForm({ onClose }) {
                                     placeholder="Enter tour description"
                                     modules={{
                                         toolbar: [
-                                            [{ header: [1, 2, false] }],
+                                            [{ header: [1, 2, 3, false] }],
                                             ['bold', 'italic', 'underline'],
-                                            ['link', 'image'],
+                                            ['link'],
                                             [{ list: 'ordered' }, { list: 'bullet' }],
                                             ['clean']
                                         ],
