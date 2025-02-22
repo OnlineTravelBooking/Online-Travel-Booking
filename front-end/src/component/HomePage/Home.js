@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserHeader } from "../Header/UserHeader";
 import { useAuth } from "../../AuthContext";
 import PackageCard from "./PackageCard";
@@ -16,6 +16,7 @@ const footerStyle = {
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
+  const [filters, setFilters] = useState({});
 
   return (
     <Layout>
@@ -27,10 +28,14 @@ export default function Home() {
       </Layout>
       <Layout>
         <Sider width="20%">
-          <SiderFilter />
+          <SiderFilter onFilter={setFilters} />
         </Sider>
         <Content>
-          {<PackageCard /> ? <PackageCard /> : <h1>No Package Data</h1>}
+          {<PackageCard /> ? (
+            <PackageCard filters={filters} />
+          ) : (
+            <h1>No Package Data</h1>
+          )}
         </Content>
       </Layout>
       <Footer style={footerStyle}>Footer</Footer>
