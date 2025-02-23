@@ -17,6 +17,7 @@ export default function StatusPage() {
     loading,
     error,
     data: data_booking,
+    refetch,
   } = useQuery(BOOKING, {
     variables: {
       filters: {
@@ -71,8 +72,10 @@ export default function StatusPage() {
           Start: booking.Start,
           End: booking.End,
           image: `http://localhost:1337${packageImage.Image[0].url}`,
+          RejectionReason: booking.RejectionReason,
         };
       });
+      refetch();
       setBookings(mapData);
     }
   }, [data_booking, data_image]);
@@ -112,21 +115,16 @@ export default function StatusPage() {
                     <Col span={24}>
                       <Timeline>
                         <Timeline.Item color="green">Booked</Timeline.Item>
-                        <Timeline.Item
-                          color={item.status === "approved" || item.status === "rejected" ? "green" : "gray"}
-                        >
-                          Payment Completed
-                        </Timeline.Item>
+
                         <Timeline.Item
                           color={item.status === "approved" ? "green" : item.status === "rejected" ? "red" : "gray"}
                         >
                           {item.status === "approved"
                             ? "Approved"
                             : item.status === "rejected"
-                            ? "Rejected"
+                            ? "Rejected\n" + `Because: ${item.RejectionReason}`
                             : "Pending Approval"}
                         </Timeline.Item>
-                        <Timeline.Item color="gray">Trip Completion</Timeline.Item>
                       </Timeline>
                     </Col>
                   </Row>

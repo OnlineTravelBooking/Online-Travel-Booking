@@ -58,11 +58,11 @@ export default function ApprovePage() {
               <Title level={3}>Approved Bookings</Title>
               <div style={{ display: "flex", gap: 16 }}>
                 <Input.Search placeholder="Search bookings..." style={{ width: 300 }} />
-                <Button type="primary">Export to CSV</Button>
               </div>
             </div>
 
             <Table
+              pagination={false}
               columns={columns}
               dataSource={data?.bookings || []}
               rowKey="documentId"

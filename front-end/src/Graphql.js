@@ -102,6 +102,7 @@ export const BOOKING = gql`
       Status_booking
       Start
       End
+      RejectionReason
     }
   }
 `;
