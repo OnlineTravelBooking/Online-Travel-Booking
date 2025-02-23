@@ -20,6 +20,7 @@ export default function LoginScreen() {
 
   const handleSubmit = async (values) => {
     try {
+      message.destroy();
       await loginMutation({
         variables: {
           input: {
@@ -39,7 +40,7 @@ export default function LoginScreen() {
         },
       });
     } catch (err) {
-      console.error("Login failed:", err);
+      message.error("Login failed:", err);
     }
   };
 

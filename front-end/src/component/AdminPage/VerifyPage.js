@@ -11,8 +11,6 @@ import { useAuth } from "../../AuthContext";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
-const { Panel } = Collapse;
-const { TextArea } = Input;
 
 export default function VerifyPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,14 +26,17 @@ export default function VerifyPage() {
 
   const { loading: loading_package, error: error_package, data: data_package, refetch } = useQuery(GET_PACKAGES);
 
-  const packageWithBooking = data_package?.packages?.filter((pkg) => pkg.bookings && pkg.bookings.length > 0) || [];
+  const packageWithBooking =
+    data_package?.packages?.filter((pkg) => pkg.bookings?.some((booking) => booking.Status_booking === "pending")) ||
+    [];
 
   if (loading_package) return <div>Loading...</div>;
   if (error_package) return <div>Error: {error_package.message}</div>;
 
   const groupBookingByDate = (pkg) => {
     if (!pkg?.bookings) return {};
-    return pkg.bookings.reduce((acc, { End, Start, ...booking }) => {
+    const pendingBooking = pkg.bookings.filter((booking) => booking.Status_booking === "pending");
+    return pendingBooking.reduce((acc, { End, Start, ...booking }) => {
       const formattedStart = moment(Start).format("DD/MM/YYYY");
       const formattedEnd = End ? moment(End).format("DD/MM/YYYY") : null;
       const dateRange = formattedEnd ? `${formattedStart} - ${formattedEnd}` : formattedStart;
@@ -65,8 +66,14 @@ export default function VerifyPage() {
           },
         },
       });
-      await refetch();
+      const { data: newData } = await refetch();
+      const updatedPackage = newData.packages.find((pkg) => pkg.documentId === selectedPackage.documentId);
+      setSelectedPackage(updatedPackage);
       message.success(`Booking ${bookingId} approved!`);
+
+      //ตรวจสอบวถ้าไม่มี pending bookint ให้ปิด modal
+      const hasPending = updatedPackage.bookings.some((b) => b.Status_booking === "pending");
+      if (!hasPending) setIsModalOpen(false);
     } catch (err) {
       message.error(`Failed to approve booking: ${err.message}`);
     }
@@ -93,9 +100,15 @@ export default function VerifyPage() {
         },
       });
       await refetch();
-      message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
+      const { data: newData } = await refetch();
+      const updatedPackage = newData.packages.find((pkg) => pkg.documentId === selectedPackage.documentId);
+      setSelectedPackage(updatedPackage);
       setComment("");
       setSelectedBooking(null);
+      message.success(`Booking ${bookingId} rejected. Reason: ${comment}`);
+      //ตรวจสอบวถ้าไม่มี pending bookint ให้ปิด modal
+      const hasPending = updatedPackage.bookings.some((b) => b.Status_booking === "pending");
+      if (!hasPending) setIsModalOpen(false);
     } catch (error) {}
   };
 

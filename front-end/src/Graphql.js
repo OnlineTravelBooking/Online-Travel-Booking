@@ -114,3 +114,29 @@ export const UPDATE_STATUS = gql`
     }
   }
 `;
+
+export const GET_APPROVED_BOOKINGS = gql`
+  query GET_APPROVED_BOOKINGS($filters: BookingFiltersInput) {
+    bookings(filters: $filters) {
+      documentId
+      Start
+      End
+      HowManyPeople
+      TotalPrice
+      Status_booking
+      customer {
+        Fname
+        Lname
+        email
+      }
+      package {
+        Title
+        Type
+        Price
+      }
+      slip {
+        url
+      }
+    }
+  }
+`;
