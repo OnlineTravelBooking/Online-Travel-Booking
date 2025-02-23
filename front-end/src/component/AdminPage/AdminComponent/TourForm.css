@@ -305,29 +305,43 @@ input:focus {
 }
 
 /* Toast Notification */
+/* Toast Notification */
 .toast {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    top: 2rem;
+    /* ระยะจากด้านบน */
+    left: 50%;
+    /* กึ่งกลางแนวนอน */
+    transform: translate(-50%, -150%);
+    /* ซ่อนด้านบนและกึ่งกลาง */
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
-    color: white;
+    background-color: white;
+    /* พื้นหลังสีขาว */
+    color: var(--text-color);
+    /* สีตัวอักษรให้ตัดกับพื้นหลังขาว */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transform: translateY(150%);
     transition: transform 0.3s ease-out;
     z-index: 1000;
 }
 
 .toast.show {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
+    /* เลื่อนลงมาแสดงผล */
 }
 
 .toast.success {
     background-color: var(--success-color);
+    /* เขียวสำหรับ success */
+    color: white;
+    /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังเขียว */
 }
 
 .toast.error {
     background-color: var(--error-color);
+    /* แดงสำหรับ error */
+    color: white;
+    /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังแดง */
 }
 
 /* Scrollable Dropdown */

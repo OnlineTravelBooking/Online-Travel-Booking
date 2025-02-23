@@ -55,14 +55,22 @@ export default function TourForm({ onClose }) {
     };
 
     const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length === 0) return;
-        const uploadedImages = files.map((file) => ({
-            file,
-            url: URL.createObjectURL(file),
-        }));
-        setImages((prev) => [...prev, ...uploadedImages]);
-        showToast("Images added to preview");
+        const files = Array.from(e.target.files || e.dataTransfer.files);
+        const validFiles = files.filter(file => {
+            const isImage = file.type.startsWith("image/");
+            const isUnderSize = file.size <= 5 * 1024 * 1024; // 5MB
+            if (!isImage) showToast("อนุญาตเฉพาะไฟล์ภาพเท่านั้น", "error");
+            if (!isUnderSize) showToast("ไฟล์ต้องมีขนาดไม่เกิน 5MB", "error");
+            return isImage && isUnderSize;
+        });
+        if (validFiles.length > 0) {
+            const uploadedImages = validFiles.map(file => ({
+                file,
+                url: URL.createObjectURL(file),
+            }));
+            setImages(prev => [...prev, ...uploadedImages]);
+            showToast("Images added to preview");
+        }
     };
 
     const removeImage = (index) => {
