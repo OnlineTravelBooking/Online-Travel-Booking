@@ -71,12 +71,13 @@ export default function PackageCard({ filters }) {
         });
       }
 
+      console.log(`filteredData`, filteredData);
       const mapData = filteredData.map((item) => ({
         documentId: item.documentId,
         Price: item.Price,
         Title: item.Title,
         Type: item.Type,
-        urlImage: item.Image[0].url,
+        urlImage: item.Image[0]?.url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
         StartDate: item.Start_Date,
@@ -84,6 +85,7 @@ export default function PackageCard({ filters }) {
       }));
       setDataSource(mapData);
       console.log(data_date);
+      
     }
   }, [data_package, data_date, filters]);
 

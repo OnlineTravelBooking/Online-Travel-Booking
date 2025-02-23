@@ -14,6 +14,10 @@ const footerStyle = {
   backgroundColor: "#4096ff",
 };
 
+/* const siderStyle = {
+  backgroundColor: "transparent",
+}; */
+
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState({});
@@ -27,7 +31,7 @@ export default function Home() {
         <Slide />
       </Layout>
       <Layout>
-        <Sider width="20%">
+        <Sider width="20%" /* style={siderStyle} */>
           <SiderFilter onFilter={setFilters} />
         </Sider>
         <Content>
