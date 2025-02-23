@@ -521,6 +521,7 @@ export default function TourForm({ onClose }) {
                                     type="number"
                                     value={formData.price}
                                     onChange={handleInputChange}
+                                    onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                     placeholder="Enter price"
                                 />
                                 {errors.price && <span className="error">{errors.price}</span>}
