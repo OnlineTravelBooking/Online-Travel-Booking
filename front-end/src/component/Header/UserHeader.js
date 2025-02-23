@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
-import { FormOutlined, FileTextOutlined, LogoutOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  FormOutlined,
+  FileTextOutlined,
+  LogoutOutlined,
+  UserOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, logout, data } = useAuth();
-  const [fullName, setFullName] = useState("User"); // ชื่อผู้ใช้
+  const [fullName, setFullName] = useState("User");
   const [menuItems, setMenuItems] = useState([]);
+  const images = ["southtex_logo.png"];
 
   // ดึงชื่อผู้ใช้จาก sessionStorage
   useEffect(() => {
@@ -50,7 +57,8 @@ export const UserHeader = () => {
                 <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
               </>
             ),
-          onClick: () => navigate(location.pathname === "/status" ? "/" : "/status"),
+          onClick: () =>
+            navigate(location.pathname === "/status" ? "/" : "/status"),
           style: { marginLeft: "auto" },
         },
         {
@@ -74,9 +82,15 @@ export const UserHeader = () => {
   }, [isAuthenticated, location.pathname, fullName, navigate, logout]);
 
   return (
-    <Header>
-      <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]} items={menuItems} />
+    <Header className="Header-user">
+      <img src={images} alt="Sothtex Logo" className="Logo-header" />
+      <div className="Header-title"> SOUTHEX </div>
+      <Menu
+        className="Menu-user"
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        items={menuItems}
+      />
     </Header>
   );
 };
