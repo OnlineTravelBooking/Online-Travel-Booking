@@ -57,14 +57,14 @@ export default function PackageCard({ filters }) {
         Price: item.Price,
         Title: item.Title,
         Type: item.Type,
-        urlImage: item.Image[0].url,
+        urlImage: item.Image[0]?.url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
         StartDate: item.Start_Date,
         EndDate: item.End_Date,
       }));
       setDataSource(mapData);
-      console.log(data_date);
+      
     }
   }, [data_package, data_date, filters]);
 
