@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
   const login = useCallback((userData, token, role) => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("role", role);
+    sessionStorage.setItem("userData", JSON.stringify(userData)); // เก็บข้อมูลผู้ใช้ใน sessionStorage
     setData(userData);
     setIsAuthenticated(true);
     setRole(role);
