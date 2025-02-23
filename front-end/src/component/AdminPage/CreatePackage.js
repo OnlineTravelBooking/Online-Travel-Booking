@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { Layout, theme, Card, Row, Col } from "antd";
+import CreatePackageButton from "./AdminComponent/CreatePackageButton";
 
 const { Header, Content, Footer } = Layout;
 const { useToken } = theme;
@@ -24,7 +25,7 @@ export default function CreatePackage() {
         Price: item.Price,
         Title: item.Title,
         Type: item.Type,
-        urlImage: item.Image[0].url,
+        urlImage: item.Image[0]?.url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
       }));
@@ -76,6 +77,9 @@ export default function CreatePackage() {
                 </Col>
               ))}
             </Row>
+          </div>
+          <div>
+            <CreatePackageButton />
           </div>
         </Content>
       </Layout>

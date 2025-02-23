@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Descriptions } from "antd";
 import { GET_PACKAGES, TRAVEL_DATE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
-import Title from "antd/es/skeleton/Title";
 import { data, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { spaceChildren } from "antd/es/button";
 const { Meta } = Card;
 
 export default function PackageCard({ filters }) {
@@ -52,14 +50,15 @@ export default function PackageCard({ filters }) {
         Price: item.Price,
         Title: item.Title,
         Type: item.Type,
-        urlImage: item.Image[0].url,
+        urlImage: item.Image[0]?.url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
         StartDate: item.Start_Date,
         EndDate: item.End_Date,
+        StartDate: item.Start_Date,
+        EndDate: item.End_Date,
       }));
       setDataSource(mapData);
-      console.log(data_date);
     }
   }, [data_package, filters]);
 

@@ -8,13 +8,31 @@ import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import "antd/dist/reset.css";
+import { useNavigate } from "react-router-dom";
 
 export default function StatusPage() {
-  const { loading, error, data: data_booking } = useQuery(BOOKING);
-  const { data: data_image } = useQuery(ALL_IMAGES_PACKAGE);
+  const navigate = useNavigate();
   const { data } = useAuth();
   const [bookings, setBookings] = useState([]);
-  const [image, setImage] = useState([]);
+  const userId = data?.documentId;
+  const {
+    loading,
+    error,
+    data: data_booking,
+    refetch,
+  } = useQuery(BOOKING, {
+    variables: {
+      filters: {
+        customer: {
+          documentId: {
+            eq: userId,
+          },
+        },
+      },
+    },
+    skip: !userId,
+  });
+  const { data: data_image } = useQuery(ALL_IMAGES_PACKAGE);
 
   const getStatusTag = (status) => {
     switch (status) {
@@ -40,6 +58,7 @@ export default function StatusPage() {
         return <Tag color="default">Unknown</Tag>;
     }
   };
+
   useEffect(() => {
     if (data_booking && data_image) {
       const mapData = data_booking.bookings.map((booking, index) => {
@@ -55,14 +74,17 @@ export default function StatusPage() {
           Start: booking.Start,
           End: booking.End,
           image: `http://localhost:1337${packageImage.Image[0].url}`,
+          RejectionReason: booking.RejectionReason,
         };
       });
+      refetch();
       setBookings(mapData);
     }
   }, [data_booking, data_image]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!data_booking) return <div>No data available</div>;
+
   return (
     <Layout>
       <Header>
@@ -76,6 +98,18 @@ export default function StatusPage() {
             {bookings.map((item) => (
               <Col key={item.id} xs={24} sm={12} lg={8}>
                 <Card
+                  // onClick={() => {
+                  //   navigate("/transaction", {
+                  //     state: {
+                  //       data: data,
+                  //       Title: Title,
+                  //       Price: totalPrice * count,
+                  //       selectedDate: selectedDate,
+                  //       people: count,
+                  //       packageId: documentId,
+                  //     },
+                  //   });
+                  // }}
                   cover={
                     <img alt={item.packageName} src={item.image} style={{ height: "200px", objectFit: "cover" }} />
                   }
@@ -95,21 +129,16 @@ export default function StatusPage() {
                     <Col span={24}>
                       <Timeline>
                         <Timeline.Item color="green">Booked</Timeline.Item>
-                        <Timeline.Item
-                          color={item.status === "approved" || item.status === "rejected" ? "green" : "gray"}
-                        >
-                          Payment Completed
-                        </Timeline.Item>
+
                         <Timeline.Item
                           color={item.status === "approved" ? "green" : item.status === "rejected" ? "red" : "gray"}
                         >
                           {item.status === "approved"
                             ? "Approved"
                             : item.status === "rejected"
-                            ? "Rejected"
+                            ? "Rejected\n" + `Because: ${item.RejectionReason}`
                             : "Pending Approval"}
                         </Timeline.Item>
-                        <Timeline.Item color="gray">Trip Completion</Timeline.Item>
                       </Timeline>
                     </Col>
                   </Row>

@@ -38,16 +38,18 @@ export default function Filter_Button({ onFilter }) {
       <Form.Item name="types">
         <Button
           className="One-Button"
-          type={selectedTypes.includes("One_day_trip") ? "primary" : "default"}
-          onClick={() => handleTypeToggle("One_day_trip")}
+          type={selectedTypes.includes("One_Day_Trip") ? "primary" : "default"}
+          onClick={() => handleTypeToggle("One_Day_Trip")}
         >
           One Day Trip 🚍
         </Button>
 
         <Button
           className="Muti-Button"
-          type={selectedTypes.includes("Muti_day_trip") ? "primary" : "default"}
-          onClick={() => handleTypeToggle("Muti_day_trip")}
+          type={
+            selectedTypes.includes("Multi_Day_Trip") ? "primary" : "default"
+          }
+          onClick={() => handleTypeToggle("Multi_Day_Trip")}
         >
           Multi Day Trip 🏢
         </Button>
