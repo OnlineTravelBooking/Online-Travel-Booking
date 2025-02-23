@@ -56,6 +56,9 @@
     },
     "End": {
       "type": "date"
+    },
+    "RejectionReason": {
+      "type": "text"
     }
   }
 }

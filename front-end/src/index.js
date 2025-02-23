@@ -22,16 +22,3 @@ root.render(
     </React.StrictMode>
   </ApolloProvider>
 );
-
-/* root.render(
-  <AdminDashboard />
-) */
-
-/* root.render(
-  <Main />
-) */
-
-/* root.render(
-  <AddPackage />
-)
- */

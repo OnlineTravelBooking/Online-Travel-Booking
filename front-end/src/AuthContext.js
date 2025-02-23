@@ -1,18 +1,7 @@
-import React, {
-  createContext,
-  useCallback,
-  useState,
-  useMemo,
-  useEffect,
-  useContext,
-} from "react";
+import React, { createContext, useCallback, useState, useMemo, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 const AuthContext = createContext();
-
-
 
 export const AuthProvider = ({ children }) => {
   const [data, setData] = useState(null);
@@ -20,8 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState(null);
   const navigate = useNavigate();
-
-
 
   // ตรวจสอบ token และดึงข้อมูลผู้ใช้จาก sessionStorage
   useEffect(() => {
@@ -37,8 +24,6 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false); // เปลี่ยนสถานะหลังจากตรวจสอบเสร็จ
   }, []);
 
-
-
   // ฟังก์ชันสำหรับ login
   const login = useCallback((userData, token, role) => {
     sessionStorage.setItem("token", token);
@@ -49,19 +34,14 @@ export const AuthProvider = ({ children }) => {
     setRole(role);
   }, []);
 
-
-
-
   // ฟังก์ชัน logout
   const logout = useCallback(() => {
     sessionStorage.clear();
     setData(null);
     setIsAuthenticated(false);
-    navigate("/");
+    setRole(null);
+    navigate("/login");
   }, []);
-
-
-
 
   // Memoize context value
   const value = useMemo(
@@ -77,8 +57,6 @@ export const AuthProvider = ({ children }) => {
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
