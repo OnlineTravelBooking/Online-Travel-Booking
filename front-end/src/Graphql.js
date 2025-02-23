@@ -39,11 +39,27 @@ export const GET_PACKAGES = gql`
       Title
       Type
       Price
+      Description
+      MeetingPoint
+      bookings {
+        documentId
+        Start
+        End
+        slip {
+          url
+        }
+        customer {
+          email
+          Fname
+          Lname
+          documentId
+        }
+        Status_booking
+        HowManyPeople
+      }
       Image {
         url
       }
-      Description
-      MeetingPoint
     }
   }
 `;
@@ -86,6 +102,41 @@ export const BOOKING = gql`
       Status_booking
       Start
       End
+    }
+  }
+`;
+
+export const UPDATE_STATUS = gql`
+  mutation Mutation($documentId: ID!, $data: BookingInput!) {
+    updateBooking(documentId: $documentId, data: $data) {
+      Status_booking
+      RejectionReason
+    }
+  }
+`;
+
+export const GET_APPROVED_BOOKINGS = gql`
+  query GET_APPROVED_BOOKINGS($filters: BookingFiltersInput) {
+    bookings(filters: $filters) {
+      documentId
+      Start
+      End
+      HowManyPeople
+      TotalPrice
+      Status_booking
+      customer {
+        Fname
+        Lname
+        email
+      }
+      package {
+        Title
+        Type
+        Price
+      }
+      slip {
+        url
+      }
     }
   }
 `;

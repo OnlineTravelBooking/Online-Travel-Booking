@@ -1,16 +1,17 @@
 "use client";
-import { Radio, Space, Button, Dropdown, Menu, DatePicker } from "antd";
+import { Radio, Space, Button, Dropdown, Menu, DatePicker, Modal } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { DeleteOutlined, PlusOutlined, DownOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import "./TourForm.css";
+import "./CreatePackageButton.css";
 
 const { RangePicker } = DatePicker;
 
-export default function TourForm({ onClose }) {
+export default function CreateButton({ onClose }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
@@ -373,198 +374,216 @@ export default function TourForm({ onClose }) {
     };
 
     return (
-        <div className="container">
-            <div className="card">
-                <div className="header">
-                    <h1>สร้างแพ็คเกจทัวร์</h1>
-                </div>
+        <div>
+            <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
+                เพิ่มแพ็คเกจ
+            </Button>
+            <Modal
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                footer={null}
+                width={"80%"}
+            >
+                <div className="container">
+                    <div className="card">
+                        <div className="header">
+                            <h1>สร้างแพ็คเกจทัวร์</h1>
+                        </div>
 
-                <div className="content">
-                    <div className="image-section">
-                        <div className="image-preview">
-                            {images.length > 0 ? (
-                                <>
-                                    <img
-                                        src={images[currentImageIndex].url || "/placeholder.svg"}
-                                        alt="Tour preview"
-                                        className="main-image"
-                                    />
-                                    {images.length > 1 && (
-                                        <div className="slideshow-controls">
-                                            <button
-                                                className="nav-button"
-                                                onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
-                                            >
-                                                ←
-                                            </button>
-                                            <button
-                                                className="nav-button"
-                                                onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
-                                            >
-                                                →
-                                            </button>
+                        <div className="content">
+                            <div className="image-section">
+                                <div className="image-preview">
+                                    {images.length > 0 ? (
+                                        <>
+                                            <img
+                                                src={images[currentImageIndex].url || "/placeholder.svg"}
+                                                alt="Tour preview"
+                                                className="main-image"
+                                            />
+                                            {images.length > 1 && (
+                                                <div className="slideshow-controls">
+                                                    <button
+                                                        className="nav-button"
+                                                        onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
+                                                    >
+                                                        ←
+                                                    </button>
+                                                    <button
+                                                        className="nav-button"
+                                                        onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
+                                                    >
+                                                        →
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <div className="upload-placeholder">
+                                            <p>No images uploaded</p>
                                         </div>
                                     )}
-                                </>
-                            ) : (
-                                <div className="upload-placeholder">
-                                    <p>No images uploaded</p>
                                 </div>
-                            )}
-                        </div>
 
-                        <div className="upload-container">
-                            <label className="upload-button" htmlFor="image-upload">
-                                {isUploading ? "Uploading..." : "Upload Images"}
-                                <input
-                                    id="image-upload"
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleImageUpload}
-                                    disabled={isUploading}
-                                    hidden
-                                />
-                            </label>
-                        </div>
-
-                        {images.length > 0 && (
-                            <div className="thumbnail-container">
-                                {images.map((image, index) => (
-                                    <div
-                                        key={index}
-                                        className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
-                                    >
-                                        <img
-                                            src={image.url}
-                                            alt={`Preview ${index + 1}`}
-                                            onClick={() => setCurrentImageIndex(index)}
+                                <div className="upload-container">
+                                    <label className="upload-button" htmlFor="image-upload">
+                                        {isUploading ? "Uploading..." : "Upload Images"}
+                                        <input
+                                            id="image-upload"
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            onChange={handleImageUpload}
+                                            disabled={isUploading}
+                                            hidden
                                         />
-                                        <button
-                                            className="delete-button"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                removeImage(index);
-                                            }}
+                                    </label>
+                                </div>
+
+                                {images.length > 0 && (
+                                    <div className="thumbnail-container">
+                                        {images.map((image, index) => (
+                                            <div
+                                                key={index}
+                                                className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+                                            >
+                                                <img
+                                                    src={image.url}
+                                                    alt={`Preview ${index + 1}`}
+                                                    onClick={() => setCurrentImageIndex(index)}
+                                                />
+                                                <button
+                                                    className="delete-button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        removeImage(index);
+                                                    }}
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {errors.images && <span className="error">{errors.images}</span>}
+                            </div>
+
+                            <div className="form-section">
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                        <label htmlFor="title">ชื่อแพ็คเกจทัวร์</label>
+                                        <input
+                                            id="title"
+                                            name="title"
+                                            type="text"
+                                            value={formData.title}
+                                            onChange={handleInputChange}
+                                            placeholder="Enter tour title"
+                                        />
+                                        {errors.title && <span className="error">{errors.title}</span>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>ประเภทแพ็คเกจทัวร์</label>
+                                        <div className="radio-group-full">
+                                            <Radio.Group
+                                                value={formData.type}
+                                                onChange={handleRadioChange}
+                                                optionType="button"
+                                                buttonStyle="solid"
+                                                className="full-width-radio"
+                                            >
+                                                <Radio value="One day trip">One Day Trip</Radio>
+                                                <Radio value="Muti day trip">Multi Day Trip</Radio>
+                                            </Radio.Group>
+                                        </div>
+                                        {errors.type && <span className="error">{errors.type}</span>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <Dropdown
+                                            overlay={renderMenu(formData.type === "One Day Trip")}
+                                            trigger={["click"]}
+                                            visible={dropdownVisible}
+                                            onVisibleChange={setDropdownVisible}
                                         >
-                                            ×
+                                            <Button size="large">
+                                                เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                                            </Button>
+                                        </Dropdown>
+                                        {errors.dates && <span className="error">{errors.dates}</span>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="description">คำอธิบาย</label>
+                                        <ReactQuill
+                                            value={formData.description}
+                                            onChange={handleDescriptionChange}
+                                            placeholder="Enter tour description"
+                                            modules={{
+                                                toolbar: [
+                                                    [{ header: [1, 2, 3, false] }],
+                                                    ['bold', 'italic', 'underline'],
+                                                    ['link'],
+                                                    [{ list: 'ordered' }, { list: 'bullet' }],
+                                                    ['clean']
+                                                ],
+                                            }}
+                                        />
+                                        {errors.description && <span className="error">{errors.description}</span>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="price">ราคา</label>
+                                        <input
+                                            id="price"
+                                            name="price"
+                                            type="number"
+                                            value={formData.price}
+                                            onChange={handleInputChange}
+                                            onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
+                                            placeholder="Enter price"
+                                        />
+                                        {errors.price && <span className="error">{errors.price}</span>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="meetingPoint">จุดนัดพบ</label>
+                                        <input
+                                            id="meetingPoint"
+                                            name="meetingPoint"
+                                            type="text"
+                                            value={formData.meetingPoint}
+                                            onChange={handleInputChange}
+                                            placeholder="Enter meeting point"
+                                        />
+                                        {errors.meetingPoint && <span className="error">{errors.meetingPoint}</span>}
+                                    </div>
+
+                                    <div className="button-group">
+                                        <button type="submit" className="primary-button" disabled={isUploading}>
+                                            สร้างแพ็คเกจ
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="secondary-button"
+                                            disabled={isUploading}
+                                            onClick={onClose}
+                                        >
+                                            ยกเลิก
                                         </button>
                                     </div>
-                                ))}
+                                </form>
                             </div>
-                        )}
-                        {errors.images && <span className="error">{errors.images}</span>}
-                    </div>
-
-                    <div className="form-section">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="title">ชื่อแพ็คเกจทัวร์</label>
-                                <input
-                                    id="title"
-                                    name="title"
-                                    type="text"
-                                    value={formData.title}
-                                    onChange={handleInputChange}
-                                    placeholder="Enter tour title"
-                                />
-                                {errors.title && <span className="error">{errors.title}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label>ประเภทแพ็คเกจทัวร์</label>
-                                <div className="radio-group-full">
-                                    <Radio.Group
-                                        value={formData.type}
-                                        onChange={handleRadioChange}
-                                        optionType="button"
-                                        buttonStyle="solid"
-                                        className="full-width-radio"
-                                    >
-                                        <Radio value="One Day Trip">One Day Trip</Radio>
-                                        <Radio value="Multi Day Trip">Multi Day Trip</Radio>
-                                    </Radio.Group>
-                                </div>
-                                {errors.type && <span className="error">{errors.type}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <Dropdown
-                                    overlay={renderMenu(formData.type === "One Day Trip")}
-                                    trigger={["click"]}
-                                    visible={dropdownVisible}
-                                    onVisibleChange={setDropdownVisible}
-                                >
-                                    <Button size="large">
-                                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
-                                    </Button>
-                                </Dropdown>
-                                {errors.dates && <span className="error">{errors.dates}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="description">คำอธิบาย</label>
-                                <ReactQuill
-                                    value={formData.description}
-                                    onChange={handleDescriptionChange}
-                                    placeholder="Enter tour description"
-                                    modules={{
-                                        toolbar: [
-                                            [{ header: [1, 2, 3, false] }],
-                                            ['bold', 'italic', 'underline'],
-                                            ['link'],
-                                            [{ list: 'ordered' }, { list: 'bullet' }],
-                                            ['clean']
-                                        ],
-                                    }}
-                                />
-                                {errors.description && <span className="error">{errors.description}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="price">ราคา</label>
-                                <input
-                                    id="price"
-                                    name="price"
-                                    type="number"
-                                    value={formData.price}
-                                    onChange={handleInputChange}
-                                    onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                    placeholder="Enter price"
-                                />
-                                {errors.price && <span className="error">{errors.price}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="meetingPoint">จุดนัดพบ</label>
-                                <input
-                                    id="meetingPoint"
-                                    name="meetingPoint"
-                                    type="text"
-                                    value={formData.meetingPoint}
-                                    onChange={handleInputChange}
-                                    placeholder="Enter meeting point"
-                                />
-                                {errors.meetingPoint && <span className="error">{errors.meetingPoint}</span>}
-                            </div>
-
-                            <div className="button-group">
-                                <button type="submit" className="primary-button" disabled={isUploading}>
-                                    สร้างแพ็คเกจ
-                                </button>
-                                <button
-                                    type="button"
-                                    className="secondary-button"
-                                    disabled={isUploading}
-                                    onClick={onClose}
-                                >
-                                    ยกเลิก
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Modal>
         </div>
     );
 }
+
+
+
+
+
+

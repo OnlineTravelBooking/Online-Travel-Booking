@@ -19,8 +19,8 @@
     "Type": {
       "type": "enumeration",
       "enum": [
-        "One Day Trip",
-        "Multi Day Trip"
+        "One day trip",
+        "Muti day trip"
       ],
       "required": true
     },

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Tag, Timeline, Layout, message } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
-import {
-  ClockCircleOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-} from "@ant-design/icons";
+import { ClockCircleOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { UserHeader } from "../Header/UserHeader";
 import { useAuth } from "../../AuthContext";
 import { BOOKING } from "../../Graphql";
@@ -44,14 +40,10 @@ export default function StatusPage() {
         return <Tag color="default">Unknown</Tag>;
     }
   };
-  console.log(data_booking);
-  console.log("image", data_image);
   useEffect(() => {
     if (data_booking && data_image) {
       const mapData = data_booking.bookings.map((booking, index) => {
-        const packageImage = data_image.packages.find(
-          (item) => item.documentId === booking.package.documentId
-        );
+        const packageImage = data_image.packages.find((item) => item.documentId === booking.package.documentId);
         return {
           id: index,
           seats: booking.HowManyPeople,
@@ -85,11 +77,7 @@ export default function StatusPage() {
               <Col key={item.id} xs={24} sm={12} lg={8}>
                 <Card
                   cover={
-                    <img
-                      alt={item.packageName}
-                      src={item.image}
-                      style={{ height: "200px", objectFit: "cover" }}
-                    />
+                    <img alt={item.packageName} src={item.image} style={{ height: "200px", objectFit: "cover" }} />
                   }
                   hoverable
                 >
@@ -98,36 +86,22 @@ export default function StatusPage() {
                       <h2>{item.packageName}</h2>
                       <p>
                         Date: {new Date(item.Start).toLocaleDateString()}{" "}
-                        {item.End &&
-                          ` - ${new Date(item.End).toLocaleDateString()}`}
+                        {item.End && ` - ${new Date(item.End).toLocaleDateString()}`}
                       </p>
                       <p>Price: ${item.price}</p>
                       <p>Seats: {item.seats}</p>
-                      <div style={{ marginTop: "16px" }}>
-                        {getStatusTag(item.status)}
-                      </div>
+                      <div style={{ marginTop: "16px" }}>{getStatusTag(item.status)}</div>
                     </Col>
                     <Col span={24}>
                       <Timeline>
                         <Timeline.Item color="green">Booked</Timeline.Item>
                         <Timeline.Item
-                          color={
-                            item.status === "approved" ||
-                            item.status === "rejected"
-                              ? "green"
-                              : "gray"
-                          }
+                          color={item.status === "approved" || item.status === "rejected" ? "green" : "gray"}
                         >
                           Payment Completed
                         </Timeline.Item>
                         <Timeline.Item
-                          color={
-                            item.status === "approved"
-                              ? "green"
-                              : item.status === "rejected"
-                              ? "red"
-                              : "gray"
-                          }
+                          color={item.status === "approved" ? "green" : item.status === "rejected" ? "red" : "gray"}
                         >
                           {item.status === "approved"
                             ? "Approved"
@@ -135,9 +109,7 @@ export default function StatusPage() {
                             ? "Rejected"
                             : "Pending Approval"}
                         </Timeline.Item>
-                        <Timeline.Item color="gray">
-                          Trip Completion
-                        </Timeline.Item>
+                        <Timeline.Item color="gray">Trip Completion</Timeline.Item>
                       </Timeline>
                     </Col>
                   </Row>

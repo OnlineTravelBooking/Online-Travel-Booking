@@ -398,6 +398,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     package: Schema.Attribute.Relation<'manyToOne', 'api::package.package'>;
     publishedAt: Schema.Attribute.DateTime;
+    RejectionReason: Schema.Attribute.Text;
     slip: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
     Start: Schema.Attribute.Date & Schema.Attribute.Required;
@@ -448,7 +449,7 @@ export interface ApiPackagePackage extends Struct.CollectionTypeSchema {
     Price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Type: Schema.Attribute.Enumeration<['One Day Trip', 'Multi Day Trip']> &
+    Type: Schema.Attribute.Enumeration<['One day trip', 'Muti day trip']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
