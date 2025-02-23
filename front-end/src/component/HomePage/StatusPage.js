@@ -8,8 +8,10 @@ import { BOOKING } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import "antd/dist/reset.css";
+import { useNavigate } from "react-router-dom";
 
 export default function StatusPage() {
+  const navigate = useNavigate();
   const { data } = useAuth();
   const [bookings, setBookings] = useState([]);
   const userId = data?.documentId;
@@ -96,6 +98,18 @@ export default function StatusPage() {
             {bookings.map((item) => (
               <Col key={item.id} xs={24} sm={12} lg={8}>
                 <Card
+                  // onClick={() => {
+                  //   navigate("/transaction", {
+                  //     state: {
+                  //       data: data,
+                  //       Title: Title,
+                  //       Price: totalPrice * count,
+                  //       selectedDate: selectedDate,
+                  //       people: count,
+                  //       packageId: documentId,
+                  //     },
+                  //   });
+                  // }}
                   cover={
                     <img alt={item.packageName} src={item.image} style={{ height: "200px", objectFit: "cover" }} />
                   }
