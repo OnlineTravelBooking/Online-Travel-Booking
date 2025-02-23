@@ -19,7 +19,6 @@ export default function ApprovePage() {
     },
   });
   const [selectedBooking, setSelectedBooking] = useState(null);
-  console.log("approve:", data);
   const columns = [
     {
       title: "Customer",

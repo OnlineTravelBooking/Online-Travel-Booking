@@ -100,7 +100,7 @@ export default function Detail() {
           : navigate("/login");
       })
       .catch((err) => {
-        console.log("Validation failed:", err);
+        message.log("Validation failed:", err);
       });
   };
 
