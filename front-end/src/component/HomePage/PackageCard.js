@@ -71,7 +71,6 @@ export default function PackageCard({ filters }) {
         });
       }
 
-      console.log(`filteredData`, filteredData);
       const mapData = filteredData.map((item) => ({
         documentId: item.documentId,
         Price: item.Price,
@@ -84,7 +83,6 @@ export default function PackageCard({ filters }) {
         EndDate: item.End_Date,
       }));
       setDataSource(mapData);
-      console.log(data_date);
       
     }
   }, [data_package, data_date, filters]);

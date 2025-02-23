@@ -10,13 +10,14 @@ import "./CreatePackageButton.css";
 
 const { RangePicker } = DatePicker;
 
-export default function CreateButton({ onClose }) {
+export default function CreateButton() {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [formData, setFormData] = useState({
         title: "",
-        type: "One Day Trip",
+        type: "One day trip",
         description: "",
         price: "",
         meetingPoint: "",
@@ -35,8 +36,8 @@ export default function CreateButton({ onClose }) {
         if (!formData.price || isNaN(formData.price) || Number(formData.price) <= 0) newErrors.price = "Please enter a valid price";
         if (!formData.meetingPoint) newErrors.meetingPoint = "Please enter a meeting point";
         if (images.length === 0) newErrors.images = "Please upload at least one image";
-        if ((formData.type === "One Day Trip" && formData.dates.length === 0) ||
-            (formData.type === "Multi Day Trip" && formData.ranges.length === 0)) {
+        if ((formData.type === "One day trip" && formData.dates.length === 0) ||
+            (formData.type === "Muti Day Trip" && formData.ranges.length === 0)) {
             newErrors.dates = "Please select at least one date or date range";
         }
         setErrors(newErrors);
@@ -56,22 +57,14 @@ export default function CreateButton({ onClose }) {
     };
 
     const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files || e.dataTransfer.files);
-        const validFiles = files.filter(file => {
-            const isImage = file.type.startsWith("image/");
-            const isUnderSize = file.size <= 5 * 1024 * 1024; // 5MB
-            if (!isImage) showToast("อนุญาตเฉพาะไฟล์ภาพเท่านั้น", "error");
-            if (!isUnderSize) showToast("ไฟล์ต้องมีขนาดไม่เกิน 5MB", "error");
-            return isImage && isUnderSize;
-        });
-        if (validFiles.length > 0) {
-            const uploadedImages = validFiles.map(file => ({
-                file,
-                url: URL.createObjectURL(file),
-            }));
-            setImages(prev => [...prev, ...uploadedImages]);
-            showToast("Images added to preview");
-        }
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+        const uploadedImages = files.map((file) => ({
+            file,
+            url: URL.createObjectURL(file),
+        }));
+        setImages((prev) => [...prev, ...uploadedImages]);
+        // showToast("Images added to preview");
     };
 
     const removeImage = (index) => {
@@ -81,6 +74,9 @@ export default function CreateButton({ onClose }) {
         }
     };
 
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    }
     const convertHtmlToJSONFormat = (html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
@@ -188,7 +184,7 @@ export default function CreateButton({ onClose }) {
             });
 
             const imageIds = await Promise.all(imageUploadPromises);
-            showToast("Images uploaded successfully");
+            // showToast("Images uploaded successfully");
 
             // 2. POST package
             const packagePayload = {
@@ -213,7 +209,7 @@ export default function CreateButton({ onClose }) {
             showToast("Package created successfully");
 
             // 3. POST travel dates
-            const datePayloads = formData.type === "One Day Trip"
+            const datePayloads = formData.type === "One day trip"
                 ? formData.dates.map(date => ({
                     data: {
                         package: packageId,
@@ -239,12 +235,12 @@ export default function CreateButton({ onClose }) {
             );
 
             await Promise.all(dateUploadPromises);
-            showToast("Travel dates created successfully");
+            // showToast("Travel dates created successfully");
 
             // Reset form
             setFormData({
                 title: "",
-                type: "One Day Trip",
+                type: "One day trip",
                 description: "",
                 price: "",
                 meetingPoint: "",
@@ -501,13 +497,13 @@ export default function CreateButton({ onClose }) {
 
                                     <div className="form-group">
                                         <Dropdown
-                                            overlay={renderMenu(formData.type === "One Day Trip")}
+                                            overlay={renderMenu(formData.type === "One day trip")}
                                             trigger={["click"]}
                                             visible={dropdownVisible}
                                             onVisibleChange={setDropdownVisible}
                                         >
                                             <Button size="large">
-                                                เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                                                เลือก{formData.type === "One day trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
                                             </Button>
                                         </Dropdown>
                                         {errors.dates && <span className="error">{errors.dates}</span>}
@@ -567,7 +563,7 @@ export default function CreateButton({ onClose }) {
                                             type="button"
                                             className="secondary-button"
                                             disabled={isUploading}
-                                            onClick={onClose}
+                                            onClick={() => handleModalClose()}
                                         >
                                             ยกเลิก
                                         </button>
@@ -577,13 +573,7 @@ export default function CreateButton({ onClose }) {
                         </div>
                     </div>
                 </div>
-            </Modal>
+            </Modal >
         </div>
     );
 }
-
-
-
-
-
-

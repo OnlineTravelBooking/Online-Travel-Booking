@@ -25,7 +25,7 @@ export default function CreatePackage() {
         Price: item.Price,
         Title: item.Title,
         Type: item.Type,
-        urlImage: item.Image[0].url,
+        urlImage: item.Image[0]?.url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
       }));
