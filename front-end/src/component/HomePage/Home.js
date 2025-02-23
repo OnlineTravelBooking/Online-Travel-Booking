@@ -18,6 +18,7 @@ const footerStyle = {
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState({});
+  const [searchTitle, setSearchTitle] = useState("");
 
   const mergeFilters = (newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -29,16 +30,16 @@ export default function Home() {
         <UserHeader />
       </Header>
       <Layout>
-        <Slide />
+        <Slide onSearch={(title) => setSearchTitle(title)} />
       </Layout>
       <Layout>
-        <Sider width="20%" style={{ padding: "0px" }}>
+        <Sider width="20%">
           <PriceFilter onFilter={mergeFilters} />
         </Sider>
-        <Content>
+        <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
           {<PackageCard /> ? (
-            <PackageCard filters={filters} />
+            <PackageCard filters={{ filters, searchTitle }} />
           ) : (
             <h1>No Package Data</h1>
           )}

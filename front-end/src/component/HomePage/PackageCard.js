@@ -28,6 +28,12 @@ export default function PackageCard({ filters }) {
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
 
+      if (filters.searchTitle) {
+        filteredData = filteredData.filter((item) =>
+          item.Title.toLowerCase().includes(filters.searchTitle.toLowerCase())
+        );
+      }
+
       if (filters.types?.length > 0) {
         filteredData = filteredData.filter((item) =>
           filters.types.includes(item.Type)

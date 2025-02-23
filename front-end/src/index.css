@@ -573,6 +573,8 @@ body {
   height: 100% !important;
 }
 
+
+
 .Filter-form {
   padding: 20px;
   background-color: #5ab1ae !important;
@@ -599,15 +601,25 @@ body {
   border-color: #005c78 !important;
 }
 
+.Main-Content {
+  padding-bottom: 25px;
+  max-height: fit-content;
+  background-color: #F5F5F5;
+}
+
 .Filter-bar {
   display: flex;
-  margin: 20px;
-  
+  max-height: max-content;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  align-items: center;
 }
 
 .One-Button {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 40px;
+  margin-left: 40px;
+  font-size: 17px;
+  height: 50px;
 }
 
 .One-Button:hover {
@@ -630,6 +642,8 @@ body {
 
 .Muti-Button {
   margin-right: 20px;
+  font-size: 17px;
+  height: 50px;
 }
 
 .Muti-Button:hover {
@@ -650,10 +664,12 @@ body {
 }
 
 .Select-Date {
-  margin-left: 10px ;
+  margin-left: 40px;
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
 }
 
 .Select-Date:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 
