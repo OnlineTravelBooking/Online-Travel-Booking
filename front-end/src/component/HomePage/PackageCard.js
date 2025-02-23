@@ -11,7 +11,7 @@ const { Meta } = Card;
 export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
-  const [dataDate, setDataDate] = useState([]);
+
   const {
     loading: loading_package,
     error: error_package,
@@ -25,8 +25,24 @@ export default function PackageCard({ filters }) {
   } = useQuery(TRAVEL_DATE);
 
   useEffect(() => {
-    if (data_package && data_package.packages) {
-      let filteredData = data_package.packages;
+    if (
+      data_package &&
+      data_package.packages &&
+      data_date &&
+      data_date.travelDates
+    ) {
+      const mergedData = data_package.packages.map((pkg) => {
+        const travelDate = data_date.travelDates.find(
+          (date) => date.documentId === pkg.documentId
+        );
+        return {
+          ...pkg,
+          Start_Date: travelDate?.Start_Date || null,
+          End_Date: travelDate?.End_Date || null,
+        };
+      });
+
+      let filteredData = mergedData;
 
       if (filters.types?.length > 0) {
         filteredData = filteredData.filter((item) =>
@@ -45,7 +61,7 @@ export default function PackageCard({ filters }) {
         const startDate = new Date(filters.travelDate[0]);
         const endDate = new Date(filters.travelDate[1]);
 
-        dataDate = dataDate.filter((item) => {
+        filteredData = filteredData.filter((item) => {
           if (item.Start_Date && item.End_Date) {
             const packageStartDate = new Date(item.Start_Date);
             const packageEndDate = new Date(item.End_Date);
@@ -63,20 +79,14 @@ export default function PackageCard({ filters }) {
         urlImage: item.Image[0].url,
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
-      }));
-      setDataSource(mapData);
-    }
-
-    if (data_date && data_date.travelDates) {
-      let filteredDate = data_date.travelDates;
-      const mapDate = filteredDate.map((item) => ({
         StartDate: item.Start_Date,
         EndDate: item.End_Date,
       }));
-      setDataDate(mapDate);
-      console.log(filteredDate);
+      setDataSource(mapData);
+      console.log(data_date);
     }
   }, [data_package, data_date, filters]);
+
   if (loading_package) {
     return <div>Loading...</div>;
   }
