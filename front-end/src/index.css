@@ -568,9 +568,9 @@ body {
 }
 
 .Filter-Box {
-  padding: 16px !important;
-  background-color: #f0f2f5 !important;
-  height: fit-content !important;
+  padding: 20px !important;
+  background-color: #F5F5F5 !important;
+  height: 100% !important;
 }
 
 .Filter-form {
@@ -578,6 +578,7 @@ body {
   background-color: #5ab1ae !important;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  
 }
 
 .Filter-form .ant-form-item-label > label {
@@ -585,9 +586,6 @@ body {
   font-weight: 500;
 }
 
-.Filter-form .ant-checkbox-wrapper {
-  color: white !important;
-}
 
 .Filter-form .ant-picker {
   width: 100%;
@@ -601,18 +599,61 @@ body {
   border-color: #005c78 !important;
 }
 
-.ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #005c78;
-  border-color: #005c78;
-}
-
-.checkbox-group {
+.Filter-bar {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin: 20px;
+  
 }
 
-.ant-checkbox-wrapper {
-  color: white !important;
-  margin-left: 0 !important;
+.One-Button {
+  margin-left: 20px;
+  margin-right: 20px;
 }
+
+.One-Button:hover {
+  transform: scale(1.1);
+  color: #5AB1AE !important;
+  border-color: #005C78 !important;
+}
+
+.One-Button.ant-btn-primary {
+  background-color: #5AB1AE; 
+  border-color: #005C78;     
+}
+
+.One-Button.ant-btn-primary:hover {
+  background-color: #5AB1AE !important; 
+  color: #ffffff !important;
+  border-color: #005C78 !important;     
+}
+
+
+.Muti-Button {
+  margin-right: 20px;
+}
+
+.Muti-Button:hover {
+  transform: scale(1.1);
+  color: #5AB1AE !important;
+  border-color: #005C78 !important;
+}
+
+.Muti-Button.ant-btn-primary {
+  background-color: #5AB1AE; 
+  border-color: #005C78;     
+}
+
+.Muti-Button.ant-btn-primary:hover {
+  background-color: #5AB1AE !important; 
+  color: #ffffff !important;
+  border-color: #005C78 !important;     
+}
+
+.Select-Date {
+  margin-left: 10px ;
+}
+
+.Select-Date:hover {
+  transform: scale(1.1);
+}
+

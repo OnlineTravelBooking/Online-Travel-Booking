@@ -25,24 +25,8 @@ export default function PackageCard({ filters }) {
   } = useQuery(TRAVEL_DATE);
 
   useEffect(() => {
-    if (
-      data_package &&
-      data_package.packages &&
-      data_date &&
-      data_date.travelDates
-    ) {
-      const mergedData = data_package.packages.map((pkg) => {
-        const travelDate = data_date.travelDates.find(
-          (date) => date.documentId === pkg.documentId
-        );
-        return {
-          ...pkg,
-          Start_Date: travelDate?.Start_Date || null,
-          End_Date: travelDate?.End_Date || null,
-        };
-      });
-
-      let filteredData = mergedData;
+    if (data_package && data_package.packages) {
+      let filteredData = data_package.packages;
 
       if (filters.types?.length > 0) {
         filteredData = filteredData.filter((item) =>
@@ -55,20 +39,6 @@ export default function PackageCard({ filters }) {
         filteredData = filteredData.filter(
           (item) => item.Price >= min && item.Price <= max
         );
-      }
-
-      if (filters.travelDate?.length === 2) {
-        const startDate = new Date(filters.travelDate[0]);
-        const endDate = new Date(filters.travelDate[1]);
-
-        filteredData = filteredData.filter((item) => {
-          if (item.Start_Date && item.End_Date) {
-            const packageStartDate = new Date(item.Start_Date);
-            const packageEndDate = new Date(item.End_Date);
-            return packageStartDate >= startDate && packageEndDate <= endDate;
-          }
-          return false;
-        });
       }
 
       const mapData = filteredData.map((item) => ({
@@ -85,7 +55,7 @@ export default function PackageCard({ filters }) {
       setDataSource(mapData);
       console.log(data_date);
     }
-  }, [data_package, data_date, filters]);
+  }, [data_package, filters]);
 
   if (loading_package) {
     return <div>Loading...</div>;
