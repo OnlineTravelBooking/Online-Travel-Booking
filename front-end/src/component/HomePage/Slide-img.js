@@ -25,9 +25,9 @@ export default function Slide({ onSearch }) {
     >
       <div className="Search-carousel">
         <Input
-          placeholder="FIND YOUR TRIP!!!"
+          placeholder="Let’s Find Your Next Adventure!"
           className="Input-search"
-          prefix={<SearchOutlined style={{ fontSize: "22px" }} />}
+          prefix={<SearchOutlined style={{ fontSize: "20px" }} />}
           onChange={(e) => onSearch(e.target.value)}
         />
       </div>

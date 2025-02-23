@@ -41,7 +41,7 @@ export default function Filter_Button({ onFilter }) {
           type={selectedTypes.includes("One_day_trip") ? "primary" : "default"}
           onClick={() => handleTypeToggle("One_day_trip")}
         >
-          ทริปวันเดียว
+          One Day Trip 🚍
         </Button>
 
         <Button
@@ -49,7 +49,7 @@ export default function Filter_Button({ onFilter }) {
           type={selectedTypes.includes("Muti_day_trip") ? "primary" : "default"}
           onClick={() => handleTypeToggle("Muti_day_trip")}
         >
-          ทริปหลายวัน
+          Multi Day Trip 🏢
         </Button>
       </Form.Item>
 

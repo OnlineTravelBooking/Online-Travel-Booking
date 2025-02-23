@@ -39,7 +39,7 @@ export default function Home() {
         <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
           {<PackageCard /> ? (
-            <PackageCard filters={{ filters, searchTitle }} />
+            <PackageCard filters={{ ...filters, searchTitle }} />
           ) : (
             <h1>No Package Data</h1>
           )}
