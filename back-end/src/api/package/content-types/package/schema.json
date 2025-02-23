@@ -16,14 +16,6 @@
       "type": "string",
       "required": true
     },
-    "Type": {
-      "type": "enumeration",
-      "enum": [
-        "One day trip",
-        "Muti day trip"
-      ],
-      "required": true
-    },
     "Description": {
       "type": "blocks"
     },
@@ -57,6 +49,13 @@
     "MeetingPoint": {
       "type": "string",
       "required": true
+    },
+    "Type": {
+      "type": "enumeration",
+      "enum": [
+        "One Day Trip",
+        "Multi Day Trip"
+      ]
     }
   }
 }

@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Slider,
-  DatePicker,
-  Form,
-  InputNumber,
-  Layout,
-  Space,
-} from "antd";
+import { Button, Checkbox, Slider, DatePicker, Form, InputNumber, Layout, Space } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
@@ -46,12 +37,7 @@ export default function SiderFilter({ onFilter }) {
 
   return (
     <Sider className="Filter-Box" width="100%">
-      <Form
-        form={form}
-        onFinish={handleSubmit}
-        className="Filter-form"
-        layout="vertical"
-      >
+      <Form form={form} onFinish={handleSubmit} className="Filter-form" layout="vertical">
         <h2 style={{ color: "white", textAlign: "center" }}>
           <FilterOutlined /> ค้นหาทริป
         </h2>
@@ -60,7 +46,7 @@ export default function SiderFilter({ onFilter }) {
           <Checkbox.Group>
             <Space direction="vertical">
               <Checkbox value="One_day_trip">ทริปวันเดียว</Checkbox>
-              <Checkbox value="Muti_day_trip">ทริปหลายวัน</Checkbox>
+              <Checkbox value="Multi_day_trip">ทริปหลายวัน</Checkbox>
             </Space>
           </Checkbox.Group>
         </Form.Item>
@@ -94,22 +80,11 @@ export default function SiderFilter({ onFilter }) {
             />
           </div>
 
-          <Slider
-            range
-            min={0}
-            max={10000}
-            step={100}
-            value={priceRange}
-            onChange={handleSliderChange}
-          />
+          <Slider range min={0} max={10000} step={100} value={priceRange} onChange={handleSliderChange} />
         </Form.Item>
 
         <Form.Item label="วันที่เดินทาง" name="travelDate">
-          <RangePicker
-            style={{ width: "100%" }}
-            placeholder={["เริ่มต้น", "สิ้นสุด"]}
-            format="DD-MM-YYYY"
-          />
+          <RangePicker style={{ width: "100%" }} placeholder={["เริ่มต้น", "สิ้นสุด"]} format="DD-MM-YYYY" />
         </Form.Item>
 
         <Button
