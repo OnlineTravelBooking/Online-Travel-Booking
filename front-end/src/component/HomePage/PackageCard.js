@@ -12,29 +12,14 @@ export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
 
-  const {
-    loading: loading_package,
-    error: error_package,
-    data: data_package,
-  } = useQuery(GET_PACKAGES);
+  const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
-  const {
-    loading: loading_date,
-    error: error_date,
-    data: data_date,
-  } = useQuery(TRAVEL_DATE);
+  const { loading: loading_date, error: error_date, data: data_date } = useQuery(TRAVEL_DATE);
 
   useEffect(() => {
-    if (
-      data_package &&
-      data_package.packages &&
-      data_date &&
-      data_date.travelDates
-    ) {
+    if (data_package && data_package.packages && data_date && data_date.travelDates) {
       const mergedData = data_package.packages.map((pkg) => {
-        const travelDate = data_date.travelDates.find(
-          (date) => date.documentId === pkg.documentId
-        );
+        const travelDate = data_date.travelDates.find((date) => date.documentId === pkg.documentId);
         return {
           ...pkg,
           Start_Date: travelDate?.Start_Date || null,
@@ -45,16 +30,12 @@ export default function PackageCard({ filters }) {
       let filteredData = mergedData;
 
       if (filters.types?.length > 0) {
-        filteredData = filteredData.filter((item) =>
-          filters.types.includes(item.Type)
-        );
+        filteredData = filteredData.filter((item) => filters.types.includes(item.Type));
       }
 
       if (filters.priceRange) {
         const [min, max] = filters.priceRange;
-        filteredData = filteredData.filter(
-          (item) => item.Price >= min && item.Price <= max
-        );
+        filteredData = filteredData.filter((item) => item.Price >= min && item.Price <= max);
       }
 
       if (filters.travelDate?.length === 2) {
@@ -148,9 +129,7 @@ export default function PackageCard({ filters }) {
                 description={
                   <>
                     <div>{item.Type}</div>
-                    <div style={{ color: "#FF0000", textAlign: "end" }}>
-                      ${item.Price}
-                    </div>
+                    <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
                   </>
                 }
               />
