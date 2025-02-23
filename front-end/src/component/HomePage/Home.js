@@ -26,9 +26,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <Header>
-        <UserHeader />
-      </Header>
+      <UserHeader />
       <Layout>
         <Slide onSearch={(title) => setSearchTitle(title)} />
       </Layout>

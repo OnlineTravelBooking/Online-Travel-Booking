@@ -17,6 +17,7 @@ export const UserHeader = () => {
   const { isAuthenticated, logout, data } = useAuth();
   const [fullName, setFullName] = useState("User");
   const [menuItems, setMenuItems] = useState([]);
+  const images = ["southtex_logo.png"];
 
   // ดึงชื่อผู้ใช้จาก sessionStorage
   useEffect(() => {
@@ -82,7 +83,14 @@ export const UserHeader = () => {
 
   return (
     <Header className="Header-user">
-      <Menu mode="horizontal" defaultSelectedKeys={["2"]} items={menuItems} />
+      <img src={images} alt="Sothtex Logo" className="Logo-header" />
+      <div className="Header-title"> SOUTHEX </div>
+      <Menu
+        className="Menu-user"
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        items={menuItems}
+      />
     </Header>
   );
 };
