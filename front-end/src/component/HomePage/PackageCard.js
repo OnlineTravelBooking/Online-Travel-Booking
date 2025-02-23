@@ -148,7 +148,9 @@ export default function PackageCard({ filters }) {
                 description={
                   <>
                     <div>{item.Type}</div>
-                    <div style={{ color: "#FF0000" }}>${item.Price}</div>
+                    <div style={{ color: "#FF0000", textAlign: "end" }}>
+                      ${item.Price}
+                    </div>
                   </>
                 }
               />
