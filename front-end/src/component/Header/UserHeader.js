@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Menu, Layout } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
-import {
-  FormOutlined,
-  FileTextOutlined,
-  LogoutOutlined,
-  UserOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
+import { FormOutlined, FileTextOutlined, LogoutOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {
@@ -16,55 +10,38 @@ export const UserHeader = () => {
   const location = useLocation();
   const { isAuthenticated, logout, data } = useAuth();
   const [fullName, setFullName] = useState("User"); // ชื่อผู้ใช้
+  const [menuItems, setMenuItems] = useState([]);
 
   // ดึงชื่อผู้ใช้จาก sessionStorage
   useEffect(() => {
-    if (data) {
-      try {
-        if (data.Fname && data.Lname) {
-          setFullName(`${data.Fname} ${data.Lname}`);
-        }
-      } catch (error) {
-        console.error("Error parsing userData from sessionStorage:", error);
-      }
+    if (data?.Fname && data?.Lname) {
+      setFullName(`${data.Fname} ${data.Lname}`);
     }
   }, [data]);
 
-  if (!isAuthenticated) {
-    return (
-      <Header>
-        <div className="container-fluid">
-          <div className="header">
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-              <Menu.Item
-                key="3"
-                style={{ marginLeft: "auto" }}
-                onClick={() => navigate("/login")}
-              >
-                <UserOutlined /> เข้าสู่ระบบ
-              </Menu.Item>
-              <Menu.Item key="4" onClick={() => navigate("/login")}>
-                <FormOutlined /> ลงทะเบียน
-              </Menu.Item>
-            </Menu>
-          </div>
-        </div>
-      </Header>
-    );
-  } else {
-    return (
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item
-            key="3"
-            style={{ marginLeft: "auto" }}
-            onClick={() =>
-              navigate(location.pathname === "/status" ? "/" : "/status")
-            }
-          >
-            {location.pathname === "/status" ? (
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setMenuItems([
+        {
+          key: "login",
+          label: "เข้าสู่ระบบ",
+          icon: <UserOutlined />,
+          onClick: () => navigate("/login"),
+          style: { marginLeft: "auto" },
+        },
+        {
+          key: "register",
+          label: "ลงทะเบียน",
+          icon: <FormOutlined />,
+          onClick: () => navigate("/login"),
+        },
+      ]);
+    } else {
+      setMenuItems([
+        {
+          key: "nav-toggle",
+          label:
+            location.pathname === "/status" ? (
               <>
                 <HomeOutlined /> Home
               </>
@@ -72,22 +49,34 @@ export const UserHeader = () => {
               <>
                 <FileTextOutlined /> ตรวจสอบสถานะการจองทัวร์
               </>
-            )}
-          </Menu.Item>
-          <Menu.SubMenu
-            key="user"
-            title={
-              <span>
-                <UserOutlined /> {fullName}
-              </span>
-            }
-          >
-            <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
-              ออกจากระบบ
-            </Menu.Item>
-          </Menu.SubMenu>
-        </Menu>
-      </Header>
-    );
-  }
+            ),
+          onClick: () => navigate(location.pathname === "/status" ? "/" : "/status"),
+          style: { marginLeft: "auto" },
+        },
+        {
+          key: "user-menu",
+          label: (
+            <span>
+              <UserOutlined /> {fullName}
+            </span>
+          ),
+          children: [
+            {
+              key: "logout",
+              label: "ออกจากระบบ",
+              icon: <LogoutOutlined />,
+              onClick: logout,
+            },
+          ],
+        },
+      ]);
+    }
+  }, [isAuthenticated, location.pathname, fullName, navigate, logout]);
+
+  return (
+    <Header>
+      <div className="logo" />
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]} items={menuItems} />
+    </Header>
+  );
 };
