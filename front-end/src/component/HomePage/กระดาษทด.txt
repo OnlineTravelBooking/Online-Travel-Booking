@@ -1,0 +1,7 @@
+ดึง booking ทั้งหมดมา
+
+กรองเหลือแต่ booking ของ package 
+
+map เอาจำนวน HowManyPeople มารวมกัน
+
+นำไปแทนเลข 0

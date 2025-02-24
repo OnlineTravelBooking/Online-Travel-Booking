@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
 import { PlusOutlined, MinusOutlined, ConsoleSqlOutlined, UserOutlined } from "@ant-design/icons";
-import { TRAVEL_DATE, ALL_IMAGES_PACKAGE } from "../../Graphql";
+import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import ImageSlider from "./ImageSlider";
@@ -56,12 +56,33 @@ export default function Detail() {
       },
     },
   });
+
+  const {
+    loading: loadingBooking,
+    error: errorBooking,
+    data: data_booking,
+  } = useQuery(APPROVE_BOOKINGSD, {
+    variables: {
+      filters: {
+        package: {
+          documentId: {
+            eq: documentId,
+          },
+        },
+        Status_booking: {
+          eq: "approved",
+        },
+      },
+    },
+  });
+
   useEffect(() => {
     if (data_date?.travelDates) {
       const formattedDates = data_date.travelDates.map((date) => ({
         documentId: date.documentId,
         Start_Date: date.Start_Date,
         End_Date: date.End_Date,
+        MaxPeople: date.MaxPeople,
       }));
       // Sort dates in ascending order
       formattedDates.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
@@ -107,6 +128,7 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
@@ -165,12 +187,21 @@ export default function Detail() {
                     >
                       <div className="title-input">เลือกวันที่ต้องการจอง</div>
                       <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
-                        {availableDates?.map((date) => (
-                          <Option key={date.documentId}>
-                            {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                            {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
-                          </Option>
-                        ))}
+                        {availableDates?.map((date) => {
+                          const totalPeople = data_booking?.bookings
+                            ?.filter((booking) => booking.Start === date.Start_Date)
+                            ?.reduce((sum, booking) => sum + booking.HowManyPeople, 0);
+
+                          return (
+                            <Option key={date.documentId}>
+                              {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                              {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+
+                              {/* จำนวนสูงสุดที่จองได้ */}
+                              <span style={{ marginLeft: "70%" }}>{`${totalPeople}/${date.MaxPeople}`}</span>
+                            </Option>
+                          );
+                        })}
                       </Select>
                     </Form.Item>
                   </div>
