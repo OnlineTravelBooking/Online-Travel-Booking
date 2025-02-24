@@ -29,6 +29,9 @@ export default function CreateButton() {
 
   const validateForm = () => {
     const newErrors = {};
+    if (formData.type === "Multi Day Trip" && !formData.Accommodation)
+      newErrors.Accommodation = "Please enter the accommodation";
+    if (!formData.MaxPeople) newErrors.MaxPeople = "Please enter the maximum number of people";
     if (!formData.title || formData.title.length < 2) newErrors.title = "Title must be at least 2 characters";
     if (!formData.type) newErrors.type = "Please select a tour type";
     if (!formData.description || formData.description.length < 10)
@@ -204,6 +207,8 @@ export default function CreateButton() {
           Price: parseFloat(formData.price),
           MeetingPoint: formData.meetingPoint,
           Image: imageIds.length === 1 ? imageIds[0] : imageIds,
+          //ถ้าเป็น Multi Day Trip ให้เพิ่ม Accommodation ด้วย
+          ...(formData.Accommodation && { Accommodation: formData.Accommodation }),
         },
       };
 
@@ -498,43 +503,13 @@ export default function CreateButton() {
                         onChange={handleRadioChange}
                         optionType="button"
                         buttonStyle="solid"
-                        className="full-width-radio"
+                        className={{ color: "1D4ED8" }}
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
                         <Radio value="Multi Day Trip">Multi Day Trip</Radio>
                       </Radio.Group>
                     </div>
                     {errors.type && <span className="error">{errors.type}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <Dropdown
-                      overlay={renderMenu(formData.type === "One Day Trip")}
-                      trigger={["click"]}
-                      visible={dropdownVisible}
-                      onVisibleChange={setDropdownVisible}
-                    >
-                      <Button size="large">
-                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
-                      </Button>
-                    </Dropdown>
-                    {errors.dates && <span className="error">{errors.dates}</span>}
-                    {formData.type === "Multi Day Trip" ? (
-                      <div className="form-group">
-                        <label htmlFor="Accommodation">สถานที่พัก</label>
-                        <input
-                          id="Accommodation"
-                          name="Accommodation"
-                          type="text"
-                          value={formData.Accommodation}
-                          onChange={handleInputChange}
-                          placeholder="Enter Accommodation"
-                        />
-                        {errors.Accommodation && <span className="error">{errors.Accommodation}</span>}
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
 
                   <div className="form-group">
@@ -595,7 +570,35 @@ export default function CreateButton() {
                     />
                     {errors.MaxPeople && <span className="error">{errors.MaxPeople}</span>}
                   </div>
-
+                  {formData.type === "Multi Day Trip" ? (
+                    <div className="form-group">
+                      <label htmlFor="Accommodation">สถานที่พัก</label>
+                      <input
+                        id="Accommodation"
+                        name="Accommodation"
+                        type="text"
+                        value={formData.Accommodation}
+                        onChange={handleInputChange}
+                        placeholder="Enter Accommodation"
+                      />
+                      {errors.Accommodation && <span className="error">{errors.Accommodation}</span>}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="form-group">
+                    <Dropdown
+                      overlay={renderMenu(formData.type === "One Day Trip")}
+                      trigger={["click"]}
+                      visible={dropdownVisible}
+                      onVisibleChange={setDropdownVisible}
+                    >
+                      <Button size="large">
+                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                      </Button>
+                    </Dropdown>
+                    {errors.dates && <span className="error">{errors.dates}</span>}
+                  </div>
                   <div className="button-group">
                     <button type="submit" className="primary-button" disabled={isUploading}>
                       สร้างแพ็คเกจ
