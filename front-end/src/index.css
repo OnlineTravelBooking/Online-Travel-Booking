@@ -193,11 +193,9 @@ body {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  height: 108vh;
-  height: 108vh;
+  height:fit-content;
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: 50px;
   padding-top: 50px;
   gap: 30px;
   background-color: #e5e5e5;
@@ -285,6 +283,7 @@ body {
   background-color: #4b6a5d;
   color: #fff0f0;
   font-size: large;
+  margin-bottom: 20px ;
 }
 
 .ant-message {

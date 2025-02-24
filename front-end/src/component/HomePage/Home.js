@@ -6,14 +6,9 @@ import Filter_Button from "./Filter";
 import PriceFilter from "./PriceFilter";
 import Slide from "./Slide-img";
 import { Layout } from "antd";
+import CustomFooter from "./Footer";
 
-const { Header, Footer, Sider, Content } = Layout;
-
-const footerStyle = {
-  textAlign: "center",
-  color: "#fff",
-  backgroundColor: "#4096ff",
-};
+const { Footer, Sider, Content } = Layout;
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -43,7 +38,7 @@ export default function Home() {
           )}
         </Content>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
+      <CustomFooter />
     </Layout>
   );
 }
