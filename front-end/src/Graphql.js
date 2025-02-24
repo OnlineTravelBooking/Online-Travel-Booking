@@ -69,6 +69,7 @@ export const TRAVEL_DATE = gql`
     travelDates(filters: $filters) {
       Start_Date
       End_Date
+      MaxPeople
       package {
         Title
       }
@@ -137,6 +138,19 @@ export const GET_APPROVED_BOOKINGS = gql`
       }
       slip {
         url
+      }
+    }
+  }
+`;
+
+export const APPROVE_BOOKINGSD = gql`
+  query Bookings($filters: BookingFiltersInput) {
+    bookings(filters: $filters) {
+      HowManyPeople
+      Start
+      documentId
+      package {
+        Title
       }
     }
   }

@@ -9,6 +9,13 @@ import {
   UserOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
+import {
+  FormOutlined,
+  FileTextOutlined,
+  LogoutOutlined,
+  UserOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 const { Header } = Layout;
 
 export const UserHeader = () => {

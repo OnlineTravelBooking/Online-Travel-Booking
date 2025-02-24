@@ -47,16 +47,16 @@ export default function PackageCard({ filters }) {
 
       const mapData = filteredData.map((item) => ({
         documentId: item.documentId,
-        Price: item.Price,
-        Title: item.Title,
-        Type: item.Type,
-        urlImage: item.Image[0]?.url,
-        Description: item.Description,
-        MeetingPoint: item.MeetingPoint,
-        StartDate: item.Start_Date,
-        EndDate: item.End_Date,
-        StartDate: item.Start_Date,
-        EndDate: item.End_Date,
+        Price: item?.Price,
+        Title: item?.Title,
+        Type: item?.Type,
+        urlImage: item?.Image[0]?.url,
+        Description: item?.Description,
+        MeetingPoint: item?.MeetingPoint,
+        StartDate: item?.Start_Date,
+        EndDate: item?.End_Date,
+        StartDate: item?.Start_Date,
+        EndDate: item?.End_Date,
       }));
       setDataSource(mapData);
     }

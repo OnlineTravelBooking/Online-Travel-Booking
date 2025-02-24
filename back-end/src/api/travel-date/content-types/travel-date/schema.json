@@ -24,6 +24,11 @@
     },
     "End_Date": {
       "type": "date"
+    },
+    "MaxPeople": {
+      "type": "integer",
+      "required": true,
+      "min": 1
     }
   }
 }

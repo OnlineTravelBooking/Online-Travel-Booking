@@ -63,14 +63,35 @@ export default function Detail() {
       },
     },
   });
+
+  const {
+    loading: loadingBooking,
+    error: errorBooking,
+    data: data_booking,
+  } = useQuery(APPROVE_BOOKINGSD, {
+    variables: {
+      filters: {
+        package: {
+          documentId: {
+            eq: documentId,
+          },
+        },
+        Status_booking: {
+          eq: "approved",
+        },
+      },
+    },
+  });
+
   useEffect(() => {
     if (data_date?.travelDates) {
       const formattedDates = data_date.travelDates.map((date) => ({
         documentId: date.documentId,
         Start_Date: date.Start_Date,
         End_Date: date.End_Date,
+        MaxPeople: date.MaxPeople,
       }));
-      // Sort dates in ascending order
+
       formattedDates.sort(
         (a, b) => new Date(a.Start_Date) - new Date(b.Start_Date)
       );
@@ -116,6 +137,7 @@ export default function Detail() {
   const onFinishFailed = (err) => {
     message.error("กรุณาเลือกวันที่");
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <UserHeader />
@@ -184,16 +206,57 @@ export default function Detail() {
                     >
                       <div className="title-input">เลือกวันที่ต้องการจอง</div>
                       <Select
-                        placeholder="เลือกวันเที่ยว"
+                        placeholder={
+                          <div className="placeholder-wrapper">
+                            <CalendarOutlined />
+                            <span>เลือกวันเที่ยว</span>
+                          </div>
+                        }
                         onChange={handleDateChange}
+                        className="booking-select"
                       >
-                        {availableDates?.map((date) => (
-                          <Option key={date.documentId}>
-                            {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                            {date.End_Date &&
-                              ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
-                          </Option>
-                        ))}
+                        {availableDates?.map((date) => {
+                          const totalPeople =
+                            data_booking?.bookings
+                              ?.filter(
+                                (booking) => booking.Start === date.Start_Date
+                              )
+                              ?.reduce(
+                                (sum, booking) => sum + booking.HowManyPeople,
+                                0
+                              ) || 0;
+
+                          const isDisabled = totalPeople >= date.MaxPeople;
+                          const dateRange = `${dayjs(date.Start_Date).format(
+                            "DD/MM/YYYY"
+                          )}${
+                            date.End_Date
+                              ? ` - ${dayjs(date.End_Date).format(
+                                  "DD/MM/YYYY"
+                                )}`
+                              : ""
+                          }`;
+
+                          return (
+                            <Option
+                              key={date.documentId}
+                              disabled={isDisabled}
+                              className="booking-option"
+                            >
+                              <CalendarOutlined className="calendar-icon" />
+                              <span className="date-text">{dateRange}</span>
+
+                              <div
+                                className={`user-count ${
+                                  isDisabled ? "full" : ""
+                                }`}
+                              >
+                                <UserOutlined className="user-icon" />
+                                <span>{`${totalPeople}/${date.MaxPeople}`}</span>
+                              </div>
+                            </Option>
+                          );
+                        })}
                       </Select>
                     </Form.Item>
                   </div>

@@ -11,7 +11,6 @@ import CustomFooter from "./Footer";
 const { Footer, Sider, Content } = Layout;
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState({});
   const [searchTitle, setSearchTitle] = useState("");
 

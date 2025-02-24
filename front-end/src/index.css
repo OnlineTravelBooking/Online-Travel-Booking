@@ -565,13 +565,31 @@ body {
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 500px;
+  width: 500px;
 }
 
 .Input-search{
   height: 40px;
+  height: 40px;
   border-radius: 20px;
   background-color: #d5dee6de;
+  background-color: #d5dee6de;
   border-color: whitesmoke;
+  transition: all 0.3s ease-in;
+}
+
+
+.Input-search:hover {
+  transform: scale(1.2) ;
+  background-color: #d5dee6e2 ;
+  border-color: #005c78 ;
+}
+
+.Input-search:focus,
+.Input-search:focus-within {
+  transform: scale(1.2);
+  background-color: #d5dee6e2 ;
+  border-color: #005c78 ;
   transition: all 0.3s ease-in;
 }
 
@@ -604,6 +622,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   
+  
 }
 
 .Filter-form .ant-form-item-label > label {
@@ -633,6 +652,49 @@ body {
 
 .Filter-bar {
   display: flex;
+  max-height: max-content;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.One-Button {
+  margin-right: 40px;
+  margin-left: 40px;
+  font-size: 18px;
+  height: 50px;
+  width: 150px;
+}
+
+.One-Button:hover {
+  transform: scale(1.1);
+  color: #5AB1AE !important;
+  border-color: #005C78 !important;
+}
+
+.One-Button.ant-btn-primary {
+  background-color: #5AB1AE; 
+  border-color: #005C78;     
+}
+
+.One-Button.ant-btn-primary:hover {
+  background-color: #5AB1AE !important; 
+  color: #ffffff !important;
+  border-color: #005C78 !important;     
+}
+
+
+.Muti-Button {
+  margin-right: 20px;
+  font-size: 17px;
+  height: 50px;
+  width: 150px;
+}
+
+.Muti-Button:hover {
+  transform: scale(1.1);
+  color: #5AB1AE !important;
+  border-color: #005C78 !important;
   max-height: max-content;
   margin-top: 20px;
   margin-bottom: 10px;

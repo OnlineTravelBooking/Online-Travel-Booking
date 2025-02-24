@@ -389,7 +389,9 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     End: Schema.Attribute.Date;
-    HowManyPeople: Schema.Attribute.Integer;
+    HowManyPeople: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -478,6 +480,14 @@ export interface ApiTravelDateTravelDate extends Struct.CollectionTypeSchema {
       'api::travel-date.travel-date'
     > &
       Schema.Attribute.Private;
+    MaxPeople: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     package: Schema.Attribute.Relation<'manyToOne', 'api::package.package'>;
     publishedAt: Schema.Attribute.DateTime;
     Start_Date: Schema.Attribute.Date & Schema.Attribute.Required;
