@@ -225,6 +225,7 @@ export default function CreateButton() {
                 package: packageId,
                 Start_Date: date.format("YYYY-MM-DD"),
                 End_Date: date.format("YYYY-MM-DD"),
+                MaxPeople: formData.MaxPeople,
               },
             }))
           : formData.ranges.map((range) => ({
@@ -232,6 +233,7 @@ export default function CreateButton() {
                 package: packageId,
                 Start_Date: range[0].format("YYYY-MM-DD"),
                 End_Date: range[1].format("YYYY-MM-DD"),
+                MaxPeople: formData.MaxPeople,
               },
             }));
 
@@ -366,8 +368,24 @@ export default function CreateButton() {
           ))}
           <Menu.Divider />
           <Menu.Item key="add">
-            <Button type="dashed" onClick={() => addItem(key)} block icon={<PlusOutlined />}>
+            <Button
+              type="Dashed"
+              onClick={() => addItem(key)}
+              block
+              icon={<PlusOutlined />}
+              style={{ borderRadius: "8px", backgroundColor: "#1D4ED8", borderColor: "#d9d9d9", color: "#ffffff" }}
+            >
               เพิ่ม{isDayTrip ? "วันที่" : "ช่วงวันที่"}
+            </Button>
+          </Menu.Item>
+          <Menu.Item key="close">
+            <Button
+              type="Dashed"
+              onClick={() => setDropdownVisible(false)}
+              block
+              style={{ borderRadius: "8px", backgroundColor: "#f0f0f0", borderColor: "#1890ff", color: "#000000" }}
+            >
+              เสร็จสิ้น
             </Button>
           </Menu.Item>
         </Menu>
@@ -501,6 +519,22 @@ export default function CreateButton() {
                       </Button>
                     </Dropdown>
                     {errors.dates && <span className="error">{errors.dates}</span>}
+                    {formData.type === "Multi Day Trip" ? (
+                      <div className="form-group">
+                        <label htmlFor="Accommodation">สถานที่พัก</label>
+                        <input
+                          id="Accommodation"
+                          name="Accommodation"
+                          type="text"
+                          value={formData.Accommodation}
+                          onChange={handleInputChange}
+                          placeholder="Enter Accommodation"
+                        />
+                        {errors.Accommodation && <span className="error">{errors.Accommodation}</span>}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -547,6 +581,19 @@ export default function CreateButton() {
                       placeholder="Enter meeting point"
                     />
                     {errors.meetingPoint && <span className="error">{errors.meetingPoint}</span>}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="MaxPeople">จำนวนสูงสุดที่จองได้</label>
+                    <input
+                      id="MaxPeople"
+                      name="MaxPeople"
+                      type="text"
+                      value={formData.MaxPeople}
+                      onChange={handleInputChange}
+                      placeholder="Enter the maximum number of people"
+                    />
+                    {errors.MaxPeople && <span className="error">{errors.MaxPeople}</span>}
                   </div>
 
                   <div className="button-group">

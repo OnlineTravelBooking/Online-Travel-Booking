@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Descriptions } from "antd";
-import { GET_PACKAGES, TRAVEL_DATE } from "../../Graphql";
+import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -12,9 +12,8 @@ export default function PackageCard({ filters }) {
 
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
-  const { loading: loading_date, error: error_date, data: data_date } = useQuery(TRAVEL_DATE);
-
   useEffect(() => {
+    console.log("filters", filters);
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
 
@@ -33,6 +32,19 @@ export default function PackageCard({ filters }) {
         filteredData = filteredData.filter((item) => item.Price >= min && item.Price <= max);
       }
 
+      if (filters.travelDate) {
+        const [start, end] = filters.travelDate;
+
+        filteredData = filteredData.filter((pkg) => {
+          // Check if the package has any date that overlaps with selected range
+          return pkg.Date?.some((date) => {
+            const Start_Date = date.Start_Date;
+            const End_Date = date.End_Date;
+            return End_Date ? Start_Date >= start && End_Date <= end : Start_Date >= start;
+          });
+        });
+      }
+
       const mapData = filteredData.map((item) => ({
         documentId: item.documentId,
         Price: item?.Price,
@@ -41,8 +53,6 @@ export default function PackageCard({ filters }) {
         urlImage: item?.Image[0]?.url,
         Description: item?.Description,
         MeetingPoint: item?.MeetingPoint,
-        StartDate: item?.Start_Date,
-        EndDate: item?.End_Date,
         StartDate: item?.Start_Date,
         EndDate: item?.End_Date,
       }));
