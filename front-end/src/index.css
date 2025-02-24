@@ -512,7 +512,8 @@ body {
   margin-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
-  gap: 40px;
+  gap: 80px;
+  row-gap: 60px !important;
 }
 
 .Card-package {
@@ -695,10 +696,6 @@ body {
   transform: scale(1.1);
   color: #5AB1AE !important;
   border-color: #005C78 !important;
-  max-height: max-content;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  align-items: center;
 }
 
 .One-Button {
@@ -811,3 +808,4 @@ body {
   flex: 1;
   min-width: 200px; 
 }
+
