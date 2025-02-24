@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { Form, message, Select, Button, Upload, Space, Layout, Steps } from "antd";
+import {
+  Form,
+  message,
+  Select,
+  Button,
+  Upload,
+  Space,
+  Layout,
+  Steps,
+} from "antd";
 import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/reset.css";
+import CustomFooter from "../HomePage/Footer";
 message.config({
   maxCount: 3,
   duration: 3,
@@ -18,7 +28,8 @@ export default function Transaction() {
   const [paymentStatus, setPaymentStatus] = useState(0);
   const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
-  const { data, Title, Price, selectedDate, people, packageId } = useLocation().state;
+  const { data, Title, Price, selectedDate, people, packageId } =
+    useLocation().state;
   const [form] = Form.useForm();
   const { Option } = Select;
 
@@ -38,11 +49,15 @@ export default function Transaction() {
     formData.append("files", imageFile);
 
     try {
-      const uploadRes = await axios.post("http://localhost:1337/api/upload", formData, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      });
+      const uploadRes = await axios.post(
+        "http://localhost:1337/api/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
       const slipId = uploadRes.data[0]?.id;
 
       const bookingData = {
@@ -90,7 +105,9 @@ export default function Transaction() {
     {
       label: "วันที่เดินทาง",
       value: `${dayjs(selectedDate.Start_Date).format("DD/MM/YYYY")}${
-        selectedDate.End_Date ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}` : ""
+        selectedDate.End_Date
+          ? ` - ${dayjs(selectedDate.End_Date).format("DD/MM/YYYY")}`
+          : ""
       }`,
     },
     { label: "ทัวร์", value: Title },
@@ -101,7 +118,7 @@ export default function Transaction() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout>
       <UserHeader />
       <Content className="Box">
         <div className="Box-trip-data">
@@ -119,9 +136,17 @@ export default function Transaction() {
             <h2>การชำระเงินด้วย QR Code</h2>
           </div>
           <div className="Qr-container">
-            <img src="/qr_code.jpg" alt="QR Code" style={{ width: "200px", margin: "20px 0" }} />
+            <img
+              src="/qr_code.jpg"
+              alt="QR Code"
+              style={{ width: "200px", margin: "20px 0" }}
+            />
             <div className="Qr-payment">
-              <p>สแกน QR Code นี้ด้วยแอปมือถือธนาคารของคุณเพื่อชำระเงินให้เสร็จสมบูรณ์ ข้อมูลการชำระเงิน</p>
+              <p>
+                สแกน QR Code
+                นี้ด้วยแอปมือถือธนาคารของคุณเพื่อชำระเงินให้เสร็จสมบูรณ์
+                ข้อมูลการชำระเงิน
+              </p>
               {paymentInfo.map((item, index) => (
                 <p key={index}>
                   {"- "}
@@ -136,7 +161,12 @@ export default function Transaction() {
           <div className="Upload-header">
             <h2>อัพโหลดหลักฐานการชำระเงิน</h2>
           </div>
-          <Form form={form} layout="vertical" onFinish={onFinish} scrollToFirstError>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            scrollToFirstError
+          >
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Form.Item
                 name="image"
@@ -189,7 +219,11 @@ export default function Transaction() {
             current={paymentStatus}
             className="Step-Body"
             size="large"
-            items={[{ title: "รอการชำระเงิน" }, { title: "กำลังตรวจสอบ" }, { title: "ยืนยันสำเร็จ" }]}
+            items={[
+              { title: "รอการชำระเงิน" },
+              { title: "กำลังตรวจสอบ" },
+              { title: "ยืนยันสำเร็จ" },
+            ]}
           />
         </div>
         <div>
@@ -205,6 +239,7 @@ export default function Transaction() {
           </Button>
         </div>
       </Content>
+      <CustomFooter />
     </Layout>
   );
 }

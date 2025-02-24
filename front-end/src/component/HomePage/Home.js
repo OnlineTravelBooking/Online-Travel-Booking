@@ -6,14 +6,9 @@ import Filter_Button from "./Filter";
 import PriceFilter from "./PriceFilter";
 import Slide from "./Slide-img";
 import { Layout } from "antd";
+import CustomFooter from "./Footer";
 
 const { Footer, Sider, Content } = Layout;
-
-const footerStyle = {
-  textAlign: "center",
-  color: "#fff",
-  backgroundColor: "#4096ff",
-};
 
 export default function Home() {
   const [filters, setFilters] = useState({});
@@ -35,10 +30,14 @@ export default function Home() {
         </Sider>
         <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
-          {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
+          {<PackageCard /> ? (
+            <PackageCard filters={{ ...filters, searchTitle }} />
+          ) : (
+            <h1>No Package Data</h1>
+          )}
         </Content>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
+      <CustomFooter />
     </Layout>
   );
 }
