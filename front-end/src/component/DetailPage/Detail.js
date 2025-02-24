@@ -193,7 +193,7 @@ export default function Detail() {
                             ?.reduce((sum, booking) => sum + booking.HowManyPeople, 0);
 
                           return (
-                            <Option key={date.documentId}>
+                            <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
                               {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
