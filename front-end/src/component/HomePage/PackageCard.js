@@ -76,7 +76,7 @@ export default function PackageCard({ filters }) {
             initial={{ x: 100, opacity: 0, rotate: 0 }}
             animate={{ x: 0, opacity: 1, rotate: 0 }}
             transition={{
-              delay: index * 0.2,
+              delay: index * 0.1,
               duration: 0.5,
             }}
             whileHover={{
@@ -101,7 +101,7 @@ export default function PackageCard({ filters }) {
                   src={`http://localhost:1337${item.urlImage}`}
                   style={{
                     height: "170px",
-                    objectFit: "contain",
+                    objectFit: "cover",
                   }}
                 />
               }

@@ -510,17 +510,30 @@ body {
 }
 
 .Package {
-  display: flex;
-  justify-content: start;
   margin-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
+  row-gap: 30px !important;
 }
 
 .Card-package {
   width: 80%;
   height: 60%;
- 
+  margin-bottom: 20px; 
+  border-radius: 15px ;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.5s;
+}
+
+.Card-package:hover {
+  width: 80%;
+  height: 60%;
+  margin-bottom: 20px; 
+  border-radius: 15px ;
+  overflow: hidden;
+  box-shadow: 0 0px 12px #5AB1AE ;
+  transition: transform 0.3s;
 }
 
 .carousel {
