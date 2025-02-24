@@ -9,7 +9,6 @@ import { Layout } from "antd";
 import CustomFooter from "./Footer";
 
 const { Footer, Sider, Content } = Layout;
-const { Footer, Sider, Content } = Layout;
 
 const footerStyle = {
   textAlign: "center",
