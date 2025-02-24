@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Descriptions } from "antd";
+import { Card, Row, Col } from "antd";
+import LoadingSpin from "../LoadingSpin";
+import ErrorIcon from "../ErrorIcon";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+
 const { Meta } = Card;
 
 export default function PackageCard({ filters }) {
@@ -61,10 +64,10 @@ export default function PackageCard({ filters }) {
   }, [data_package, filters]);
 
   if (loading_package) {
-    return <div>Loading...</div>;
+    return <LoadingSpin />;
   }
   if (error_package) {
-    return <div>Error: {error_package.message}</div>;
+    return <ErrorIcon error={error_package} />;
   }
   return (
     <Row className="Package">
