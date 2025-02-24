@@ -198,7 +198,9 @@ export default function Detail() {
                               {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
                               {/* จำนวนสูงสุดที่จองได้ */}
-                              <span style={{ marginLeft: "70%" }}>{`${totalPeople}/${date.MaxPeople}`}</span>
+                              <span
+                                style={date.End_Date ? { marginLeft: "45%" } : { marginLeft: "70%" }}
+                              >{`${totalPeople}/${date.MaxPeople}`}</span>
                             </Option>
                           );
                         })}
