@@ -5,6 +5,8 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
 import { PlusOutlined, MinusOutlined, ConsoleSqlOutlined, UserOutlined, CalendarOutlined } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
+import { PlusOutlined, MinusOutlined, ConsoleSqlOutlined, UserOutlined, CalendarOutlined } from "@ant-design/icons";
+import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import ImageSlider from "./ImageSlider";
@@ -84,7 +86,7 @@ export default function Detail() {
         End_Date: date.End_Date,
         MaxPeople: date.MaxPeople,
       }));
-
+      // เรียงวันที่จากน้อย-ไปมาก
       formattedDates.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
       setAvailableDates(formattedDates);
     }
@@ -186,36 +188,22 @@ export default function Detail() {
                       ]}
                     >
                       <div className="title-input">เลือกวันที่ต้องการจอง</div>
-                      <Select
-                        placeholder={
-                          <div className="placeholder-wrapper">
-                            <CalendarOutlined />
-                            <span>เลือกวันเที่ยว</span>
-                          </div>
-                        }
-                        onChange={handleDateChange}
-                        className="booking-select"
-                      >
+                      <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
                         {availableDates?.map((date) => {
-                          const totalPeople =
-                            data_booking?.bookings
-                              ?.filter((booking) => booking.Start === date.Start_Date)
-                              ?.reduce((sum, booking) => sum + booking.HowManyPeople, 0) || 0;
-
-                          const isDisabled = totalPeople >= date.MaxPeople;
-                          const dateRange = `${dayjs(date.Start_Date).format("DD/MM/YYYY")}${
-                            date.End_Date ? ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}` : ""
-                          }`;
+                          const totalPeople = data_booking?.bookings
+                            ?.filter((booking) => booking.Start === date.Start_Date)
+                            ?.reduce((sum, booking) => sum + booking.HowManyPeople, 0);
 
                           return (
-                            <Option key={date.documentId} disabled={isDisabled} className="booking-option">
-                              <CalendarOutlined className="calendar-icon" />
-                              <span className="date-text">{dateRange}</span>
+                            <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
+                              {dayjs(date.Start_Date).format("DD/MM/YYYY")}
+                              {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
-                              <div className={`user-count ${isDisabled ? "full" : ""}`}>
-                                <UserOutlined className="user-icon" />
-                                <span>{`${totalPeople}/${date.MaxPeople}`}</span>
-                              </div>
+                              {/* จำนวนสูงสุดที่จองได้ */}
+                              <span
+                                className="Total-people"
+                                style={date.End_Date ? { marginLeft: "30%" } : { marginLeft: "70%" }}
+                              >{`${totalPeople}/${date.MaxPeople}`}</span>
                             </Option>
                           );
                         })}

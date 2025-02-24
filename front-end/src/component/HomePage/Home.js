@@ -6,7 +6,9 @@ import Filter_Button from "./Filter";
 import PriceFilter from "./PriceFilter";
 import Slide from "./Slide-img";
 import { Layout } from "antd";
+import CustomFooter from "./Footer";
 
+const { Footer, Sider, Content } = Layout;
 const { Footer, Sider, Content } = Layout;
 
 const footerStyle = {
@@ -38,7 +40,7 @@ export default function Home() {
           {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
         </Content>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
+      <CustomFooter />
     </Layout>
   );
 }
