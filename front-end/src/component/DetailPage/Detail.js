@@ -84,7 +84,7 @@ export default function Detail() {
         End_Date: date.End_Date,
         MaxPeople: date.MaxPeople,
       }));
-      // Sort dates in ascending order
+      // เรียงวันที่จากน้อย-ไปมาก
       formattedDates.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
       setAvailableDates(formattedDates);
     }
