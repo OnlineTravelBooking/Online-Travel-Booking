@@ -10,17 +10,9 @@ export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
 
-  const {
-    loading: loading_package,
-    error: error_package,
-    data: data_package,
-  } = useQuery(GET_PACKAGES);
+  const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
-  const {
-    loading: loading_date,
-    error: error_date,
-    data: data_date,
-  } = useQuery(TRAVEL_DATE);
+  const { loading: loading_date, error: error_date, data: data_date } = useQuery(TRAVEL_DATE);
 
   useEffect(() => {
     if (data_package && data_package.packages) {
@@ -33,30 +25,26 @@ export default function PackageCard({ filters }) {
       }
 
       if (filters.types?.length > 0) {
-        filteredData = filteredData.filter((item) =>
-          filters.types.includes(item.Type)
-        );
+        filteredData = filteredData.filter((item) => filters.types.includes(item.Type));
       }
 
       if (filters.priceRange) {
         const [min, max] = filters.priceRange;
-        filteredData = filteredData.filter(
-          (item) => item.Price >= min && item.Price <= max
-        );
+        filteredData = filteredData.filter((item) => item.Price >= min && item.Price <= max);
       }
 
       const mapData = filteredData.map((item) => ({
         documentId: item.documentId,
-        Price: item.Price,
-        Title: item.Title,
-        Type: item.Type,
-        urlImage: item.Image[0]?.url,
-        Description: item.Description,
-        MeetingPoint: item.MeetingPoint,
-        StartDate: item.Start_Date,
-        EndDate: item.End_Date,
-        StartDate: item.Start_Date,
-        EndDate: item.End_Date,
+        Price: item?.Price,
+        Title: item?.Title,
+        Type: item?.Type,
+        urlImage: item?.Image[0]?.url,
+        Description: item?.Description,
+        MeetingPoint: item?.MeetingPoint,
+        StartDate: item?.Start_Date,
+        EndDate: item?.End_Date,
+        StartDate: item?.Start_Date,
+        EndDate: item?.End_Date,
       }));
       setDataSource(mapData);
     }
@@ -123,9 +111,7 @@ export default function PackageCard({ filters }) {
                 description={
                   <>
                     <div>{item.Type}</div>
-                    <div style={{ color: "#FF0000", textAlign: "end" }}>
-                      ${item.Price}
-                    </div>
+                    <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
                   </>
                 }
               />

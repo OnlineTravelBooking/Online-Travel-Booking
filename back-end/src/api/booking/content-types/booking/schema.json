@@ -13,7 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "HowManyPeople": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0,
+      "required": true
     },
     "TotalPrice": {
       "type": "decimal"

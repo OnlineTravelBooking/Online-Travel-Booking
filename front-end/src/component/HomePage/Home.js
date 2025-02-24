@@ -7,7 +7,7 @@ import PriceFilter from "./PriceFilter";
 import Slide from "./Slide-img";
 import { Layout } from "antd";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Sider, Content } = Layout;
 
 const footerStyle = {
   textAlign: "center",
@@ -16,7 +16,6 @@ const footerStyle = {
 };
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState({});
   const [searchTitle, setSearchTitle] = useState("");
 
@@ -36,11 +35,7 @@ export default function Home() {
         </Sider>
         <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
-          {<PackageCard /> ? (
-            <PackageCard filters={{ ...filters, searchTitle }} />
-          ) : (
-            <h1>No Package Data</h1>
-          )}
+          {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
         </Content>
       </Layout>
       <Footer style={footerStyle}>Footer</Footer>

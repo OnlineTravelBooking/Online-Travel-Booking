@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Slider, Form, InputNumber } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
-export default function Filter_Price({ onFilter }) {
+export default function PriceFilter({ onFilter }) {
   const [form] = Form.useForm();
   const [priceRange, setPriceRange] = useState([0, 10000]);
 
@@ -32,12 +32,7 @@ export default function Filter_Price({ onFilter }) {
 
   return (
     <div className="Filter-Box">
-      <Form
-        form={form}
-        onFinish={handleSubmit}
-        className="Filter-form"
-        layout="vertical"
-      >
+      <Form form={form} onFinish={handleSubmit} className="Filter-form" layout="vertical">
         <h4 style={{ color: "white", textAlign: "center" }}>
           <FilterOutlined /> กรองด้วยราคา
         </h4>
@@ -71,14 +66,7 @@ export default function Filter_Price({ onFilter }) {
             />
           </div>
 
-          <Slider
-            range
-            min={0}
-            max={10000}
-            step={100}
-            value={priceRange}
-            onChange={handleSliderChange}
-          />
+          <Slider range min={0} max={10000} step={100} value={priceRange} onChange={handleSliderChange} />
         </Form.Item>
         <Button
           type="primary"
