@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Descriptions } from "antd";
-import { GET_PACKAGES, TRAVEL_DATE, BOOKING } from "../../Graphql";
+import { GET_PACKAGES, TRAVEL_DATE } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
