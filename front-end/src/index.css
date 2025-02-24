@@ -691,24 +691,23 @@ body {
 
 .Logo-header{
   height: 50px;
-  margin-left: 20px;
   border-radius: 30%;
 }
 
 .Header-title{
-  position: absolute;
+  margin-left: 20px;
   margin-top: -10px;
-  left: 10%;
   font-size: 80px;
   color: white;
+  font-weight: bold;
 }
 
 .Header-user {
-  position: relative;
   display: flex ;
   align-items: center ;
   padding: 0 20px ;
   background-color: #005C78 ; 
+  height: 64px;
 }
 
 .Header-user .ant-menu {
@@ -722,7 +721,8 @@ body {
 }
 
 .Header-user .ant-menu-item:hover {
-  color: #70ece8 !important; 
+  color: #70ece8 !important;
+  white-space: nowrap;
 }
 
 .Header-user .ant-menu-submenu-title {
@@ -731,4 +731,11 @@ body {
 
 .Header-user .ant-menu-submenu-title:hover {
   color: #70ece8 !important;
+}
+
+.Header-user .ant-menu-overflow {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 200px; 
 }

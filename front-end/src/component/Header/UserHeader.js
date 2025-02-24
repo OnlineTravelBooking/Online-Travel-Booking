@@ -83,7 +83,7 @@ export const UserHeader = () => {
 
   return (
     <Header className="Header-user">
-      <img src={images} alt="Sothtex Logo" className="Logo-header" />
+      <img src={images[0]} alt="Sothtex Logo" className="Logo-header" />
       <div className="Header-title"> SOUTHEX </div>
       <Menu
         className="Menu-user"
