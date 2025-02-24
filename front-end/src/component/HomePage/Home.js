@@ -6,8 +6,9 @@ import Filter_Button from "./Filter";
 import PriceFilter from "./PriceFilter";
 import Slide from "./Slide-img";
 import { Layout } from "antd";
+import BackToTop from "./back";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Sider, Content } = Layout;
 
 const footerStyle = {
   textAlign: "center",
@@ -27,22 +28,22 @@ export default function Home() {
   return (
     <Layout>
       <UserHeader />
-      <Layout>
-        <Slide onSearch={(title) => setSearchTitle(title)} />
-      </Layout>
+      <Slide onSearch={(title) => setSearchTitle(title)} />
       <Layout>
         <Sider width="20%">
           <PriceFilter onFilter={mergeFilters} />
         </Sider>
         <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
-          {<PackageCard /> ? (
+          {/* เช็คข้อมูลก่อนแสดงผล */}
+          {searchTitle || Object.keys(filters).length > 0 ? (
             <PackageCard filters={{ ...filters, searchTitle }} />
           ) : (
             <h1>No Package Data</h1>
           )}
         </Content>
       </Layout>
+      <BackToTop />
       <Footer style={footerStyle}>Footer</Footer>
     </Layout>
   );
