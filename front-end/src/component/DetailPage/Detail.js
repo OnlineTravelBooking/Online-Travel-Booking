@@ -9,7 +9,6 @@ import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import ImageSlider from "./ImageSlider";
 import { useAuth } from "../../AuthContext";
-import { motion } from "framer-motion";
 import "./Detail.css";
 
 const { Option } = Select;
