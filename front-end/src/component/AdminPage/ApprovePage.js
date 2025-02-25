@@ -19,15 +19,41 @@ export default function ApprovePage() {
     },
   });
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const columns = [
+
+  // Process data to group bookings by package title
+  const groupedPackages =
+    data?.bookings?.reduce((acc, booking) => {
+      const packageTitle = booking.package?.Title || "Unnamed Package";
+      if (!acc[packageTitle]) {
+        acc[packageTitle] = {
+          packageTitle,
+          bookings: [],
+        };
+      }
+      refetch();
+      acc[packageTitle].bookings.push(booking);
+      return acc;
+    }, {}) || {};
+
+  const packageData = Object.values(groupedPackages);
+
+  // Columns for parent table (packages)
+  const packageColumns = [
     {
-      title: "Customer",
-      dataIndex: ["customer", "Fname"],
-      render: (_, record) => `${record.customer?.Fname} ${record.customer?.Lname}`,
+      title: "Package",
+      dataIndex: "packageTitle",
     },
     {
-      title: "Trip",
-      dataIndex: ["package", "Title"],
+      title: "Number of Bookings",
+      render: (_, record) => record.bookings.length,
+    },
+  ];
+
+  // Columns for nested table (bookings)
+  const bookingColumns = [
+    {
+      title: "Customer",
+      render: (_, record) => `${record.customer?.Fname} ${record.customer?.Lname}`,
     },
     {
       title: "Dates",
@@ -47,7 +73,7 @@ export default function ApprovePage() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  refetch();
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -63,28 +89,37 @@ export default function ApprovePage() {
 
             <Table
               pagination={false}
-              columns={columns}
-              dataSource={data?.bookings || []}
-              rowKey="documentId"
+              columns={packageColumns}
+              dataSource={packageData}
+              rowKey="packageTitle"
               expandable={{
-                expandedRowRender: (record) => (
-                  <div style={{ margin: 0 }}>
-                    <p>
-                      <strong>Participants:</strong> {record.HowManyPeople}
-                    </p>
-                    <p>
-                      <strong>Total Price:</strong> ${record.TotalPrice}
-                    </p>
-                    <p>
-                      <strong>Contact:</strong> {record.customer?.email}
-                    </p>
-                  </div>
+                expandedRowRender: (packageGroup) => (
+                  <Table
+                    columns={bookingColumns}
+                    dataSource={packageGroup.bookings}
+                    rowKey="documentId"
+                    pagination={false}
+                    expandable={{
+                      expandedRowRender: (record) => (
+                        <div style={{ margin: 0 }}>
+                          <p>
+                            <strong>Participants:</strong> {record.HowManyPeople}
+                          </p>
+                          <p>
+                            <strong>Total Price:</strong> ${record.TotalPrice}
+                          </p>
+                          <p>
+                            <strong>Contact:</strong> {record.customer?.email}
+                          </p>
+                        </div>
+                      ),
+                    }}
+                  />
                 ),
               }}
             />
           </Card>
 
-          {/* Booking Detail Modal */}
           {selectedBooking && (
             <BookingDetailsModal booking={selectedBooking} onClose={() => setSelectedBooking(null)} />
           )}
