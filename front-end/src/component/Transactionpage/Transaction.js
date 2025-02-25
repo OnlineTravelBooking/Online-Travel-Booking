@@ -206,7 +206,7 @@ export default function Transaction() {
           </Button>
         </div>
       </Content>
-      <CustomFooter />
+      {/* <CustomFooter /> */}
     </Layout>
   );
 }

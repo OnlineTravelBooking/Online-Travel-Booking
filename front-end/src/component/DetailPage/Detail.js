@@ -143,7 +143,9 @@ export default function Detail() {
           <Row>
             <Col span={15} className="Detail">
               <div className="Detail-Tour">รายละเอียดทริปทัวร์</div>
-              <BlocksRenderer content={Description} />
+              <div className="Detail-Description">
+                <BlocksRenderer content={Description} />
+              </div>
             </Col>
             <Col span={7} className="Detail-input">
               <div>
@@ -155,7 +157,6 @@ export default function Detail() {
                       icon={<UserOutlined />}
                       style={{ backgroundColor: "#005C78", color: "white" }}
                     />
-                    {/* circle */}
                     <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                     <div style={{ scale: "1.2" }}>
                       <Button
@@ -241,7 +242,7 @@ export default function Detail() {
           </Row>
         </div>
       </Content>
-      <CustomFooter />
+      {/* <CustomFooter /> */}
     </Layout>
   );
 }

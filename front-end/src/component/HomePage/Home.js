@@ -39,7 +39,7 @@ export default function Home() {
           <PriceFilter onFilter={mergeFilters} />
         </Sider>
       </Layout>
-      <CustomFooter />
+      {/* <CustomFooter /> */}
     </Layout>
   );
 }
