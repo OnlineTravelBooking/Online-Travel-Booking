@@ -400,10 +400,14 @@ export default function CreateButton() {
 
   return (
     <div>
-      <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => setIsModalOpen(true)}
+        style={{ backgroundColor: "#1D4ED8", color: "#ffffff", borderRadius: "0" }}
+      >
         เพิ่มแพ็คเกจ
       </Button>
-      <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"80%"}>
+      <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"85%"} style={{ top: 25 }}>
         <div className="container">
           <div className="card">
             <div className="header">
@@ -503,7 +507,7 @@ export default function CreateButton() {
                         onChange={handleRadioChange}
                         optionType="button"
                         buttonStyle="solid"
-                        className={{ color: "1D4ED8" }}
+                        style={{ backgroundColor: "#1D4ED8" }}
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
                         <Radio value="Multi Day Trip">Multi Day Trip</Radio>

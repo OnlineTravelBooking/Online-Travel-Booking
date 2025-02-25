@@ -367,3 +367,9 @@ input:focus {
   padding: 4px;
   cursor: pointer;
 }
+
+.CreatePackageButton {
+  margin-left: 88%;
+  margin-top: 17%;
+  scale: 1.5;
+}

@@ -130,7 +130,7 @@ export default function CreatePackage() {
               ))}
             </Row>
           </div>
-          <div>
+          <div className="CreatePackageButton">
             <CreatePackageButton />
           </div>
         </Content>
