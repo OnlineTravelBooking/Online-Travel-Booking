@@ -33,10 +33,7 @@ export default function SlideImg({ onSearch }) {
       </div>
       <div className="carousel-inner">
         {images.map((img, index) => (
-          <div
-            key={index}
-            className={`carousel-item ${index === 0 ? "active" : ""}`}
-          >
+          <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
             <img
               src={img}
               className="d-block w-100"

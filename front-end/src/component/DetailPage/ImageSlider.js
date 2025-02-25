@@ -37,7 +37,7 @@ export default function ImageSlider({ allImages }) {
     <div
       style={{
         width: "100%",
-        height: "100%",
+        height: "400px",
         position: "relative",
         overflow: "hidden",
       }}

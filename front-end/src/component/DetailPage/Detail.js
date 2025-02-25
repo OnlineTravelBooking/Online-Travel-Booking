@@ -3,7 +3,7 @@ import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
-import { PlusOutlined, MinusOutlined, UserOutlined, CalendarOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, UserOutlined, CalendarTwoTone } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
@@ -194,14 +194,18 @@ export default function Detail() {
 
                           return (
                             <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
+                              <CalendarTwoTone style={{ marginRight: "10px" }} />
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
                               {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
                               {/* จำนวนสูงสุดที่จองได้ */}
                               <span
-                                className="Total-people"
-                                style={date.End_Date ? { marginLeft: "30%" } : { marginLeft: "70%" }}
-                              >{`${totalPeople}/${date.MaxPeople}`}</span>
+                                className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
+                                style={date.End_Date ? { marginLeft: "23%" } : { marginLeft: "48%" }}
+                              >
+                                <UserOutlined />
+                                {`${totalPeople}/${date.MaxPeople}`}
+                              </span>
                             </Option>
                           );
                         })}

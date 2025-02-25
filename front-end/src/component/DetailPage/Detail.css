@@ -1,3 +1,24 @@
 .Total-people {
-  color: rgb(255, 0, 0) !important;
+  color: rgb(15, 184, 0) !important;
+}
+
+.Total-people.full {
+  color: red !important;
+}
+
+.ant-select:hover .ant-select-selector {
+  background-color: #5ab1ae42 !important;
+  border-color: #005C78 !important;
+}
+
+.ant-select:hover .ant-select-selector:focus,
+.ant-select:hover .ant-select-selector:focus-within {
+  background-color: #5ab1ae42 !important;
+  border-color: #005C78 !important;
+}
+
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector {
+  border-color: #005C78 !important;
+  box-shadow: 2px 2px 5px #5ab1ae !important; 
 }

@@ -594,20 +594,6 @@ body {
   transition: all 0.3s ease-in;
 }
 
-
-.Input-search:hover {
-  transform: scale(1.2) ;
-  background-color: #d5dee6e2 ;
-  border-color: #005c78 ;
-}
-
-.Input-search:focus,
-.Input-search:focus-within {
-  transform: scale(1.2);
-  background-color: #d5dee6e2 ;
-  border-color: #005c78 ;
-}
-
 .Filter-Box {
   padding: 20px !important;
   background-color: #F5F5F5 !important;
