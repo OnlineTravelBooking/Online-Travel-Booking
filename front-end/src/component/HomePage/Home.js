@@ -4,7 +4,7 @@ import { useAuth } from "../../AuthContext";
 import PackageCard from "./PackageCard";
 import Filter_Button from "./Filter";
 import PriceFilter from "./PriceFilter";
-import Slide from "./Slide-img";
+import SlideImg from "./SlideImg";
 import { Layout } from "antd";
 import CustomFooter from "./Footer";
 
@@ -28,7 +28,7 @@ export default function Home() {
     <Layout>
       <UserHeader />
       <Layout>
-        <Slide onSearch={(title) => setSearchTitle(title)} />
+        <SlideImg onSearch={(title) => setSearchTitle(title)} />
       </Layout>
       <Layout>
         <Sider width="20%">

@@ -17,6 +17,24 @@ export const MUTATION_LOGIN = gql`
   }
 `;
 
+export const MUTATION_REGISTER = gql`
+  mutation Mutation($data: UsersPermissionsUserInput!) {
+    createUsersPermissionsUser(data: $data) {
+      data {
+        username
+        email
+        Fname
+        Lname
+        role {
+          type
+        }
+        confirmed
+      }
+    }
+  }
+`;
+
+
 export const ROLE = gql`
   query Query($filters: UsersPermissionsUserFiltersInput) {
     usersPermissionsUsers(filters: $filters) {
@@ -41,6 +59,7 @@ export const GET_PACKAGES = gql`
       Price
       Description
       MeetingPoint
+      Accommodation
       bookings {
         documentId
         Start

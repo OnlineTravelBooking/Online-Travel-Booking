@@ -3,13 +3,14 @@ import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
-import { PlusOutlined, MinusOutlined, UserOutlined, CalendarOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, UserOutlined, CalendarTwoTone } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import ImageSlider from "./ImageSlider";
 import { useAuth } from "../../AuthContext";
 import "./Detail.css";
+import CustomFooter from "../HomePage/Footer";
 
 const { Option } = Select;
 
@@ -20,7 +21,7 @@ export default function Detail() {
   const location = useLocation();
   const [form] = Form.useForm();
   const { data, isAuthenticated } = useAuth();
-  const { documentId, Title, Price, Type, Description, MeetingPoint } = location.state || {};
+  const { documentId, Title, Price, Type, Description, MeetingPoint, Accommodation } = location.state || {};
   const formattedType = Type.replaceAll("_", " ");
   const [totalPrice, setTotalPrice] = useState(Price);
   const [count, setCount] = useState(1);
@@ -133,11 +134,11 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
-
+  console.log("accommodation", Accommodation);
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout>
       <UserHeader />
-      <Content style={{ display: "flex", flexDirection: "column" }}>
+      <Content style={{ display: "flex", flexDirection: "column", maxHeight: "fit-content", marginBottom: "30px" }}>
         <div className="Title-detail">
           <div>{Title}</div>
         </div>
@@ -157,7 +158,13 @@ export default function Detail() {
               <div>
                 <Form form={form} onFinish={handleSubmit}>
                   <div className="Background-add">
-                    <Avatar shape="square" size={64} icon={<UserOutlined />} />
+                    <Avatar
+                      shape="circle"
+                      size={64}
+                      icon={<UserOutlined />}
+                      style={{ backgroundColor: "#005C78", color: "white" }}
+                    />
+                    {/* circle */}
                     <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                     <div style={{ scale: "1.2" }}>
                       <Button
@@ -199,20 +206,31 @@ export default function Detail() {
 
                           return (
                             <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
+                              <CalendarTwoTone style={{ marginRight: "10px" }} />
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
                               {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
                               {/* จำนวนสูงสุดที่จองได้ */}
                               <span
-                                className="Total-people"
-                                style={date.End_Date ? { marginLeft: "30%" } : { marginLeft: "70%" }}
-                              >{`${totalPeople}/${date.MaxPeople}`}</span>
+                                className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
+                                style={date.End_Date ? { marginLeft: "23%" } : { marginLeft: "48%" }}
+                              >
+                                <UserOutlined />
+                                {`${totalPeople}/${date.MaxPeople}`}
+                              </span>
                             </Option>
                           );
                         })}
                       </Select>
                     </Form.Item>
                   </div>
+                  {Accommodation && (
+                    <>
+                      <div className="line">_______________________________________________________</div>
+                      <div className="Meeting-box">สถานที่พัก</div>
+                      <div className="Meeting">{Accommodation}</div>
+                    </>
+                  )}
                   <div className="line">_______________________________________________________</div>
                   <div className="Meeting-box">จุดนัดพบ</div>
                   <div className="Meeting">{MeetingPoint}</div>
@@ -232,6 +250,7 @@ export default function Detail() {
           </Row>
         </div>
       </Content>
+      <CustomFooter />
     </Layout>
   );
 }
