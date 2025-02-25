@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { GET_PACKAGES } from "../../Graphql";
-import { useQuery } from "@apollo/client";
+import { GET_PACKAGES, DELETE_PACKAGE } from "../../Graphql";
+import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { Layout, theme, Card, Row, Col } from "antd";
+import { Layout, theme, Card, Row, Col, Modal, message, Button } from "antd";
 import CreatePackageButton from "./AdminComponent/CreatePackageButton";
-
-const { Header, Content, Footer } = Layout;
+import { CloseOutlined } from "@ant-design/icons";
+import LoadingSpin from "../LoadingSpin";
+import ErrorIcon from "../ErrorIcon";
+const { Content } = Layout;
 const { useToken } = theme;
 
 export default function CreatePackage() {
   const { Meta } = Card;
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery(GET_PACKAGES);
+  const { loading, error, data, refetch } = useQuery(GET_PACKAGES);
   const [dataSource, setDataSource] = useState([]);
+  const [deletePackage] = useMutation(DELETE_PACKAGE);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = useToken();
@@ -33,8 +39,27 @@ export default function CreatePackage() {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <LoadingSpin />;
+  if (error) return <ErrorIcon />;
+
+  const handleDelete = async () => {
+    try {
+      await deletePackage({
+        variables: {
+          documentId: selectedPackage.documentId,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        },
+      });
+      setIsModalOpen(false);
+      refetch();
+    } catch (error) {
+      message.error("Delete failed: " + error.message);
+    }
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -56,11 +81,13 @@ export default function CreatePackage() {
                     hoverable
                     style={{ width: "100%", height: "100%" }}
                     cover={
-                      <img
-                        alt={item.Title}
-                        src={`http://localhost:1337${item.urlImage}`}
-                        style={{ height: "200px", objectFit: "cover" }}
-                      />
+                      <>
+                        <img
+                          alt={item.Title}
+                          src={`http://localhost:1337${item.urlImage}`}
+                          style={{ height: "200px", objectFit: "cover" }}
+                        />
+                      </>
                     }
                     onClick={() => navigate("/admin/approve", { state: { ...item } })}
                   >
@@ -73,7 +100,32 @@ export default function CreatePackage() {
                         </>
                       }
                     />
+                    <div>
+                      <Button
+                        style={{ marginLeft: "75%" }}
+                        variant="solid "
+                        color="danger"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsModalOpen(true);
+                          setSelectedPackage(item);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </Card>
+
+                  <Modal
+                    title="Confirm Delete"
+                    open={isModalOpen}
+                    onOk={handleDelete}
+                    onCancel={() => setIsModalOpen(false)}
+                    okText="Delete"
+                    okButtonProps={{ danger: true }}
+                  >
+                    <p>คุณต้องการลบแพ็คเกจ "{selectedPackage?.Title}" ใช่หรือไม่</p>
+                  </Modal>
                 </Col>
               ))}
             </Row>
