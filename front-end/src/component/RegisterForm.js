@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Layout, message } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined, EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { MUTATION_REGISTER, MUTATION_LOGIN } from "../Graphql";
@@ -11,7 +11,6 @@ export default function RegisterForm() {
   const [fullName, setFullName] = useState({ firstname: "Grace", lastname: "Katherine" });
   const images = ["Login.jpg"];
   const { login } = useAuth();
-
   const [registerMutation, { loading }] = useMutation(MUTATION_REGISTER);
   const [loginMutation] = useMutation(MUTATION_LOGIN);
 
@@ -24,7 +23,6 @@ export default function RegisterForm() {
   };
 
   const handleSubmit = async (values) => {
-
     const registerData = {
       username: values.Username,
       email: values.email,
@@ -35,14 +33,12 @@ export default function RegisterForm() {
       confirmed: true,
     };
 
-    
     try {
       const result = await registerMutation({
         variables: {
           data: registerData,
         },
       });
-
 
       const loginResult = await loginMutation({
         variables: {
@@ -58,13 +54,12 @@ export default function RegisterForm() {
         username: values.Username,
         Fname: fullName.firstname,
         Lname: fullName.lastname,
-        email: values.email
+        email: values.email,
       };
       message.destroy();
       login(userData, jwt, "user");
       message.success("สมัครสมาชิกสำเร็จและล็อกอินแล้ว!");
       navigate("/");
-
     } catch (err) {
       if (err.graphQLErrors) {
         message.destroy();
@@ -134,8 +129,8 @@ export default function RegisterForm() {
                 { required: true, message: "กรุณากรอก Email!" },
                 {
                   pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Email ไม่ถูกต้อง! ต้องมี @ และ domain เช่น example.com"
-                }
+                  message: "Email ไม่ถูกต้อง! ต้องมี @ และ domain เช่น example.com",
+                },
               ]}
             >
               <Input className="Input-login" type="email" placeholder="Email" />
@@ -143,15 +138,9 @@ export default function RegisterForm() {
             <Form.Item
               name="Username"
               wrapperCol={{ span: 24 }}
-              rules={[
-                { required: true, message: "Please input your Username!" },
-              ]}
+              rules={[{ required: true, message: "Please input your Username!" }]}
             >
-              <Input
-                className="Input-login"
-                placeholder="Username"
-                prefix={<UserOutlined />}
-              />
+              <Input className="Input-login" placeholder="Username" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
               name="Password"
@@ -160,14 +149,17 @@ export default function RegisterForm() {
                 { required: true, message: "Please input your password!" },
                 { min: 8, message: "รหัสผ่านต้องมีอย่างน้อย 8 ตัว!" },
                 { max: 20, message: "รหัสผ่านต้องไม่เกิน 20 ตัว!" },
-                { pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/, message: "รหัสต้องมีตัวอักษร ตัวเลข และอักขระพิเศษ!" },
+                {
+                  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
+                  message: "รหัสต้องมีตัวอักษร ตัวเลข และอักขระพิเศษ!",
+                },
               ]}
             >
               <Input.Password
                 className="Input-login"
                 placeholder="Password"
                 prefix={<LockOutlined />}
-                visibilityToggle={false}
+                visibilityToggle={true}
               />
             </Form.Item>
             <Form.Item
@@ -189,25 +181,16 @@ export default function RegisterForm() {
                 className="Input-login"
                 placeholder="Confirm password"
                 prefix={<LockOutlined />}
-                visibilityToggle={false}
+                visibilityToggle={true}
               />
             </Form.Item>
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Button
-                className="button-Login"
-                type="primary"
-                htmlType="submit"
-                loading={loading}
-              >
+              <Button className="button-Login" type="primary" htmlType="submit" loading={loading}>
                 Create new account
               </Button>
             </Form.Item>
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Button
-                onClick={() => navigate("/")}
-                className="button-Register"
-                type="primary"
-              >
+              <Button onClick={() => navigate("/")} className="button-Register" type="primary">
                 Go back to login
               </Button>
             </Form.Item>

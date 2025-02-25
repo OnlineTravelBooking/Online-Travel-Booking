@@ -8,19 +8,19 @@
 
 .ant-select:hover .ant-select-selector {
   background-color: #5ab1ae42 !important;
-  border-color: #005C78 !important;
+  border-color: #005c78 !important;
 }
 
 .ant-select:hover .ant-select-selector:focus,
 .ant-select:hover .ant-select-selector:focus-within {
   background-color: #5ab1ae42 !important;
-  border-color: #005C78 !important;
+  border-color: #005c78 !important;
 }
 
 .ant-select-focused .ant-select-selector,
 .ant-select-open .ant-select-selector {
-  border-color: #005C78 !important;
-  box-shadow: 2px 2px 5px #5ab1ae !important; 
+  border-color: #005c78 !important;
+  box-shadow: 2px 2px 5px #5ab1ae !important;
 }
 
 .dots-container {
