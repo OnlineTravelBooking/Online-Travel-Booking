@@ -7,7 +7,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Carousel } from "bootstrap";
 
 export default function SlideImg({ onSearch }) {
-  const images = ["Zoo.jpg", "Payanarg.jpg", "Samila.jpg"];
+  const images = ["Bigpic.jpg", "Bigpic2.jpeg", "Samila.jpg"];
 
   useEffect(() => {
     const carousel = document.querySelector("#carouselExample");
