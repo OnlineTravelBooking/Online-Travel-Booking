@@ -33,9 +33,7 @@ export default function Home() {
       <Layout>
         <Content className="Main-Content">
           <FilterButton onFilter={mergeFilters} />
-          <div className="Package-Container">
-            {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
-          </div>
+          {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
         </Content>
         <Sider className="Filter-Box" width="20%">
           <PriceFilter onFilter={mergeFilters} />

@@ -6,33 +6,29 @@ export default function PriceFilter({ onFilter }) {
   const [form] = Form.useForm();
   const [priceRange, setPriceRange] = useState([0, 10000]);
 
-  const handleSubmit = (values) => {
-    const processedValues = {
-      ...values,
-    };
-    onFilter(processedValues);
-  };
-
   const handleMinChange = (min) => {
     const newRange = [min, priceRange[1]];
     setPriceRange(newRange);
     form.setFieldsValue({ priceRange: newRange });
+    onFilter({ priceRange: newRange });
   };
 
   const handleMaxChange = (max) => {
     const newRange = [priceRange[0], max];
     setPriceRange(newRange);
     form.setFieldsValue({ priceRange: newRange });
+    onFilter({ priceRange: newRange });
   };
 
   const handleSliderChange = (value) => {
     setPriceRange(value);
     form.setFieldsValue({ priceRange: value });
+    onFilter({ priceRange: value });
   };
 
   return (
     <div className="Price-filter">
-      <Form form={form} onFinish={handleSubmit} className="Filter-form" layout="vertical">
+      <Form form={form} className="Filter-form" layout="vertical">
         <h4 style={{ color: "white", textAlign: "center" }}>
           <FilterOutlined /> กรองด้วยราคา
         </h4>
@@ -68,9 +64,6 @@ export default function PriceFilter({ onFilter }) {
 
           <Slider range min={0} max={10000} step={100} value={priceRange} onChange={handleSliderChange} />
         </Form.Item>
-        <Button type="primary" htmlType="submit" block className="Summit-filter">
-          กรองผลลัพธ์
-        </Button>
       </Form>
     </div>
   );

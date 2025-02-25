@@ -134,16 +134,12 @@ export default function Detail() {
     <Layout>
       <UserHeader />
       <Content style={{ display: "flex", flexDirection: "column", maxHeight: "fit-content", marginBottom: "30px" }}>
-        <div className="Title-detail">
-          <div>{Title}</div>
-        </div>
+        <div className="Title-Detail">{Title}</div>
         <div>
           <div>
             <ImageSlider allImages={allImages} />
           </div>
-          <div className="Type-Trip-box">
-            <div className="Type-Trip">{formattedType}</div>
-          </div>
+          <div className="Type-Trip">{formattedType}</div>
           <Row>
             <Col span={15} className="Detail">
               <div className="Detail-Tour">รายละเอียดทริปทัวร์</div>
@@ -179,7 +175,7 @@ export default function Detail() {
                       />
                     </div>
                   </div>
-                  <div className="line">_______________________________________________________</div>
+                  <hr className="line" />
                   {/* ช่องเลือกวันที่ */}
                   <div className="Day-Trip">
                     <Form.Item
@@ -221,15 +217,15 @@ export default function Detail() {
                   </div>
                   {Accommodation && (
                     <>
-                      <div className="line">_______________________________________________________</div>
+                      <hr className="line" />
                       <div className="Meeting-box">สถานที่พัก</div>
                       <div className="Meeting">{Accommodation}</div>
                     </>
                   )}
-                  <div className="line">_______________________________________________________</div>
+                  <hr className="line" />
                   <div className="Meeting-box">จุดนัดพบ</div>
                   <div className="Meeting">{MeetingPoint}</div>
-                  <div className="line">_______________________________________________________</div>
+                  <hr className="line" />
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
                   <div className="Pay-box">
                     <div className="Cost">THB {count === 0 ? totalPrice : totalPrice * count}</div>

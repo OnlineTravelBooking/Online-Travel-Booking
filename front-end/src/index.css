@@ -208,6 +208,7 @@ body {
   box-shadow: 0px 2px 5px #75747480;
   padding-left: 15px;
   max-height: max-content;
+  font-size: large;
 }
 
 .trip-data {
@@ -242,6 +243,7 @@ body {
   flex-direction: column;
   justify-content: center;
   margin-left: 20px;
+  font-size: large;
 }
 
 .Box-Upload-payment {
@@ -266,8 +268,25 @@ body {
 .Button-summit{
   background-color: #4b6a5d;
   color: #fff0f0;
+  height: 40px;
+  width: 100%;
+  border-radius: 20px;
+  margin-top: 10px ;
   font-weight: 600;
   font-size: large;
+}
+
+.Button-summit:hover{
+  background-color: #4b6a5d !important;
+  color: #fff0f0 !important;
+  border: none !important;
+  height: 40px;
+  width: 100%;
+  border-radius: 20px;
+  margin-top: 10px ;
+  font-weight: 600;
+  font-size: large;
+  transform: scale(1.1);
 }
 
 .Steps {
@@ -284,6 +303,17 @@ body {
   color: #fff0f0;
   font-size: large;
   margin-bottom: 20px ;
+  border-radius: 20px;
+}
+
+.Back-button:hover {
+  background-color: #4b6a5d !important;
+  color: #fff0f0 !important;
+  border: none !important;
+  font-size: large;
+  margin-bottom: 20px ;
+  border-radius: 20px;
+  scale: 1.1;
 }
 
 .ant-message {
@@ -294,15 +324,6 @@ body {
   background: rgba(255, 255, 255, 0.95) !important;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12) !important;
   padding: 12px 24px !important;
-}
-
-.Title-detail {
-  margin-top: 20px;
-  justify-items: start;
-  font-size: 30px;
-  font-weight: bold;
-  margin-left: 20px ;
-  color: #001529;
 }
 
 .img-slide {
@@ -319,7 +340,7 @@ body {
   left: 340px;
   transform: translateY(-50%);
   z-index: 10;
-  color: #59c4ce;
+  color: #ffffff;
   background-color: #005C78 !important;
   width: 60px;
   height: 100px;
@@ -327,7 +348,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 10%;
-  border: none;
+  transition: all 0.3s;
 }
 
 .button-slide-right {
@@ -336,7 +357,7 @@ body {
   right: 340px;
   transform: translateY(-50%);
   z-index: 10;
-  color: #59c4ce;
+  color: #ffffff;
   background-color: #005C78 !important;
   width: 60px;
   height: 100px;
@@ -344,17 +365,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border-color: none;
+  transition: all 0.5s;
 }
 
 .button-slide-left:hover {
-  background-color: #59c4ce !important;
+  background-color: #ffffff !important;
   color: #005C78 !important;
+  border-color: #000000 !important;
 }
 
 .button-slide-right:hover {
-  background-color: #59c4ce !important;
+  background-color: #ffffff !important;
   color: #005C78 !important;
+  border-color: #000000 !important;
 }
 
 .IMG {
@@ -372,6 +396,7 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   margin: 25px;
+  margin-top: 0px;
   background-color: #e5e5e5;
 }
 
@@ -379,6 +404,7 @@ body {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 30px;
   padding: 20px;
   justify-content: center;
   align-items: center;
@@ -463,15 +489,27 @@ body {
   width: 120px;
 }
 
+.pay-button:hover {
+  scale: 1.1;
+  background-color: #2e5077 !important;
+  font-size: 18px;
+  font-weight: 400;
+  transform: scale(1.2);
+  width: 120px;
+}
+
 .Member-Trip {
   font-size: 30px;
   color: #2e5077;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .line {
-  text-align: center;
-  color: #00000061;
+  border: none;           
+  height: 2px;            
+  background-color: #2e507793;  
+  margin: 20px 0;         
+  width: 100%;    
 }
 
 .Meeting-box {
@@ -495,17 +533,14 @@ body {
   font-weight: 600;
 }
 
-.Type-Trip-box{
-  font-size: 30px;
-  font-weight: 600;
+.Type-Trip{
+  display: flex;
+  justify-content: start;
+  margin-left: 50px;
+  font-size: 35px;
+  font-weight: bold;
   width: 100%;
-  color: #ff0000;
-  text-align: end;
-}
-
-.Type-Trip {
-  font-size: 30px;
-  margin-right: 80px;
+  color: #2e5077;
 }
 
 .Package {
@@ -603,12 +638,13 @@ body {
 .Price-filter {
   display: flex;
   justify-content: center;
+  max-height: fit-content;
 }
 
 .Filter-form {
   width: 80%;
-  padding: 20px;
-  background-color: #5ab1ae !important;
+  padding: 12px 20px;
+  background-color: #005c78 !important;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
@@ -620,26 +656,17 @@ body {
 
 .Filter-form h4 {
   color: white !important;
+  margin-bottom: 5px;
   font-weight: 500;
 }
 
-.Summit-filter{
-  background: #005c78 !important;
-  border-radius: 8px ;
-  height: 40px ;
-  font-weight: 550;
-  font-size: large;
-  margin-top: -10px ;
-  transition: all 0.3s ;
-}
-
-.Summit-filter:hover {
-  transform: translateY(-2px) ;
-  box-shadow: 0px 4px 10px #005c78;
+.ant-slider {
+  margin-top: 15px !important;
+  margin-bottom: -15px;
 }
 
 .ant-slider-track {
-  background-color: #005c78 !important;
+  background-color: #fffcf5 !important;
 }
 
 .ant-input-number {
@@ -649,25 +676,18 @@ body {
 
 .Main-Content {
   padding-bottom: 25px;
-  min-height: 800px;
+  min-height: 1000px;
   max-height: fit-content;
   background-color: #F5F5F5;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 250px); 
 }
 
-.Package-Container {
-  flex: 1;
-  overflow-y: auto; 
-  padding: 20px;
-}
-
-/* .custom-footer {
+.custom-footer {
   position: sticky;
   bottom: 0;
   z-index: 1000;
-} */
+}
 
 .Filter-bar {
   display: flex;
@@ -688,50 +708,56 @@ body {
   margin-right: 40px;
   margin-left: 40px;
   font-size: 18px;
+  font-weight: 500;
+  color: #005C78;
   height: 50px;
   width: 150px;
 }
 
 .One-Button:hover {
   transform: scale(1.1);
-  color: #5AB1AE !important;
+  color: #005C78 !important;
   border-color: #005C78 !important;
 }
 
 .One-Button.ant-btn-primary {
-  background-color: #5AB1AE; 
-  border-color: #005C78;     
+  background-color: #005C78; 
+  color: #ffffff !important;
+  border-color: #5AB1AE;     
 }
 
 .One-Button.ant-btn-primary:hover {
-  background-color: #5AB1AE !important; 
+  background-color: #005C78 !important; 
   color: #ffffff !important;
-  border-color: #005C78 !important;     
+  border-color: #5AB1AE !important;     
 }
 
 
 .Muti-Button {
   margin-right: 20px;
   font-size: 17px;
+  font-weight: 500;
   height: 50px;
   width: 150px;
+  color: #005C78;
 }
 
 .Muti-Button:hover {
   transform: scale(1.1);
-  color: #5AB1AE !important;
+  color: #005C78 !important;
   border-color: #005C78 !important;
 }
 
 .Muti-Button.ant-btn-primary {
-  background-color: #5AB1AE; 
-  border-color: #005C78;     
+  background-color: #005C78; 
+  color: #ffffff !important;
+  border-color: #5AB1AE;    
 }
 
 .Muti-Button.ant-btn-primary:hover {
-  background-color: #5AB1AE !important; 
+  background-color: #005C78 !important; 
   color: #ffffff !important;
-  border-color: #005C78 !important;     
+  border-color: #5AB1AE !important;   
 }
 
 .Select-Date {
@@ -751,8 +777,7 @@ body {
 
 .Header-title{
   margin-left: 20px;
-  margin-top: -10px;
-  font-size: 80px;
+  font-size: 40px;
   color: white;
   font-weight: bold;
 }
@@ -761,7 +786,7 @@ body {
   display: flex ;
   align-items: center ;
   padding: 0 20px ;
-  background-color: #005C78 ; 
+  background-color: #005c78 ; 
   height: 64px;
 }
 
@@ -794,6 +819,7 @@ body {
   flex: 1;
   min-width: 200px; 
 }
+
 
 
 
