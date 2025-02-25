@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import { motion, AnimatePresence } from "framer-motion";
+import "./Detail.css";
 
 export default function ImageSlider({ allImages }) {
   const [imageIndex, setImageIndex] = useState(0);
@@ -34,50 +35,62 @@ export default function ImageSlider({ allImages }) {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div className="IMG">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.img
-            key={imageIndex}
-            src={`http://localhost:1337${allImages[imageIndex]}`}
-            className="img-slide"
-            variants={slideVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            custom={direction}
-            style={{ position: "absolute", width: "100%", height: "100%" }}
+    <div style={{ width: "100%" }}>
+      <div
+        style={{
+          width: "100%",
+          height: "380px",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div className="IMG">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.img
+              key={imageIndex}
+              src={`http://localhost:1337${allImages[imageIndex]}`}
+              className="img-slide"
+              variants={slideVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              custom={direction}
+              style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </AnimatePresence>
+
+          <Button className="button-slide-left" onClick={prevImage}>
+            <div
+              style={{
+                transform: "scale(3)",
+                marginRight: "6px",
+                marginBottom: "3px",
+              }}
+            >
+              ❰
+            </div>
+          </Button>
+          <Button className="button-slide-right" onClick={nextImage}>
+            <div
+              style={{
+                transform: "scale(3)",
+                marginLeft: "6px",
+                marginBottom: "3px",
+              }}
+            >
+              ❱
+            </div>
+          </Button>
+        </div>
+      </div>
+      <div className="dots-container">
+        {allImages.map((_, index) => (
+          <div
+            key={index}
+            className={`dot ${index === imageIndex ? "active-dot" : ""}`}
+            onClick={() => setImageIndex(index)}
           />
-        </AnimatePresence>
-        <Button className="button-slide-left" onClick={prevImage}>
-          <div
-            style={{
-              transform: "scale(3)",
-              marginRight: "6px",
-              marginBottom: "3px",
-            }}
-          >
-            ❰
-          </div>
-        </Button>
-        <Button className="button-slide-right" onClick={nextImage}>
-          <div
-            style={{
-              transform: "scale(3)",
-              marginLeft: "6px",
-              marginBottom: "3px",
-            }}
-          >
-            ❱
-          </div>
-        </Button>
+        ))}
       </div>
     </div>
   );
