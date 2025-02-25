@@ -108,6 +108,15 @@ export default function Detail() {
     form
       .validateFields()
       .then(() => {
+        const totalPeople = data_booking?.bookings
+          ?.filter((booking) => booking.Start === selectedDate.Start_Date)
+          ?.reduce((sum, booking) => sum + booking.HowManyPeople, 0);
+
+        const seatAvailable = count + totalPeople <= selectedDate.MaxPeople;
+        if (!seatAvailable) {
+          message.error("จำนวนคนมากกว่าที่จองได้");
+          return;
+        }
         isAuthenticated
           ? navigate("/transaction", {
               state: {
@@ -125,11 +134,7 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
-
-  const onFinishFailed = (err) => {
-    message.error("กรุณาเลือกวันที่");
-  };
-
+  console.log("accommodation", Accommodation);
   return (
     <Layout>
       <UserHeader />
@@ -149,7 +154,7 @@ export default function Detail() {
             </Col>
             <Col span={7} className="Detail-input">
               <div>
-                <Form form={form} onFinish={handleSubmit} onFinishFailed={onFinishFailed}>
+                <Form form={form} onFinish={handleSubmit}>
                   <div className="Background-add">
                     <Avatar
                       shape="circle"

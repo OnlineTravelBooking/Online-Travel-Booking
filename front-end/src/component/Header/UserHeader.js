@@ -41,7 +41,7 @@ export const UserHeader = () => {
           key: "register",
           label: "ลงทะเบียน",
           icon: <FormOutlined />,
-          onClick: () => navigate("/login"),
+          onClick: () => navigate("/register"),
         },
       ]);
     } else {
