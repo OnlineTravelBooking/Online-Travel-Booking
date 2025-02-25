@@ -3,7 +3,7 @@ import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { MUTATION_LOGIN, ROLE } from "../Graphql";
 import { Button, Checkbox, Form, Input, message, Layout } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useMutation, useLazyQuery } from "@apollo/client";
 
 export default function LoginScreen() {
@@ -13,7 +13,6 @@ export default function LoginScreen() {
   const images = ["Login.jpg"];
 
   const [getRole, { loading: loading_role, error: error_role, data: data_role }] = useLazyQuery(ROLE);
-
   const [loginMutation, { loading, error, data }] = useMutation(MUTATION_LOGIN);
 
   const handleSubmit = async (values) => {
@@ -40,6 +39,12 @@ export default function LoginScreen() {
     } catch (err) {
       message.error("Login failed:", err);
     }
+  };
+
+  // เพิ่มฟังก์ชันสำหรับ Google Login (ตอนนี้เป็น mock function)
+  const handleGoogleLogin = () => {
+    message.info("Google Login functionality coming soon!");
+    // ที่นี่จะเป็นจุดที่คุณเพิ่ม logic จริงของ Google Login ในอนาคต
   };
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export default function LoginScreen() {
             form={form}
             name="basic"
             labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            wrapperCol={{ span: 24 }} // ปรับให้กว้างเต็มเหมือนปุ่มอื่นๆ
             initialValues={{ remember: true }}
             onFinish={handleSubmit}
             autoComplete="off"
@@ -126,6 +131,25 @@ export default function LoginScreen() {
                 Login
               </Button>
             </Form.Item>
+
+            {/* เพิ่มปุ่ม Login with Google */}
+            <Form.Item wrapperCol={{ span: 24 }}>
+              <Button
+                className="button-google-login"
+                onClick={handleGoogleLogin}
+                style={{
+                  backgroundColor: "#4285F4", // สีน้ำเงินของ Google
+                  color: "#fff",
+                  border: "none",
+                  marginBottom: "16px",
+                  transition: "all 0.3s", // เพิ่ม animation
+                }}
+                icon={<GoogleOutlined />}
+              >
+                Login with Google
+              </Button>
+            </Form.Item>
+
             <Form.Item className="Checkbox" name="remember" valuePropName="checked" wrapperCol={{ span: 24 }}>
               <Checkbox className="Checkbox">Remember me</Checkbox>
             </Form.Item>
@@ -133,7 +157,7 @@ export default function LoginScreen() {
               <Button
                 type="primary"
                 className="button-Register"
-                onClick={() => navigate("/register")} // เปลี่ยนไปหน้า /register
+                onClick={() => navigate("/register")}
               >
                 Register New Account
               </Button>
