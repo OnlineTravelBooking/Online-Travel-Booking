@@ -22,3 +22,31 @@
   border-color: #005C78 !important;
   box-shadow: 2px 2px 5px #5ab1ae !important; 
 }
+
+.dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #5ab1ae;
+  background-color: #ded9d9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  transform: scale(1.3);
+}
+
+.active-dot {
+  background-color: #005c78;
+  border-color: #004080;
+  box-shadow: 0 0 5px #5ab1ae;
+  transform: scale(1.3);
+}
