@@ -9,7 +9,7 @@ const { Title } = Typography;
 const { Content } = Layout;
 
 export default function ApprovePage() {
-  const { loading, error, data } = useQuery(GET_APPROVED_BOOKINGS, {
+  const { loading, error, data, refetch } = useQuery(GET_APPROVED_BOOKINGS, {
     variables: {
       filters: {
         Status_booking: {
@@ -47,7 +47,7 @@ export default function ApprovePage() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
+  refetch();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />

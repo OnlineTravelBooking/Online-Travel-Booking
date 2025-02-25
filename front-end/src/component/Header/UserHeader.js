@@ -9,6 +9,7 @@ import {
   UserOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
+
 const { Header } = Layout;
 
 export const UserHeader = () => {
@@ -40,7 +41,7 @@ export const UserHeader = () => {
           key: "register",
           label: "ลงทะเบียน",
           icon: <FormOutlined />,
-          onClick: () => navigate("/login"),
+          onClick: () => navigate("/register"),
         },
       ]);
     } else {
@@ -83,7 +84,7 @@ export const UserHeader = () => {
 
   return (
     <Header className="Header-user">
-      <img src={images} alt="Sothtex Logo" className="Logo-header" />
+      <img src={images[0]} alt="Sothtex Logo" className="Logo-header" />
       <div className="Header-title"> SOUTHEX </div>
       <Menu
         className="Menu-user"

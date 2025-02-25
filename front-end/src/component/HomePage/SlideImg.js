@@ -6,7 +6,7 @@ import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Carousel } from "bootstrap";
 
-export default function Slide() {
+export default function SlideImg({ onSearch }) {
   const images = ["Zoo.jpg", "Payanarg.jpg", "Samila.jpg"];
 
   useEffect(() => {
@@ -25,9 +25,10 @@ export default function Slide() {
     >
       <div className="Search-carousel">
         <Input
-          placeholder="FIND YOUR TRIP!!!"
+          placeholder="Let’s Find Your Next Adventure!"
           className="Input-search"
-          prefix={<SearchOutlined style={{ fontSize: "22px" }} />}
+          prefix={<SearchOutlined style={{ fontSize: "20px" }} />}
+          onChange={(e) => onSearch(e.target.value)}
         />
       </div>
       <div className="carousel-inner">

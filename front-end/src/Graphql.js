@@ -17,6 +17,24 @@ export const MUTATION_LOGIN = gql`
   }
 `;
 
+export const MUTATION_REGISTER = gql`
+  mutation Mutation($data: UsersPermissionsUserInput!) {
+    createUsersPermissionsUser(data: $data) {
+      data {
+        username
+        email
+        Fname
+        Lname
+        role {
+          type
+        }
+        confirmed
+      }
+    }
+  }
+`;
+
+
 export const ROLE = gql`
   query Query($filters: UsersPermissionsUserFiltersInput) {
     usersPermissionsUsers(filters: $filters) {
@@ -41,6 +59,7 @@ export const GET_PACKAGES = gql`
       Price
       Description
       MeetingPoint
+      Accommodation
       bookings {
         documentId
         Start
@@ -60,6 +79,10 @@ export const GET_PACKAGES = gql`
       Image {
         url
       }
+      Date {
+        Start_Date
+        End_Date
+      }
     }
   }
 `;
@@ -69,6 +92,7 @@ export const TRAVEL_DATE = gql`
     travelDates(filters: $filters) {
       Start_Date
       End_Date
+      MaxPeople
       package {
         Title
       }
@@ -137,6 +161,19 @@ export const GET_APPROVED_BOOKINGS = gql`
       }
       slip {
         url
+      }
+    }
+  }
+`;
+
+export const APPROVE_BOOKINGSD = gql`
+  query Bookings($filters: BookingFiltersInput) {
+    bookings(filters: $filters) {
+      HowManyPeople
+      Start
+      documentId
+      package {
+        Title
       }
     }
   }

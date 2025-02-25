@@ -29,6 +29,9 @@ export default function CreateButton() {
 
   const validateForm = () => {
     const newErrors = {};
+    if (formData.type === "Multi Day Trip" && !formData.Accommodation)
+      newErrors.Accommodation = "Please enter the accommodation";
+    if (!formData.MaxPeople) newErrors.MaxPeople = "Please enter the maximum number of people";
     if (!formData.title || formData.title.length < 2) newErrors.title = "Title must be at least 2 characters";
     if (!formData.type) newErrors.type = "Please select a tour type";
     if (!formData.description || formData.description.length < 10)
@@ -204,6 +207,8 @@ export default function CreateButton() {
           Price: parseFloat(formData.price),
           MeetingPoint: formData.meetingPoint,
           Image: imageIds.length === 1 ? imageIds[0] : imageIds,
+          //ถ้าเป็น Multi Day Trip ให้เพิ่ม Accommodation ด้วย
+          ...(formData.Accommodation && { Accommodation: formData.Accommodation }),
         },
       };
 
@@ -225,6 +230,7 @@ export default function CreateButton() {
                 package: packageId,
                 Start_Date: date.format("YYYY-MM-DD"),
                 End_Date: date.format("YYYY-MM-DD"),
+                MaxPeople: formData.MaxPeople,
               },
             }))
           : formData.ranges.map((range) => ({
@@ -232,6 +238,7 @@ export default function CreateButton() {
                 package: packageId,
                 Start_Date: range[0].format("YYYY-MM-DD"),
                 End_Date: range[1].format("YYYY-MM-DD"),
+                MaxPeople: formData.MaxPeople,
               },
             }));
 
@@ -366,8 +373,24 @@ export default function CreateButton() {
           ))}
           <Menu.Divider />
           <Menu.Item key="add">
-            <Button type="dashed" onClick={() => addItem(key)} block icon={<PlusOutlined />}>
+            <Button
+              type="Dashed"
+              onClick={() => addItem(key)}
+              block
+              icon={<PlusOutlined />}
+              style={{ borderRadius: "8px", backgroundColor: "#1D4ED8", borderColor: "#d9d9d9", color: "#ffffff" }}
+            >
               เพิ่ม{isDayTrip ? "วันที่" : "ช่วงวันที่"}
+            </Button>
+          </Menu.Item>
+          <Menu.Item key="close">
+            <Button
+              type="Dashed"
+              onClick={() => setDropdownVisible(false)}
+              block
+              style={{ borderRadius: "8px", backgroundColor: "#f0f0f0", borderColor: "#1890ff", color: "#000000" }}
+            >
+              เสร็จสิ้น
             </Button>
           </Menu.Item>
         </Menu>
@@ -480,27 +503,13 @@ export default function CreateButton() {
                         onChange={handleRadioChange}
                         optionType="button"
                         buttonStyle="solid"
-                        className="full-width-radio"
+                        className={{ color: "1D4ED8" }}
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
                         <Radio value="Multi Day Trip">Multi Day Trip</Radio>
                       </Radio.Group>
                     </div>
                     {errors.type && <span className="error">{errors.type}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <Dropdown
-                      overlay={renderMenu(formData.type === "One Day Trip")}
-                      trigger={["click"]}
-                      visible={dropdownVisible}
-                      onVisibleChange={setDropdownVisible}
-                    >
-                      <Button size="large">
-                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
-                      </Button>
-                    </Dropdown>
-                    {errors.dates && <span className="error">{errors.dates}</span>}
                   </div>
 
                   <div className="form-group">
@@ -549,6 +558,47 @@ export default function CreateButton() {
                     {errors.meetingPoint && <span className="error">{errors.meetingPoint}</span>}
                   </div>
 
+                  <div className="form-group">
+                    <label htmlFor="MaxPeople">จำนวนสูงสุดที่จองได้</label>
+                    <input
+                      id="MaxPeople"
+                      name="MaxPeople"
+                      type="text"
+                      value={formData.MaxPeople}
+                      onChange={handleInputChange}
+                      placeholder="Enter the maximum number of people"
+                    />
+                    {errors.MaxPeople && <span className="error">{errors.MaxPeople}</span>}
+                  </div>
+                  {formData.type === "Multi Day Trip" ? (
+                    <div className="form-group">
+                      <label htmlFor="Accommodation">สถานที่พัก</label>
+                      <input
+                        id="Accommodation"
+                        name="Accommodation"
+                        type="text"
+                        value={formData.Accommodation}
+                        onChange={handleInputChange}
+                        placeholder="Enter Accommodation"
+                      />
+                      {errors.Accommodation && <span className="error">{errors.Accommodation}</span>}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="form-group">
+                    <Dropdown
+                      overlay={renderMenu(formData.type === "One Day Trip")}
+                      trigger={["click"]}
+                      visible={dropdownVisible}
+                      onVisibleChange={setDropdownVisible}
+                    >
+                      <Button size="large">
+                        เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
+                      </Button>
+                    </Dropdown>
+                    {errors.dates && <span className="error">{errors.dates}</span>}
+                  </div>
                   <div className="button-group">
                     <button type="submit" className="primary-button" disabled={isUploading}>
                       สร้างแพ็คเกจ
