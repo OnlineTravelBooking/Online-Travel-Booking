@@ -34,6 +34,7 @@ export default function VerifyPage() {
   if (error_package) return <div>Error: {error_package.message}</div>;
 
   const groupBookingByDate = (pkg) => {
+    refetch();
     if (!pkg?.bookings) return {};
     const pendingBooking = pkg.bookings.filter((booking) => booking.Status_booking === "pending");
     return pendingBooking.reduce((acc, { End, Start, ...booking }) => {

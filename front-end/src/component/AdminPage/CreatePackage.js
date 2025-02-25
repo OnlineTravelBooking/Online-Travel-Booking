@@ -35,6 +35,7 @@ export default function CreatePackage() {
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
       }));
+      refetch();
       setDataSource(mapData);
     }
   }, [data]);
