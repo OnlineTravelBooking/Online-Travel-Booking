@@ -59,6 +59,7 @@ export const GET_PACKAGES = gql`
       Price
       Description
       MeetingPoint
+      Accommodation
       bookings {
         documentId
         Start

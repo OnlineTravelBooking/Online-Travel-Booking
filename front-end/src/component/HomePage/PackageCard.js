@@ -56,6 +56,7 @@ export default function PackageCard({ filters }) {
         urlImage: item?.Image[0]?.url,
         Description: item?.Description,
         MeetingPoint: item?.MeetingPoint,
+        Accommodation: item?.Accommodation,
         StartDate: item?.Start_Date,
         EndDate: item?.End_Date,
       }));
@@ -117,6 +118,7 @@ export default function PackageCard({ filters }) {
                       Type: item.Type,
                       Description: item.Description,
                       MeetingPoint: item.MeetingPoint,
+                      Accommodation: item?.Accommodation,
                     },
                   });
                 }}

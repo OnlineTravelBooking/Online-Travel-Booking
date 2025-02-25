@@ -316,31 +316,31 @@ body {
 .button-slide-left {
   position: absolute;
   top: 50%;
-  left: 370px;
+  left: 340px;
   transform: translateY(-50%);
   z-index: 10;
-  color: #ffffff;
-  background-color: #635e5e6c !important;
+  color: #59c4ce;
+  background-color: #005C78 !important;
   width: 60px;
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0%;
+  border-radius: 10%;
   border: none;
 }
 
 .button-slide-right {
   position: absolute;
   top: 50%;
-  right: 370px;
+  right: 340px;
   transform: translateY(-50%);
   z-index: 10;
-  color: #ffffff;
-  background-color: #635e5e6c !important;
+  color: #59c4ce;
+  background-color: #005C78 !important;
   width: 60px;
   height: 100px;
-  border-radius: 0%;
+  border-radius: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,13 +348,13 @@ body {
 }
 
 .button-slide-left:hover {
-  background-color: #ffffff6f !important;
-  color: #635e5e6c !important;
+  background-color: #59c4ce !important;
+  color: #005C78 !important;
 }
 
 .button-slide-right:hover {
-  background-color: #ffffff80 !important;
-  color: #635e5e6c !important;
+  background-color: #59c4ce !important;
+  color: #005C78 !important;
 }
 
 .IMG {
@@ -592,20 +592,6 @@ body {
   background-color: #d5dee6e2 ;
   border-color: #005c78 ;
   transition: all 0.3s ease-in;
-}
-
-
-.Input-search:hover {
-  transform: scale(1.2) ;
-  background-color: #d5dee6e2 ;
-  border-color: #005c78 ;
-}
-
-.Input-search:focus,
-.Input-search:focus-within {
-  transform: scale(1.2);
-  background-color: #d5dee6e2 ;
-  border-color: #005c78 ;
 }
 
 .Filter-Box {

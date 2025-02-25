@@ -87,9 +87,7 @@ export default function StatusPage() {
 
   return (
     <Layout>
-      <Header>
-        <UserHeader />
-      </Header>
+      <UserHeader />
 
       <Content>
         <div style={{ padding: "24px" }}>
