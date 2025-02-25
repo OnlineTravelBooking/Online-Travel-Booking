@@ -31,7 +31,7 @@ export default function PriceFilter({ onFilter }) {
   };
 
   return (
-    <div className="Filter-Box">
+    <div className="Price-filter">
       <Form form={form} onFinish={handleSubmit} className="Filter-form" layout="vertical">
         <h4 style={{ color: "white", textAlign: "center" }}>
           <FilterOutlined /> กรองด้วยราคา
@@ -68,15 +68,7 @@ export default function PriceFilter({ onFilter }) {
 
           <Slider range min={0} max={10000} step={100} value={priceRange} onChange={handleSliderChange} />
         </Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          block
-          style={{
-            backgroundColor: "#005c78",
-            fontWeight: "bold",
-          }}
-        >
+        <Button type="primary" htmlType="submit" block className="Summit-filter">
           กรองผลลัพธ์
         </Button>
       </Form>
