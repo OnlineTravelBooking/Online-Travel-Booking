@@ -11,6 +11,7 @@ import StatusPage from "./component/HomePage/StatusPage";
 import ApprovePage from "./component/AdminPage/ApprovePage";
 import CreatePackage from "./component/AdminPage/CreatePackage";
 import VerifyPage from "./component/AdminPage/VerifyPage";
+import RegisterForm from "./component/RegisterForm";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -30,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="/admin/create-package" element={isAuthorized("admin") ? <CreatePackage /> : <Navigate to="/" />} />
         <Route path="/edit-tour-list" element={isAuthorized("admin") ? <EditTourList /> : <Navigate to="/" />} />
         <Route path="/add-package" element={isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />} />
