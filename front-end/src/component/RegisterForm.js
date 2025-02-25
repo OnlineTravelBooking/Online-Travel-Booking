@@ -35,7 +35,7 @@ export default function RegisterForm() {
       confirmed: true,
     };
 
-
+    
     try {
       const result = await registerMutation({
         variables: {
@@ -110,13 +110,6 @@ export default function RegisterForm() {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{
-              Fullname: "Grace Katherine",
-              email: "grace.k@example.com",
-              Username: "grace_k",
-              Password: "SecurePass@2024",
-              "Confirm password": "SecurePass@2024",
-            }}
             onFinish={handleSubmit}
             autoComplete="off"
           >
