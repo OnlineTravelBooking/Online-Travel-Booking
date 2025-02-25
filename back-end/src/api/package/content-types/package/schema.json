@@ -56,6 +56,10 @@
         "One Day Trip",
         "Multi Day Trip"
       ]
+    },
+    "Accommodation": {
+      "type": "string",
+      "required": false
     }
   }
 }

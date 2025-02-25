@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Descriptions } from "antd";
-import { GET_PACKAGES, TRAVEL_DATE } from "../../Graphql";
+import { Card, Row, Col } from "antd";
+import LoadingSpin from "../LoadingSpin";
+import ErrorIcon from "../ErrorIcon";
+import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+
 const { Meta } = Card;
 
 export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
 
-  const {
-    loading: loading_package,
-    error: error_package,
-    data: data_package,
-  } = useQuery(GET_PACKAGES);
-
-  const {
-    loading: loading_date,
-    error: error_date,
-    data: data_date,
-  } = useQuery(TRAVEL_DATE);
+  const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
   useEffect(() => {
+    console.log("filters", filters);
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
 
@@ -33,16 +27,25 @@ export default function PackageCard({ filters }) {
       }
 
       if (filters.types?.length > 0) {
-        filteredData = filteredData.filter((item) =>
-          filters.types.includes(item.Type)
-        );
+        filteredData = filteredData.filter((item) => filters.types.includes(item.Type));
       }
 
       if (filters.priceRange) {
         const [min, max] = filters.priceRange;
-        filteredData = filteredData.filter(
-          (item) => item.Price >= min && item.Price <= max
-        );
+        filteredData = filteredData.filter((item) => item.Price >= min && item.Price <= max);
+      }
+
+      if (filters.travelDate) {
+        const [start, end] = filters.travelDate;
+
+        filteredData = filteredData.filter((pkg) => {
+          // Check if the package has any date that overlaps with selected range
+          return pkg.Date?.some((date) => {
+            const Start_Date = date.Start_Date;
+            const End_Date = date.End_Date;
+            return End_Date ? Start_Date >= start && End_Date <= end : Start_Date >= start;
+          });
+        });
       }
 
       const mapData = filteredData.map((item) => ({
@@ -55,18 +58,16 @@ export default function PackageCard({ filters }) {
         MeetingPoint: item?.MeetingPoint,
         StartDate: item?.Start_Date,
         EndDate: item?.End_Date,
-        StartDate: item?.Start_Date,
-        EndDate: item?.End_Date,
       }));
       setDataSource(mapData);
     }
   }, [data_package, filters]);
 
   if (loading_package) {
-    return <div>Loading...</div>;
+    return <LoadingSpin />;
   }
   if (error_package) {
-    return <div>Error: {error_package.message}</div>;
+    return <ErrorIcon error={error_package} />;
   }
   return (
     <Row className="Package">
@@ -125,9 +126,7 @@ export default function PackageCard({ filters }) {
                   description={
                     <>
                       <div>{item.Type}</div>
-                      <div style={{ color: "#FF0000", textAlign: "end" }}>
-                        ${item.Price}
-                      </div>
+                      <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
                     </>
                   }
                 />

@@ -10,6 +10,12 @@ import CustomFooter from "./Footer";
 
 const { Footer, Sider, Content } = Layout;
 
+const footerStyle = {
+  textAlign: "center",
+  color: "#fff",
+  backgroundColor: "#4096ff",
+};
+
 export default function Home() {
   const [filters, setFilters] = useState({});
   const [searchTitle, setSearchTitle] = useState("");
@@ -30,11 +36,7 @@ export default function Home() {
         </Sider>
         <Content className="Main-Content">
           <Filter_Button onFilter={mergeFilters} />
-          {<PackageCard /> ? (
-            <PackageCard filters={{ ...filters, searchTitle }} />
-          ) : (
-            <h1>No Package Data</h1>
-          )}
+          {<PackageCard /> ? <PackageCard filters={{ ...filters, searchTitle }} /> : <h1>No Package Data</h1>}
         </Content>
       </Layout>
       <CustomFooter />

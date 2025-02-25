@@ -78,6 +78,10 @@ export const GET_PACKAGES = gql`
       Image {
         url
       }
+      Date {
+        Start_Date
+        End_Date
+      }
     }
   }
 `;
