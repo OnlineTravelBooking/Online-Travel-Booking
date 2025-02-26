@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   return (
-    <Layout>
+    <Layout className="Background-Home">
       <UserHeader />
       <Layout>
         <SlideImg onSearch={(title) => setSearchTitle(title)} />
