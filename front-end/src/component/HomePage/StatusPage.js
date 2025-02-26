@@ -86,12 +86,11 @@ export default function StatusPage() {
   if (!data_booking) return <div>No data available</div>;
 
   return (
-    <Layout>
+    <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />
-
       <Content>
         <div style={{ padding: "24px" }}>
-          <h1 style={{ marginBottom: "24px" }}>Booking Status</h1>
+          <h1 style={{ marginBottom: "24px", fontWeight: "bold" }}>📝 Booking Status</h1>
           <Row gutter={[16, 16]}>
             {bookings.map((item) => (
               <Col key={item.id} xs={24} sm={12} lg={8}>
@@ -108,6 +107,7 @@ export default function StatusPage() {
                   //     },
                   //   });
                   // }}
+                  className="Status-card"
                   cover={
                     <img alt={item.packageName} src={item.image} style={{ height: "200px", objectFit: "cover" }} />
                   }
@@ -115,7 +115,7 @@ export default function StatusPage() {
                 >
                   <Row gutter={[16, 16]}>
                     <Col span={24}>
-                      <h2>{item.packageName}</h2>
+                      <h2 style={{ fontWeight: "bold" }}>{item.packageName}</h2>
                       <p>
                         Date: {new Date(item.Start).toLocaleDateString()}{" "}
                         {item.End && ` - ${new Date(item.End).toLocaleDateString()}`}
@@ -129,6 +129,7 @@ export default function StatusPage() {
                         <Timeline.Item color="green">Booked</Timeline.Item>
 
                         <Timeline.Item
+                          style={{ maxHeight: "20px" }}
                           color={item.status === "approved" ? "green" : item.status === "rejected" ? "red" : "gray"}
                         >
                           {item.status === "approved"

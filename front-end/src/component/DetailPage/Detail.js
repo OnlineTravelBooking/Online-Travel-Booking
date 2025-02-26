@@ -136,7 +136,7 @@ export default function Detail() {
   };
   console.log("accommodation", Accommodation);
   return (
-    <Layout>
+    <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />
       <Content style={{ display: "flex", flexDirection: "column", maxHeight: "fit-content", marginBottom: "30px" }}>
         <div className="Title-Detail">{Title}</div>
@@ -194,7 +194,7 @@ export default function Detail() {
                         },
                       ]}
                     >
-                      <div className="title-input">เลือกวันที่ต้องการจอง</div>
+                      <div className="title-input">เลือกวันที่ต้องการจอง🗓️</div>
                       <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
                         {availableDates?.map((date) => {
                           const totalPeople = data_booking?.bookings
