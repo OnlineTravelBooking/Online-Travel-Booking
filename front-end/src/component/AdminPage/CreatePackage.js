@@ -10,6 +10,7 @@ import LoadingSpin from "../LoadingSpin";
 import ErrorIcon from "../ErrorIcon";
 const { Content } = Layout;
 const { useToken } = theme;
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 export default function CreatePackage() {
   const { Meta } = Card;
@@ -35,7 +36,6 @@ export default function CreatePackage() {
         Description: item.Description,
         MeetingPoint: item.MeetingPoint,
       }));
-      refetch();
       setDataSource(mapData);
     }
   }, [data]);
@@ -85,7 +85,7 @@ export default function CreatePackage() {
                       <>
                         <img
                           alt={item.Title}
-                          src={`http://localhost:1337${item.urlImage}`}
+                          src={`${StrapiUrl}${item.urlImage}`}
                           style={{ height: "200px", objectFit: "cover" }}
                         />
                       </>

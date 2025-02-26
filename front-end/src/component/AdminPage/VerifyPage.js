@@ -8,6 +8,7 @@ import ImageViewModal from "./Modal/ImageViewModal";
 import moment from "moment";
 import { UPDATE_STATUS } from "../../Graphql";
 import { useAuth } from "../../AuthContext";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -134,7 +135,7 @@ export default function VerifyPage() {
                     cover={
                       <img
                         alt={item.Title}
-                        src={`http://localhost:1337${item.Image[0].url}`}
+                        src={`${StrapiUrl}${item.Image[0].url}`}
                         style={{ width: "100%", height: "auto" }}
                       />
                     }
