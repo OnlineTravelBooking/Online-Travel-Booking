@@ -6,6 +6,7 @@ import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { Meta } = Card;
 
@@ -102,7 +103,7 @@ export default function PackageCard({ filters }) {
                 cover={
                   <img
                     alt={item.Title}
-                    src={`http://localhost:1337${item.urlImage}`}
+                    src={`${StrapiUrl}${item.urlImage}`}
                     style={{
                       height: "170px",
                       objectFit: "cover",

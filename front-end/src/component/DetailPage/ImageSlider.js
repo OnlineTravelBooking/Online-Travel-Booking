@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Detail.css";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 export default function ImageSlider({ allImages }) {
   const [imageIndex, setImageIndex] = useState(0);
@@ -48,7 +49,7 @@ export default function ImageSlider({ allImages }) {
           <AnimatePresence mode="wait" custom={direction}>
             <motion.img
               key={imageIndex}
-              src={`http://localhost:1337${allImages[imageIndex]}`}
+              src={`${StrapiUrl}${allImages[imageIndex]}`}
               className="img-slide"
               variants={slideVariants}
               initial="hidden"

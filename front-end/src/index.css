@@ -750,11 +750,11 @@ body {
 .One-Button {
   margin-right: 40px;
   margin-left: 40px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   color: #005C78;
   height: 50px;
-  width: 150px;
+  width: fit-content;
 }
 
 .One-Button:hover {
@@ -778,10 +778,10 @@ body {
 
 .Muti-Button {
   margin-right: 20px;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 500;
   height: 50px;
-  width: 150px;
+  width: fit-content;
   color: #005C78;
 }
 
@@ -863,23 +863,6 @@ body {
   min-width: 200px; 
 }
 
-.Background-add {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: end;
-  padding: 10px;
-  background-color: #ffffff;
-  font-size: 20px;
-}
 
-.Member-Trip {
-  font-size: 30px;
-  color: #2e5077;
-  font-weight: 600;
-}
 
-.Add-Button {
-  transform: scale(0.7);
-  background-color: #005c78;
-}
+

@@ -1,4 +1,3 @@
-import React from "react";
 import { gql } from "@apollo/client";
 
 export const MUTATION_LOGIN = gql`
@@ -33,7 +32,6 @@ export const MUTATION_REGISTER = gql`
     }
   }
 `;
-
 
 export const ROLE = gql`
   query Query($filters: UsersPermissionsUserFiltersInput) {
@@ -175,6 +173,13 @@ export const APPROVE_BOOKINGSD = gql`
       package {
         Title
       }
+    }
+  }
+`;
+export const DELETE_PACKAGE = gql`
+  mutation DeletePackage($documentId: ID!) {
+    deletePackage(documentId: $documentId) {
+      documentId
     }
   }
 `;

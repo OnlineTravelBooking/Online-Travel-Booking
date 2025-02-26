@@ -157,25 +157,25 @@ export default function Detail() {
                 <Form form={form} onFinish={handleSubmit}>
                   <div className="Background-add">
                     <Avatar
-                      shape="circle"
+                      shape="square"
                       size={64}
                       icon={<UserOutlined />}
                       style={{ backgroundColor: "#005C78", color: "white" }}
                     />
                     <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
-                    <div style={{ scale: "1.2" }}>
+                    <div className="Box-add-button">
                       <Button
                         className="Add-Button"
                         type="primary"
-                        shape="circle"
+                        shape="square"
                         icon={<MinusOutlined />}
                         onClick={() => (count > 1 ? setCount((count) => count - 1) : setCount(1))}
                       />
-                      {count}
+                      <div className="Count"> {count}</div>
                       <Button
                         className="Add-Button"
                         type="primary"
-                        shape="circle"
+                        shape="square"
                         icon={<PlusOutlined />}
                         onClick={() => setCount((count) => count + 1)}
                       />
