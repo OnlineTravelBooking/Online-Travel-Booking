@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import { ALL_IMAGES_PACKAGE } from "../../Graphql";
 import "antd/dist/reset.css";
 import { useNavigate } from "react-router-dom";
-
+const StrapiUrl = process.env.REACT_APP_API_URL;
 export default function StatusPage() {
   const navigate = useNavigate();
   const { data } = useAuth();
@@ -73,7 +73,7 @@ export default function StatusPage() {
           Type: booking.package.Type,
           Start: booking.Start,
           End: booking.End,
-          image: `http://localhost:1337${packageImage.Image[0].url}`,
+          image: `${StrapiUrl}${packageImage.Image[0].url}`,
           RejectionReason: booking.RejectionReason,
         };
       });

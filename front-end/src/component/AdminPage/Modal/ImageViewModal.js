@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "antd";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 export default function Image({ isImageModalOpen, setIsImageModalOpen, selectedBooking }) {
   const [isZoomed, setIsZoomed] = useState(false);
@@ -13,7 +14,7 @@ export default function Image({ isImageModalOpen, setIsImageModalOpen, selectedB
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <img
-            src={`http://localhost:1337${selectedBooking?.slip?.url}`}
+            src={`${StrapiUrl}${selectedBooking?.slip?.url}`}
             style={{
               maxWidth: "100%",
               maxHeight: "75vh",

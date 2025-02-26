@@ -7,6 +7,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/reset.css";
 import CustomFooter from "../HomePage/Footer";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 message.config({
   maxCount: 3,
   duration: 3,
@@ -39,7 +40,7 @@ export default function Transaction() {
     formData.append("files", imageFile);
 
     try {
-      const uploadRes = await axios.post("http://localhost:1337/api/upload", formData, {
+      const uploadRes = await axios.post(`${StrapiUrl}/api/upload`, formData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
@@ -59,7 +60,7 @@ export default function Transaction() {
         },
       };
 
-      await axios.post("http://localhost:1337/api/bookings", bookingData, {
+      await axios.post(`${StrapiUrl}/api/bookings`, bookingData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },

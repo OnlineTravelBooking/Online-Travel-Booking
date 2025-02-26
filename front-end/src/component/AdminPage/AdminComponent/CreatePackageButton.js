@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import "./CreatePackageButton.css";
+const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { RangePicker } = DatePicker;
 
@@ -186,7 +187,7 @@ export default function CreateButton() {
         const imageFormData = new FormData();
         imageFormData.append("files", image.file);
 
-        const response = await axios.post("http://localhost:1337/api/upload", imageFormData, {
+        const response = await axios.post(`${StrapiUrl}/api/upload`, imageFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
@@ -212,7 +213,7 @@ export default function CreateButton() {
         },
       };
 
-      const packageResponse = await axios.post("http://localhost:1337/api/packages", packagePayload, {
+      const packageResponse = await axios.post(`${StrapiUrl}/api/packages`, packagePayload, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -243,7 +244,7 @@ export default function CreateButton() {
             }));
 
       const dateUploadPromises = datePayloads.map((payload) =>
-        axios.post("http://localhost:1337/api/travel-dates", payload, {
+        axios.post(`${StrapiUrl}/api/travel-dates`, payload, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -400,10 +401,14 @@ export default function CreateButton() {
 
   return (
     <div>
-      <Button type="dashed" className="add-package-btn" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => setIsModalOpen(true)}
+        style={{ backgroundColor: "#1D4ED8", color: "#ffffff", borderRadius: "0" }}
+      >
         เพิ่มแพ็คเกจ
       </Button>
-      <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"80%"}>
+      <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"85%"} style={{ top: 25 }}>
         <div className="container">
           <div className="card">
             <div className="header">
@@ -503,7 +508,7 @@ export default function CreateButton() {
                         onChange={handleRadioChange}
                         optionType="button"
                         buttonStyle="solid"
-                        className={{ color: "1D4ED8" }}
+                        style={{ backgroundColor: "#1D4ED8" }}
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
                         <Radio value="Multi Day Trip">Multi Day Trip</Radio>

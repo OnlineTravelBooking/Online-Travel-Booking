@@ -1,8 +1,8 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
-import { DesktopOutlined, FileOutlined, PlusCircleFilled } from "@ant-design/icons";
-
+import { DesktopOutlined, FileOutlined, PlusCircleFilled, LogoutOutlined } from "@ant-design/icons";
+import { useAuth } from "../../AuthContext";
 const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -16,6 +16,7 @@ const items = [
 ];
 
 export default function Sidebar() {
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,6 +47,18 @@ export default function Sidebar() {
               break;
             default:
               break;
+          }
+        }}
+      />
+      <Menu
+        theme="dark"
+        mode="inline"
+        style={{ marginTop: "270%" }}
+        items={[getItem(<span>&nbsp;&nbsp;&nbsp;&nbsp;Logout</span>, "4", <LogoutOutlined />)]}
+        onSelect={({ key }) => {
+          if (key === "4") {
+            logout();
+            navigate("/login");
           }
         }}
       />

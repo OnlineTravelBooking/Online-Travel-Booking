@@ -1,355 +1,375 @@
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --background-color: #f8fafc;
-    --card-background: #ffffff;
-    --text-color: #1e293b;
-    --text-muted: #64748b;
-    --border-color: #e2e8f0;
-    --error-color: #ef4444;
-    --success-color: #22c55e;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --background-color: #f8fafc;
+  --card-background: #ffffff;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --error-color: #ef4444;
+  --success-color: #22c55e;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.5;
 }
 
 .container {
-    min-height: 100vh;
-    padding: 2rem;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 .card {
-    background: none !important;
-    box-shadow: none !important;
-    padding: 20px;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 20px;
 }
 
 .header {
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 @media (min-width: 768px) {
-    .content {
-        grid-template-columns: 1fr 1fr;
-    }
+  .content {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Image Section */
 .image-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .image-preview {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    background-color: var(--background-color);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    border: 2px dashed var(--border-color);
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 2px dashed var(--border-color);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .main-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .upload-placeholder {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
 }
 
 .slideshow-controls {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: linear-gradient(to right,
-            rgba(0, 0, 0, 0.3) 0%,
-            transparent 20%,
-            transparent 80%,
-            rgba(0, 0, 0, 0.3) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.3) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
 }
 
 .nav-button {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .nav-button:hover {
-    background-color: white;
-    transform: scale(1.1);
+  background-color: white;
+  transform: scale(1.1);
 }
 
 .upload-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    border: 1px solid var(--border-color);
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: 1px solid var(--border-color);
+  width: 100%;
 }
 
 .upload-button:hover:not(:disabled) {
-    background-color: var(--border-color);
+  background-color: var(--border-color);
 }
 
 .upload-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .thumbnail-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 10px 0;
-    max-width: 100%;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px 0;
+  max-width: 100%;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
 }
 
 .thumbnail-container::-webkit-scrollbar {
-    height: 8px;
+  height: 8px;
 }
 
 .thumbnail-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+  background: #888;
+  border-radius: 4px;
 }
 
 .thumbnail-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 .thumbnail {
-    position: relative;
-    flex: 0 0 100px;
-    height: 100px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    overflow: hidden;
-    transition: transform 0.2s;
+  position: relative;
+  flex: 0 0 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  overflow: hidden;
+  transition: transform 0.2s;
 }
 
 .thumbnail.active {
-    border: 2px solid #1890ff;
+  border: 2px solid #1890ff;
 }
 
 .thumbnail:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .delete-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 0, 0, 0.8);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    transition: background 0.2s;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: background 0.2s;
 }
 
 .delete-button:hover {
-    background: rgba(255, 0, 0, 1);
+  background: rgba(255, 0, 0, 1);
 }
 
 /* Form Section */
 .form-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 label {
-    font-weight: 500;
-    color: var(--text-color);
+  font-weight: 500;
+  color: var(--text-color);
 }
 
 input {
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    width: 100%;
-    transition: border-color 0.2s;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s;
 }
 
 input:focus {
-    outline: none;
-    border-color: var(--primary-color);
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .error {
-    color: var(--error-color);
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .button-group {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .primary-button,
 .secondary-button {
-    flex: 1;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .primary-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
 }
 
 .primary-button:hover:not(:disabled) {
-    background-color: var(--primary-hover);
-    transform: translateY(-1px);
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
 .secondary-button {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
+  background-color: transparent;
+  border: 1px solid var(--border-color);
 }
 
 .secondary-button:hover:not(:disabled) {
-    background-color: var(--background-color);
-    transform: translateY(-1px);
+  background-color: var(--background-color);
+  transform: translateY(-1px);
 }
 
 .primary-button:disabled,
 .secondary-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Toast Notification */
 /* Toast Notification */
 .toast {
-    position: fixed;
-    top: 2rem;
-    /* ระยะจากด้านบน */
-    left: 50%;
-    /* กึ่งกลางแนวนอน */
-    transform: translate(-50%, -150%);
-    /* ซ่อนด้านบนและกึ่งกลาง */
-    padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
-    background-color: white;
-    /* พื้นหลังสีขาว */
-    color: var(--text-color);
-    /* สีตัวอักษรให้ตัดกับพื้นหลังขาว */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-out;
-    z-index: 1000;
+  position: fixed;
+  top: 2rem;
+  /* ระยะจากด้านบน */
+  left: 50%;
+  /* กึ่งกลางแนวนอน */
+  transform: translate(-50%, -150%);
+  /* ซ่อนด้านบนและกึ่งกลาง */
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  /* พื้นหลังสีขาว */
+  color: var(--text-color);
+  /* สีตัวอักษรให้ตัดกับพื้นหลังขาว */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-out;
+  z-index: 1000;
 }
 
 .toast.show {
-    transform: translate(-50%, 0);
-    /* เลื่อนลงมาแสดงผล */
+  transform: translate(-50%, 0);
+  /* เลื่อนลงมาแสดงผล */
 }
 
 .toast.success {
-    background-color: var(--success-color);
-    /* เขียวสำหรับ success */
-    color: white;
-    /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังเขียว */
+  background-color: var(--success-color);
+  /* เขียวสำหรับ success */
+  color: white;
+  /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังเขียว */
 }
 
 .toast.error {
-    background-color: var(--error-color);
-    /* แดงสำหรับ error */
-    color: white;
-    /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังแดง */
+  background-color: var(--error-color);
+  /* แดงสำหรับ error */
+  color: white;
+  /* สีตัวอักษรขาวเพื่อตัดกับพื้นหลังแดง */
 }
 
 /* Scrollable Dropdown */
 .scrollable-dropdown {
-    max-height: 300px;
-    overflow-y: auto;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .scrollable-dropdown.scroll-active {
-    padding-right: 8px;
+  padding-right: 8px;
+}
+
+.deleteButtonStyle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.CreatePackageButton {
+  margin-left: 88%;
+  margin-top: 17%;
+  scale: 1.5;
 }
