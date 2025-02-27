@@ -409,7 +409,7 @@ export default function CreateButton() {
         onClick={() => setIsModalOpen(true)}
         className="create-package-button"
       >
-        <span className="button-text">เพิ่มแพ็คเกจ</span>
+        <span className="button-text">เพิ่มแพ็คเกจ </span>
       </Button>
       <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"85%"} style={{ top: 25 }}>
         <div className="container">
