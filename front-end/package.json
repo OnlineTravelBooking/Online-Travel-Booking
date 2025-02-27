@@ -48,5 +48,8 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "husky": "^9.1.7"
-  }
+  },
+  "overrides": {
+    "react-refresh": "0.11.0"
+}
 }
