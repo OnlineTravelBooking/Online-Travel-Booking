@@ -506,10 +506,16 @@ input:focus {
 .MAX-people{
   border-Style: solid;
   border-Color: #2e5077; 
-  
+  margin-bottom: 15px;
 }
 
 .MAX-people:hover:not(:disabled),
 .MAX-people:focus-within {
   background-color: var(--border-color);
+}
+
+.Accommodation-input {
+  border-Style: solid;
+  border-Color: #2e5077; 
+  margin-bottom: 15px;
 }

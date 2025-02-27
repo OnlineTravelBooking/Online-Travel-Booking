@@ -491,7 +491,7 @@ export default function CreateButton() {
               <div className="form-section">
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label htmlFor="title" style={{ marginBottom: "5px" }}>
+                    <label htmlFor="title" style={{ marginBottom: "5px", fontWeight: "bold" }}>
                       ชื่อแพ็คเกจทัวร์
                     </label>
                     <input
@@ -507,7 +507,9 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label style={{ marginTop: "5px", marginBottom: "5px" }}>ประเภทแพ็คเกจทัวร์</label>
+                    <label style={{ marginTop: "5px", marginBottom: "5px", fontWeight: "bold" }}>
+                      ประเภทแพ็คเกจทัวร์
+                    </label>
                     <div className="radio-group-full">
                       <Radio.Group
                         value={formData.type}
@@ -523,7 +525,7 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="description" style={{ marginBottom: "5px" }}>
+                    <label htmlFor="description" style={{ marginBottom: "5px", fontWeight: "bold" }}>
                       คำอธิบาย
                     </label>
                     <ReactQuill
@@ -545,8 +547,8 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="price" style={{ marginBottom: "5px" }}>
-                      ราคา
+                    <label htmlFor="price" style={{ marginBottom: "5px", fontWeight: "bold" }}>
+                      ราคาต่อคน
                     </label>
                     <input
                       className="PRICE"
@@ -562,7 +564,7 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="meetingPoint" style={{ marginTop: "5px", marginBottom: "5px" }}>
+                    <label htmlFor="meetingPoint" style={{ marginTop: "5px", marginBottom: "5px", fontWeight: "bold" }}>
                       จุดนัดพบ
                     </label>
                     <input
@@ -578,7 +580,7 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="MaxPeople" style={{ marginTop: "5px", marginBottom: "5px" }}>
+                    <label htmlFor="MaxPeople" style={{ marginTop: "5px", marginBottom: "5px", fontWeight: "bold" }}>
                       จำนวนสูงสุดที่จองได้
                     </label>
                     <input
@@ -594,8 +596,14 @@ export default function CreateButton() {
                   </div>
                   {formData.type === "Multi Day Trip" ? (
                     <div className="form-group">
-                      <label htmlFor="Accommodation">สถานที่พัก</label>
+                      <label
+                        htmlFor="Accommodation"
+                        style={{ marginTop: "5px", marginBottom: "5px", fontWeight: "bold" }}
+                      >
+                        สถานที่พัก
+                      </label>
                       <input
+                        className="Accommodation-input"
                         id="Accommodation"
                         name="Accommodation"
                         type="text"
