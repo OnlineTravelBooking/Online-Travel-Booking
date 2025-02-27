@@ -724,10 +724,9 @@ body {
 
 .Filter-bar {
   display: flex;
-  justify-content: flex-end; 
-  align-items: center;
-  gap: 20px; 
-  padding-right: 30px;
+  justify-content: end; 
+  flex-wrap: nowrap;
+  align-items: center; 
   width: 100%;
   margin-top: 20px;
 }
@@ -735,10 +734,12 @@ body {
 .Filter-Button {
   display: flex;
   justify-content: end;
+  flex-wrap: nowrap;
+  justify-content: end;
 }
 
 .One-Button {
-  margin-right: 40px;
+  margin-right: 30px;
   margin-left: 40px;
   font-size: 20px;
   font-weight: 500;
@@ -767,7 +768,7 @@ body {
 
 
 .Muti-Button {
-  margin-right: 20px;
+  margin-right: 10px;
   font-size: 20px;
   font-weight: 500;
   height: 50px;
@@ -794,7 +795,6 @@ body {
 }
 
 .Select-Date {
-  margin-left: 40px;
   transform: scale(1.2);
   transition: transform 0.3s ease;
 }
@@ -857,3 +857,23 @@ body {
   box-shadow: 0px 2px 5px #005C78;
 }
 
+.Rage-picker{
+ border-radius: 5px !important ;
+ font-size: large !important;
+ overflow: hidden;
+ transition: all 0.3s ease;
+}
+
+.Rage-picker:hover,
+.Rage-picker:focus-within{
+  border-radius: 5px !important ;
+  border-color: #005C78 !important;
+  background-color: #ffffff4b;
+ }
+
+ .Rage-picker.input-success {
+  border-radius: 5px !important; 
+  border-color: #005C78 !important;
+  font-size: large !important;
+  color: #005C78;
+}
