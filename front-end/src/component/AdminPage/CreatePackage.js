@@ -90,7 +90,10 @@ export default function CreatePackage() {
                         />
                       </>
                     }
-                    onClick={() => navigate("/admin/approve", { state: { ...item } })}
+                    onClick={() => {
+                      console.log("package data: ", item);
+                      /*<CreatePackageButton packageData={dataSource} /> */
+                    }}
                   >
                     <Meta
                       title={item.Title}

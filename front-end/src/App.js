@@ -5,7 +5,6 @@ import LoginScreen from "./component/LoginScreen";
 import Home from "./component/HomePage/Home";
 import Detail from "./component/DetailPage/Detail";
 import Transaction from "./component/Transactionpage/Transaction";
-import EditTourList from "./component/AdminPage/EditTourList";
 import AddPackage from "./component/AdminPage/CreatePackage";
 import StatusPage from "./component/HomePage/StatusPage";
 import ApprovePage from "./component/AdminPage/ApprovePage";
@@ -33,7 +32,6 @@ function App() {
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/admin/create-package" element={isAuthorized("admin") ? <CreatePackage /> : <Navigate to="/" />} />
-        <Route path="/edit-tour-list" element={isAuthorized("admin") ? <EditTourList /> : <Navigate to="/" />} />
         <Route path="/add-package" element={isAuthorized("admin") ? <AddPackage /> : <Navigate to="/" />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/transaction" element={<Transaction />} />

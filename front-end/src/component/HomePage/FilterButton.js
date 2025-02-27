@@ -70,8 +70,8 @@ export default function FilterButton({ onFilter }) {
         >
           <Button
             className="Muti-Button"
-            type={selectedTypes.includes("Multi_Day_Trip") ? "primary" : "default"}
-            onClick={() => handleTypeToggle("Multi_Day_Trip")}
+            type={selectedTypes.includes("Tour_Packages") ? "primary" : "default"}
+            onClick={() => handleTypeToggle("Tour_Packages")}
           >
             Tour Packages 🏢
           </Button>
