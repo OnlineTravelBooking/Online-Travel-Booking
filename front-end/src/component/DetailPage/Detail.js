@@ -218,7 +218,7 @@ export default function Detail() {
                               {/* จำนวนสูงสุดที่จองได้ */}
                               <span
                                 className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
-                                style={date.End_Date ? { marginLeft: "23%" } : { marginLeft: "48%" }}
+                                style={date.End_Date ? { marginLeft: "3%" } : { marginLeft: "48%" }}
                               >
                                 <UserOutlined />
                                 {`${totalPeople}/${date.MaxPeople}`}
@@ -231,11 +231,11 @@ export default function Detail() {
                   </div>
                   {Accommodation && (
                     <>
-                      <div className="Meeting-box">สถานที่พัก</div>
+                      <div className="Meeting-box">สถานที่พัก🏢</div>
                       <div className="Meeting">{Accommodation}</div>
                     </>
                   )}
-                  <div className="Meeting-box">จุดนัดพบ</div>
+                  <div className="Meeting-box">จุดนัดพบ📍</div>
                   <div className="Meeting">{MeetingPoint}</div>
                   <hr className="line" />
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
