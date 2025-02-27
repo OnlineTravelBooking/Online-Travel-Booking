@@ -73,7 +73,7 @@ export default function FilterButton({ onFilter }) {
             type={selectedTypes.includes("Multi_Day_Trip") ? "primary" : "default"}
             onClick={() => handleTypeToggle("Multi_Day_Trip")}
           >
-            Package พร้อมที่พัก 🏢
+            Tour Packages 🏢
           </Button>
         </motion.div>
       </Form.Item>
