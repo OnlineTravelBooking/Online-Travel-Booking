@@ -41,7 +41,7 @@ export default function CreatePackage() {
   }, [data]);
 
   if (loading) return <LoadingSpin />;
-  if (error) return <ErrorIcon />;
+  if (error) return <ErrorIcon error={error} />;
 
   const handleDelete = async () => {
     try {
@@ -63,10 +63,10 @@ export default function CreatePackage() {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh", overflowX: "hidden" }}>
       <Sidebar />
-      <Layout>
-        <Content style={{ margin: "0 16px" }}>
+      <Layout style={{ backgroundColor: "#FFF6ee" }}>
+        <Content style={{ margin: "16px" }}>
           <div
             style={{
               padding: 24,

@@ -30,7 +30,7 @@ export default function Sidebar() {
     <Sider collapsible>
       <div className="demo-logo-vertical" />
       <Menu
-        theme="dark"
+        className="Menu-admin"
         selectedKeys={getSelectedKey()}
         mode="inline"
         items={items}
