@@ -29,14 +29,18 @@ body {
 }
 
 .card {
-  background: none !important;
+  background: #fff6ee !important;
+  border-style: solid;
+  border-color: #2e5077;
   box-shadow: none !important;
+  max-height: fit-content;
   padding: 20px;
 }
 
 .header {
   text-align: center;
   margin-bottom: 2rem;
+  color: #2e5077;
 }
 
 .header h1 {
@@ -61,13 +65,13 @@ body {
 .image-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
 .image-preview {
   position: relative;
   aspect-ratio: 16 / 9;
   background-color: var(--background-color);
+  border-color: #2e5077 !important;
   border-radius: 0.5rem;
   overflow: hidden;
   border: 2px dashed var(--border-color);
@@ -132,15 +136,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   background-color: var(--background-color);
   color: var(--text-color);
   padding: 0.75rem 1rem;
+  border-style:  solid !important;
+  border-color: #2e5077 !important;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.2s;
   border: 1px solid var(--border-color);
   width: 100%;
+  margin-top: 20px;
 }
 
 .upload-button:hover:not(:disabled) {
@@ -234,7 +240,6 @@ body {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 label {
@@ -279,23 +284,30 @@ input:focus {
 }
 
 .primary-button {
-  background-color: var(--primary-color);
+  background-color: #005C78;
   color: white;
+  font-size: 20px;
+  font-weight: bold;
   border: none;
 }
 
 .primary-button:hover:not(:disabled) {
-  background-color: var(--primary-hover);
+  background-color: #005C78 !important;
+  box-shadow: 0px 3px 5px #4DA1A9;
   transform: translateY(-1px);
 }
 
 .secondary-button {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
+  background-color: #f87373;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
 }
 
 .secondary-button:hover:not(:disabled) {
-  background-color: var(--background-color);
+  background-color: #f87373;
+  box-shadow: 0px 3px 5px #d52d2d;
   transform: translateY(-1px);
 }
 
@@ -369,7 +381,135 @@ input:focus {
 }
 
 .CreatePackageButton {
-  margin-left: 88%;
-  margin-top: 17%;
-  scale: 1.5;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  margin: 0;
+  scale: 1.5 ;
+}
+
+.create-package-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  min-width: 40px !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #4DA1A9;
+  transition: all 0.5s ease-in-out;
+}
+
+.create-package-button .button-text {
+  margin-right: 0px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.create-package-button:hover {
+  width: 120px; 
+  border-radius: 10px !important;
+  justify-content: flex-start;
+  background-color: #4DA1A9 !important;
+}
+
+.create-package-button:hover .button-text {
+  opacity: 1;
+}
+
+.create-package-button:hover .anticon-plus {
+  transform: none;
+}
+
+.title-tour {
+  border-style: solid !important;
+  border-color: #2e5077 !important;
+  transition: all 0.3s ease;
+}
+
+.title-tour:hover:not(:disabled),
+.title-tour:focus-within {
+  background-color: var(--border-color);
+}
+
+.radio-group-full{
+  margin-bottom: 10px;
+}
+
+.ant-radio-button-wrapper-checked {
+  background-color: #2e5077 !important;
+  border-color: #2e5077 !important; 
+  color: white;
+}
+
+.ant-radio-button-wrapper:hover {
+  border-color: #2e5077 !important;
+  color: #2e5077;
+}
+
+.Date-Button{
+ margin-Bottom: 10px;
+ border-Style: solid; 
+ border-Color: #2e5077;
+ transition: all 0.3s  ease;
+}
+
+.Date-Button:hover{
+  margin-Bottom: 10px;
+  border-Style: solid; 
+  border-Color: #2e5077 !important;
+  background-color: var(--border-color) !important;
+  color: inherit !important;
+ }
+
+ .Date-Button:hover:not(:disabled),
+.Date-Button:focus-within {
+  background-color: var(--border-color);
+}
+
+
+.Description{
+  border-Style: solid;
+  border-Color: #2e5077; 
+  margin-Bottom: 10px;
+}
+
+.Description:hover:not(:disabled),
+.Description:focus-within {
+  background-color: var(--border-color);
+}
+
+.PRICE{
+  border-Style: solid;
+  border-Color: #2e5077;
+}
+
+.PRICE:hover:not(:disabled),
+.PRICE:focus-within {
+  background-color: var(--border-color);
+}
+
+.MettingPoint{
+  border-Style: solid;
+  border-Color: #2e5077; 
+}
+
+.MettingPoint:hover:not(:disabled),
+.MettingPoint:focus-within {
+  background-color: var(--border-color);
+}
+
+.MAX-people{
+  border-Style: solid;
+  border-Color: #2e5077; 
+  
+}
+
+.MAX-people:hover:not(:disabled),
+.MAX-people:focus-within {
+  background-color: var(--border-color);
 }

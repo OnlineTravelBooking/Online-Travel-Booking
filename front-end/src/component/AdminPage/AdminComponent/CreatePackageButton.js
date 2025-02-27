@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import "./CreatePackageButton.css";
+import { motion } from "framer-motion";
 const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { RangePicker } = DatePicker;
@@ -400,13 +401,15 @@ export default function CreateButton() {
   };
 
   return (
-    <div>
+    <div className="Box-BUTTON">
       <Button
+        type="primary"
+        shape="square"
         icon={<PlusOutlined />}
         onClick={() => setIsModalOpen(true)}
-        style={{ backgroundColor: "#1D4ED8", color: "#ffffff", borderRadius: "0" }}
+        className="create-package-button"
       >
-        เพิ่มแพ็คเกจ
+        <span className="button-text">เพิ่มแพ็คเกจ</span>
       </Button>
       <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} width={"85%"} style={{ top: 25 }}>
         <div className="container">
@@ -488,27 +491,29 @@ export default function CreateButton() {
               <div className="form-section">
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label htmlFor="title">ชื่อแพ็คเกจทัวร์</label>
+                    <label htmlFor="title" style={{ marginBottom: "5px" }}>
+                      ชื่อแพ็คเกจทัวร์
+                    </label>
                     <input
                       id="title"
+                      className="title-tour"
                       name="title"
                       type="text"
                       value={formData.title}
                       onChange={handleInputChange}
-                      placeholder="Enter tour title"
+                      placeholder="Enter Tour Title"
                     />
                     {errors.title && <span className="error">{errors.title}</span>}
                   </div>
 
                   <div className="form-group">
-                    <label>ประเภทแพ็คเกจทัวร์</label>
+                    <label style={{ marginTop: "5px", marginBottom: "5px" }}>ประเภทแพ็คเกจทัวร์</label>
                     <div className="radio-group-full">
                       <Radio.Group
                         value={formData.type}
                         onChange={handleRadioChange}
                         optionType="button"
                         buttonStyle="solid"
-                        style={{ backgroundColor: "#1D4ED8" }}
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
                         <Radio value="Multi Day Trip">Multi Day Trip</Radio>
@@ -518,8 +523,11 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="description">คำอธิบาย</label>
+                    <label htmlFor="description" style={{ marginBottom: "5px" }}>
+                      คำอธิบาย
+                    </label>
                     <ReactQuill
+                      className="Description"
                       value={formData.description}
                       onChange={handleDescriptionChange}
                       placeholder="Enter tour description"
@@ -537,8 +545,11 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="price">ราคา</label>
+                    <label htmlFor="price" style={{ marginBottom: "5px" }}>
+                      ราคา
+                    </label>
                     <input
+                      className="PRICE"
                       id="price"
                       name="price"
                       type="number"
@@ -551,8 +562,11 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="meetingPoint">จุดนัดพบ</label>
+                    <label htmlFor="meetingPoint" style={{ marginTop: "5px", marginBottom: "5px" }}>
+                      จุดนัดพบ
+                    </label>
                     <input
+                      className="MettingPoint"
                       id="meetingPoint"
                       name="meetingPoint"
                       type="text"
@@ -564,8 +578,11 @@ export default function CreateButton() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="MaxPeople">จำนวนสูงสุดที่จองได้</label>
+                    <label htmlFor="MaxPeople" style={{ marginTop: "5px", marginBottom: "5px" }}>
+                      จำนวนสูงสุดที่จองได้
+                    </label>
                     <input
+                      className="MAX-people"
                       id="MaxPeople"
                       name="MaxPeople"
                       type="text"
@@ -598,24 +615,30 @@ export default function CreateButton() {
                       visible={dropdownVisible}
                       onVisibleChange={setDropdownVisible}
                     >
-                      <Button size="large">
+                      <Button size="large" className="Date-Button">
                         เลือก{formData.type === "One Day Trip" ? "วันที่" : "ช่วงวันที่"} <DownOutlined />
                       </Button>
                     </Dropdown>
                     {errors.dates && <span className="error">{errors.dates}</span>}
                   </div>
                   <div className="button-group">
-                    <button type="submit" className="primary-button" disabled={isUploading}>
+                    <motion.button
+                      type="submit"
+                      className="primary-button"
+                      disabled={isUploading}
+                      whileTap={{ scale: 0.9, transition: { type: "spring", stiffness: 900 } }}
+                    >
                       สร้างแพ็คเกจ
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
                       type="button"
                       className="secondary-button"
                       disabled={isUploading}
-                      onClick={() => handleModalClose()}
+                      onClick={handleModalClose}
+                      whileTap={{ scale: 0.9, transition: { type: "spring", stiffness: 900 } }}
                     >
                       ยกเลิก
-                    </button>
+                    </motion.button>
                   </div>
                 </form>
               </div>

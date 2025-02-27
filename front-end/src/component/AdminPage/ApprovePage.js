@@ -77,7 +77,7 @@ export default function ApprovePage() {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
-      <Layout>
+      <Layout style={{ backgroundColor: "#FFF6ee" }}>
         <Content style={{ margin: "16px" }}>
           <Card style={{ borderRadius: 8 }}>
             <div style={{ marginBottom: 24 }}>
