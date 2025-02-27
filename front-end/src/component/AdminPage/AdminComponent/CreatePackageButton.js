@@ -518,7 +518,7 @@ export default function CreateButton() {
                         buttonStyle="solid"
                       >
                         <Radio value="One Day Trip">One Day Trip</Radio>
-                        <Radio value="Multi Day Trip">Multi Day Trip</Radio>
+                        <Radio value="Multi Day Trip">Tour Packages</Radio>
                       </Radio.Group>
                     </div>
                     {errors.type && <span className="error">{errors.type}</span>}
