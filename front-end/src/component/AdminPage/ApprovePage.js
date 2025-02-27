@@ -5,6 +5,8 @@ import { GET_APPROVED_BOOKINGS } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import moment from "moment";
 import BookingDetailsModal from "./Modal/BookingDetailsModal";
+import ErrorIcon from "../ErrorIcon";
+import LoadingSpin from "../LoadingSpin";
 const { Title } = Typography;
 const { Content } = Layout;
 
@@ -71,13 +73,13 @@ export default function ApprovePage() {
     },
   ];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <LoadingSpin />;
+  if (error) return <ErrorIcon error={error} />;
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
-      <Layout>
+      <Layout style={{ backgroundColor: "#FFF6ee" }}>
         <Content style={{ margin: "16px" }}>
           <Card style={{ borderRadius: 8 }}>
             <div style={{ marginBottom: 24 }}>

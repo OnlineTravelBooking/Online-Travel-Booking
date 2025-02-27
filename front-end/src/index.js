@@ -6,7 +6,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 const StrapiUrl = process.env.REACT_APP_API_URL;
-console.log(StrapiUrl);
+
 const client = new ApolloClient({
   uri: `${StrapiUrl}/graphql`,
   cache: new InMemoryCache(),

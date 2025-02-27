@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { DatePicker, Form, Layout, Space, Button } from "antd";
+import { DatePicker, Form, Button } from "antd";
+import { motion } from "framer-motion";
 
 const { RangePicker } = DatePicker;
-const { Sider } = Layout;
 
 export default function FilterButton({ onFilter }) {
   const [form] = Form.useForm();
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [hasInput, setHasInput] = useState(false);
 
   const handleTypeToggle = (type) => {
     const newTypes = selectedTypes.includes(type) ? selectedTypes.filter((t) => t !== type) : [...selectedTypes, type];
@@ -24,28 +25,57 @@ export default function FilterButton({ onFilter }) {
     onFilter(processedValues);
   };
 
+  const handleChange = (dates, dateStrings) => {
+    if (dateStrings[0] && dateStrings[1]) {
+      setHasInput(true);
+    } else {
+      setHasInput(false);
+    }
+  };
+
   return (
     <Form className="Filter-bar" form={form} onValuesChange={handleValuesChange} layout="inline">
       <Form.Item name="travelDate" className="Select-Date">
-        <RangePicker placeholder={["เริ่มต้น", "สิ้นสุด"]} format="DD-MM-YYYY" style={{ width: 250 }} />
+        <RangePicker
+          className={`Rage-picker ${hasInput ? "input-success" : ""}`}
+          placeholder={["เริ่มต้น", "สิ้นสุด"]}
+          format="DD-MM-YYYY"
+          style={{ width: 250 }}
+          onChange={handleChange}
+        />
       </Form.Item>
 
       <Form.Item className="Filter-Button" name="types">
-        <Button
-          className="One-Button"
-          type={selectedTypes.includes("One_Day_Trip") ? "primary" : "default"}
-          onClick={() => handleTypeToggle("One_Day_Trip")}
+        <motion.div
+          style={{ display: "inline-flex" }}
+          whileTap={{
+            scale: 0.9,
+            transition: { type: "spring", stiffness: 1000 },
+          }}
         >
-          One Day Trip 🚍
-        </Button>
-
-        <Button
-          className="Muti-Button"
-          type={selectedTypes.includes("Multi_Day_Trip") ? "primary" : "default"}
-          onClick={() => handleTypeToggle("Multi_Day_Trip")}
+          <Button
+            className="One-Button"
+            type={selectedTypes.includes("One_Day_Trip") ? "primary" : "default"}
+            onClick={() => handleTypeToggle("One_Day_Trip")}
+          >
+            One Day Trip 🚍
+          </Button>
+        </motion.div>
+        <motion.div
+          style={{ display: "inline-flex" }}
+          whileTap={{
+            scale: 0.9,
+            transition: { type: "spring", stiffness: 1000 },
+          }}
         >
-          Multi Day Trip 🏢
-        </Button>
+          <Button
+            className="Muti-Button"
+            type={selectedTypes.includes("Multi_Day_Trip") ? "primary" : "default"}
+            onClick={() => handleTypeToggle("Multi_Day_Trip")}
+          >
+            Tour Packages 🏢
+          </Button>
+        </motion.div>
       </Form.Item>
     </Form>
   );
