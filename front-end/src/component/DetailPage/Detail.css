@@ -6,9 +6,11 @@
   color: red !important;
 }
 
-.ant-select:hover .ant-select-selector {
-  background-color: #5ab1ae42 !important;
-  border-color: #005C78 !important;
+.Select-DATE {
+  display: block;
+  width: 80% !important;
+  transform: scale(1.1) !important;
+  margin: 0 auto;
 }
 
 .ant-select:hover .ant-select-selector:focus,
@@ -67,31 +69,64 @@
   padding: 20px;
 }
 
-.Add-people {
+.Background-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.Member-Trip {
+  text-align: center;
+  font-size: 30px;
+  background-color: #005C78;
+  border-style: solid;
+  border-radius: 0 0 20% 20%;
+  padding: 10px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.Box-add-button{
   display: flex;
   justify-content: space-between;
   text-align: center;
   width: 20%;
-  transform: scale(1);
+  border-style:  solid ;
+  border-color:  #005c78;
   background-color: #ffffff;
-  box-shadow: 0px 0px 2px #004080 !important;
   color: #004080;
-  margin-right: 5px;
+  margin-top: 5px ;
   font-size: 20px;
   font-weight: bold;
+  transform: scale(1.1);
 }
 
-.Button-add{
-  background-color: #005C78;
-  border-radius: 0px !important;
+.Add-Button {
+  background-color: #005c78;
+  border-radius: 0% !important;
+  margin: 0 !important;
 }
 
-.Button-add:hover{
+.Add-Button:hover {
   background-color: #005C78 !important;
-  border-radius: 0px !important;
+  border-radius: 0% !important;
 }
 
-.Box-add {
+.Count {
+  background-color: #ffffff;
+  width: 40%;
+}
+
+.Type-Trip{
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  margin-left: 50px;
+  font-size: 35px;
+  font-weight: bold;
+  width: fit-content;
+  color: #2e5077;
 }

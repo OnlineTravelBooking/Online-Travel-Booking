@@ -122,9 +122,8 @@ export default function VerifyPage() {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: "0 16px" }}>
+      <Layout style={{ backgroundColor: "#FFF6ee" }}>
+        <Content style={{ margin: "16px" }}>
           <div style={{ padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG }}>
             <Row gutter={[16, 16]} style={{ padding: "24px" }}>
               {packageWithBooking.map((item) => (
