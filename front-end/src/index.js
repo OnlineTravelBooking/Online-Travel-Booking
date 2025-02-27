@@ -5,10 +5,10 @@ import App from "./App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-const StrapiUrl = process.env.REACT_APP_API_URL;
-console.log(StrapiUrl);
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
 const client = new ApolloClient({
-  uri: `${StrapiUrl}/graphql`,
+  uri: `${REACT_APP_API_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 
