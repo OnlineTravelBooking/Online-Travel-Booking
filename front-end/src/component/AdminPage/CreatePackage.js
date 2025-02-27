@@ -41,7 +41,7 @@ export default function CreatePackage() {
   }, [data]);
 
   if (loading) return <LoadingSpin />;
-  if (error) return <ErrorIcon />;
+  if (error) return <ErrorIcon error={error} />;
 
   const handleDelete = async () => {
     try {

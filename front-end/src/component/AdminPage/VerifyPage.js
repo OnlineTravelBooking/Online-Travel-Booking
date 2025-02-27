@@ -8,6 +8,7 @@ import ImageViewModal from "./Modal/ImageViewModal";
 import moment from "moment";
 import { UPDATE_STATUS } from "../../Graphql";
 import { useAuth } from "../../AuthContext";
+
 const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { Header, Content } = Layout;
