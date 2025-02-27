@@ -11,9 +11,9 @@ import ImageSlider from "./ImageSlider";
 import { useAuth } from "../../AuthContext";
 import "./Detail.css";
 import CustomFooter from "../HomePage/Footer";
+import { motion } from "framer-motion";
 
 const { Option } = Select;
-
 const { Content } = Layout;
 
 export default function Detail() {
@@ -155,14 +155,21 @@ export default function Detail() {
             <Col span={7} className="Detail-input">
               <div>
                 <Form form={form} onFinish={handleSubmit}>
+                  <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                   <div className="Background-add">
                     <Avatar
                       shape="square"
-                      size={64}
+                      size={50}
                       icon={<UserOutlined />}
-                      style={{ backgroundColor: "#005C78", color: "white" }}
+                      style={{
+                        backgroundColor: "#005C78",
+                        color: "white",
+                        marginLeft: "10px",
+                        marginTop: "5px",
+                        borderRadius: "5px",
+                      }}
                     />
-                    <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
+
                     <div className="Box-add-button">
                       <Button
                         className="Add-Button"
@@ -181,9 +188,10 @@ export default function Detail() {
                       />
                     </div>
                   </div>
-                  <hr className="line" />
+
                   {/* ช่องเลือกวันที่ */}
                   <div className="Day-Trip">
+                    <div className="title-input">เลือกวันที่ต้องการจอง🗓️</div>
                     <Form.Item
                       name="select"
                       hasFeedback
@@ -193,9 +201,9 @@ export default function Detail() {
                           message: "กรุณาเลือกวันเที่ยว",
                         },
                       ]}
+                      style={{ width: "80%", margin: "0 auto", marginTop: "25px", marginBottom: "30px" }}
                     >
-                      <div className="title-input">เลือกวันที่ต้องการจอง🗓️</div>
-                      <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange}>
+                      <Select placeholder="เลือกวันเที่ยว" onChange={handleDateChange} className="Select-DATE">
                         {availableDates?.map((date) => {
                           const totalPeople = data_booking?.bookings
                             ?.filter((booking) => booking.Start === date.Start_Date)
@@ -223,23 +231,27 @@ export default function Detail() {
                   </div>
                   {Accommodation && (
                     <>
-                      <hr className="line" />
                       <div className="Meeting-box">สถานที่พัก</div>
                       <div className="Meeting">{Accommodation}</div>
                     </>
                   )}
-                  <hr className="line" />
                   <div className="Meeting-box">จุดนัดพบ</div>
                   <div className="Meeting">{MeetingPoint}</div>
                   <hr className="line" />
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
                   <div className="Pay-box">
                     <div className="Cost">THB {count === 0 ? totalPrice : totalPrice * count}</div>
-                    <div>
+                    <motion.div
+                      style={{ display: "inline-flex" }}
+                      whileTap={{
+                        scale: 0.9,
+                        transition: { type: "spring", stiffness: 1000 },
+                      }}
+                    >
                       <Button className="pay-button" type="primary" htmlType="submit">
                         ชำระเงิน
                       </Button>
-                    </div>
+                    </motion.div>
                   </div>
                 </Form>
               </div>

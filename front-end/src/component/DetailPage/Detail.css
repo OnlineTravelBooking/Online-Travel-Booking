@@ -6,9 +6,11 @@
   color: red !important;
 }
 
-.ant-select:hover .ant-select-selector {
-  background-color: #5ab1ae42 !important;
-  border-color: #005C78 !important;
+.Select-DATE {
+  display: block;
+  width: 80% !important;
+  transform: scale(1.1) !important;
+  margin: 0 auto;
 }
 
 .ant-select:hover .ant-select-selector:focus,
@@ -69,15 +71,22 @@
 
 .Background-add {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  gap: 20px;
 }
 
 .Member-Trip {
+  text-align: center;
   font-size: 30px;
-  color: #2e5077;
+  background-color: #4DA1A9;
+  border-style: solid;
+  border-radius: 0 0 20% 20%;
+  padding: 10px;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -90,7 +99,7 @@
   border-color:  #005c78;
   background-color: #ffffff;
   color: #004080;
-  margin-right: 5px;
+  margin-top: 5px ;
   font-size: 20px;
   font-weight: bold;
   transform: scale(1.1);
