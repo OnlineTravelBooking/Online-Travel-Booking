@@ -54,7 +54,7 @@
       "type": "enumeration",
       "enum": [
         "One Day Trip",
-        "Multi Day Trip"
+        "Tour Packages"
       ]
     },
     "Accommodation": {
