@@ -7,7 +7,7 @@ import PriceFilter from "./PriceFilter";
 import SlideImg from "./SlideImg";
 import { Layout } from "antd";
 import CustomFooter from "./Footer";
-import BackToTop from "./back";
+import BackToTop from "./BackToTop";
 
 const { Footer, Sider, Content } = Layout;
 
