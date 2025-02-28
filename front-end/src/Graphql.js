@@ -55,9 +55,9 @@ export const GET_PACKAGES = gql`
       Title
       Type
       Price
-      Description
       MeetingPoint
       Accommodation
+      updatedAt
       bookings {
         documentId
         Start
@@ -78,9 +78,12 @@ export const GET_PACKAGES = gql`
         url
       }
       Date {
+        documentId
         Start_Date
         End_Date
+        MaxPeople
       }
+      Description
     }
   }
 `;
@@ -180,6 +183,24 @@ export const DELETE_PACKAGE = gql`
   mutation DeletePackage($documentId: ID!) {
     deletePackage(documentId: $documentId) {
       documentId
+    }
+  }
+`;
+
+export const UPDATE_PACKAGE = gql`
+  mutation UpdatePackage($documentId: ID!, $data: PackageInput!) {
+    updatePackage(documentId: $documentId, data: $data) {
+      documentId
+      Title
+      Description
+      Image {
+        url
+        documentId
+      }
+      Price
+      MeetingPoint
+      Type
+      Accommodation
     }
   }
 `;
