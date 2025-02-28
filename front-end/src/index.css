@@ -867,3 +867,45 @@ body {
   font-size: large !important;
   color: #005C78;
 }
+
+.Menu-admin {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #005C78 !important;
+}
+
+.Menu-admin .ant-menu-item {
+  color: white !important;
+}
+
+.Menu-admin .ant-menu-item:hover,
+.Menu-admin .ant-menu-item:hover .anticon{
+  color: #70ece8 !important;
+}
+
+.Menu-admin .ant-menu-item-selected {
+  background-color: #004558 !important;
+}
+
+.logout-menu .ant-menu-item {
+  color: white !important;
+}
+
+.logout-menu .ant-menu-item:hover,
+.logout-menu .ant-menu-item:hover .anticon {
+  color: #ee6d6d !important;
+}
+
+.Menu-admin .ant-menu-item:hover,
+.logout-menu .ant-menu-item:hover {
+  background-color: #004558 !important;
+}
+
+.logout-menu {
+  background-color: #005C78 !important;
+}
+
+.ant-layout-sider-trigger {
+  background: #377f86 !important; 
+}
