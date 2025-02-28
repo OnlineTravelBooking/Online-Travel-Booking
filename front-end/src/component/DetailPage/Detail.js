@@ -3,7 +3,7 @@ import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
-import { PlusOutlined, MinusOutlined, UserOutlined, CalendarTwoTone } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, UserOutlined, CalendarTwoTone, HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
@@ -28,6 +28,12 @@ export default function Detail() {
   const [availableDates, setAvailableDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [allImages, setAllImages] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    // โหลดข้อมูล favorites จาก localStorage เมื่อโหลดหน้า
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+
   const {
     loading: loadingDate,
     error: errorDate,
@@ -85,7 +91,6 @@ export default function Detail() {
         End_Date: date.End_Date,
         MaxPeople: date.MaxPeople,
       }));
-      // เรียงวันที่จากน้อย-ไปมาก
       formattedDates.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
       setAvailableDates(formattedDates);
     }
@@ -134,7 +139,18 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
-  console.log("accommodation", Accommodation);
+
+  const toggleFavorite = (documentId) => {
+    const updatedFavorites = favorites.includes(documentId)
+      ? favorites.filter((id) => id !== documentId)
+      : [...favorites, documentId];
+
+    setFavorites(updatedFavorites);
+
+    // เก็บข้อมูล favorites ใน localStorage
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+
   return (
     <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />
@@ -144,7 +160,21 @@ export default function Detail() {
           <div>
             <ImageSlider allImages={allImages} />
           </div>
-          <div className="Type-Trip">{formattedType}</div>
+          <div className="Type-Trip">
+            {formattedType}
+            <span
+              style={{
+                marginLeft: "10px",
+                cursor: "pointer",
+                fontSize: "20px",
+                marginTop: "16px",  // เพิ่มระยะห่างด้านบนเล็กน้อย
+                color: favorites.includes(documentId) ? "#ff0000" : "#000",
+              }}
+              onClick={() => toggleFavorite(documentId)}
+            >
+              {favorites.includes(documentId) ? <HeartFilled /> : <HeartOutlined />}
+            </span>
+          </div>
           <Row>
             <Col span={15} className="Detail">
               <div className="Detail-Tour">รายละเอียดทริปทัวร์</div>
@@ -155,28 +185,17 @@ export default function Detail() {
             <Col span={7} className="Detail-input">
               <div>
                 <Form form={form} onFinish={handleSubmit}>
+                  {/* จำนวนลูกค้า */}
                   <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                   <div className="Background-add">
-                    <Avatar
-                      shape="square"
-                      size={50}
-                      icon={<UserOutlined />}
-                      style={{
-                        backgroundColor: "#005C78",
-                        color: "white",
-                        marginLeft: "10px",
-                        marginTop: "5px",
-                        borderRadius: "5px",
-                      }}
-                    />
-
+                    <Avatar shape="square" size={50} icon={<UserOutlined />} />
                     <div className="Box-add-button">
                       <Button
                         className="Add-Button"
                         type="primary"
                         shape="square"
                         icon={<MinusOutlined />}
-                        onClick={() => (count > 1 ? setCount((count) => count - 1) : setCount(1))}
+                        onClick={() => (count > 1 ? setCount(count - 1) : setCount(1))}
                       />
                       <div className="Count"> {count}</div>
                       <Button
@@ -184,7 +203,7 @@ export default function Detail() {
                         type="primary"
                         shape="square"
                         icon={<PlusOutlined />}
-                        onClick={() => setCount((count) => count + 1)}
+                        onClick={() => setCount(count + 1)}
                       />
                     </div>
                   </div>
@@ -214,15 +233,6 @@ export default function Detail() {
                               <CalendarTwoTone style={{ marginRight: "10px" }} />
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
                               {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
-
-                              {/* จำนวนสูงสุดที่จองได้ */}
-                              <span
-                                className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
-                                style={date.End_Date ? { marginLeft: "23%" } : { marginLeft: "48%" }}
-                              >
-                                <UserOutlined />
-                                {`${totalPeople}/${date.MaxPeople}`}
-                              </span>
                             </Option>
                           );
                         })}
@@ -240,7 +250,7 @@ export default function Detail() {
                   <hr className="line" />
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
                   <div className="Pay-box">
-                    <div className="Cost">THB {count === 0 ? totalPrice : totalPrice * count}</div>
+                    <div className="Cost">THB {totalPrice * count}</div>
                     <motion.div
                       style={{ display: "inline-flex" }}
                       whileTap={{
@@ -259,7 +269,7 @@ export default function Detail() {
           </Row>
         </div>
       </Content>
-      {/* <CustomFooter /> */}
+      <CustomFooter />
     </Layout>
   );
 }

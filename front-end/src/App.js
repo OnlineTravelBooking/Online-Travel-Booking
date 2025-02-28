@@ -12,6 +12,8 @@ import ApprovePage from "./component/AdminPage/ApprovePage";
 import CreatePackage from "./component/AdminPage/CreatePackage";
 import VerifyPage from "./component/AdminPage/VerifyPage";
 import RegisterForm from "./component/RegisterForm";
+// เพิ่ม import ของ FavoritePackage
+import FavoritePackage from "./component/HomePage/FavoritePackage";
 
 function App() {
   const token = sessionStorage.getItem("token");
@@ -40,6 +42,8 @@ function App() {
         <Route path="/status" element={<StatusPage />} />
         <Route path="/admin/approve" element={<ApprovePage />} />
         <Route path="/admin/verify" element={<VerifyPage />} />
+        
+        <Route path="/favorite" element={<FavoritePackage />} /> 
       </Routes>
     </AuthProvider>
   );

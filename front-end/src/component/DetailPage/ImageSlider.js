@@ -66,6 +66,7 @@ export default function ImageSlider({ allImages }) {
                 transform: "scale(3)",
                 marginRight: "6px",
                 marginBottom: "3px",
+                borderRadius: "50%",
               }}
             >
               ❰
@@ -77,6 +78,7 @@ export default function ImageSlider({ allImages }) {
                 transform: "scale(3)",
                 marginLeft: "6px",
                 marginBottom: "3px",
+                borderRadius: "50%",
               }}
             >
               ❱
