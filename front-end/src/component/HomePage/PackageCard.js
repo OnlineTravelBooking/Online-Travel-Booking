@@ -4,9 +4,8 @@ import LoadingSpin from "../LoadingSpin";
 import ErrorIcon from "../ErrorIcon";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 const StrapiUrl = process.env.REACT_APP_API_URL;
 
 const { Meta } = Card;
@@ -14,24 +13,13 @@ const { Meta } = Card;
 export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
-  const [favorites, setFavorites] = useState(() => {
-    // โหลดข้อมูล favorites จาก localStorage เมื่อโหลดหน้า
-    const savedFavorites = localStorage.getItem('favorites');
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
 
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
   useEffect(() => {
+    console.log("filters", filters);
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
-      
-      // กรองแพ็คเกจที่เป็น favorites หากมีการเลือก
-      if (filters.favorites?.length > 0) {
-        filteredData = filteredData.filter((item) =>
-          filters.favorites.includes(item.documentId)
-        );
-      }
 
       if (filters.searchTitle) {
         filteredData = filteredData.filter((item) =>
@@ -50,7 +38,9 @@ export default function PackageCard({ filters }) {
 
       if (filters.travelDate) {
         const [start, end] = filters.travelDate;
+
         filteredData = filteredData.filter((pkg) => {
+          // Check if the package has any date that overlaps with selected range
           return pkg.Date?.some((date) => {
             const Start_Date = date.Start_Date;
             const End_Date = date.End_Date;
@@ -75,24 +65,12 @@ export default function PackageCard({ filters }) {
     }
   }, [data_package, filters]);
 
-  const toggleFavorite = (documentId) => {
-    const updatedFavorites = favorites.includes(documentId)
-      ? favorites.filter((id) => id !== documentId)
-      : [...favorites, documentId];
-
-    setFavorites(updatedFavorites);
-
-    // เก็บข้อมูล favorites ใน localStorage
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-  };
-
   if (loading_package) {
     return <LoadingSpin />;
   }
   if (error_package) {
     return <ErrorIcon error={error_package} />;
   }
-
   return (
     <Row className="Package">
       <AnimatePresence initial={false}>
@@ -123,32 +101,14 @@ export default function PackageCard({ filters }) {
                 hoverable
                 className="Card-package"
                 cover={
-                  <div style={{ position: "relative" }}>
-                    <img
-                      alt={item.Title}
-                      src={`${StrapiUrl}${item.urlImage}`}
-                      style={{
-                        height: "170px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: "10px",
-                        left: "10px",
-                        fontSize: "24px",
-                        color: favorites.includes(item.documentId) ? "#ff0000" : "#fff",
-                        cursor: "pointer",
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleFavorite(item.documentId);
-                      }}
-                    >
-                      {favorites.includes(item.documentId) ? <HeartFilled /> : <HeartOutlined />}
-                    </div>
-                  </div>
+                  <img
+                    alt={item.Title}
+                    src={`${StrapiUrl}${item.urlImage}`}
+                    style={{
+                      height: "170px",
+                      objectFit: "cover",
+                    }}
+                  />
                 }
                 onClick={() => {
                   navigate("/detail", {
