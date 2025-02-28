@@ -578,7 +578,7 @@ body {
   height: 60%;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px #0000001A;
   transition: all 0.5s;
 }
 
@@ -623,15 +623,14 @@ body {
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 500px;
-  width: 500px;
 }
 
 .Input-search{
   height: 40px;
-  height: 40px;
+  
   border-radius: 20px;
   background-color: #d5dee6de;
-  background-color: #d5dee6de;
+  
   border-color: whitesmoke;
   transition: all 0.3s ease-in;
 }
@@ -698,12 +697,12 @@ body {
 }
 
 .Main-Content {
-  padding-bottom: 25px;
-  min-height: 1000px;
-  max-height: fit-content;
-  background-color: #FFF6ee;
+  margin-right: 0px;
+  margin-left: 30px;
   display: flex;
   flex-direction: column;
+  background-color: #fff6ee;
+  margin-bottom: 30px;
 }
 
 .custom-footer {
