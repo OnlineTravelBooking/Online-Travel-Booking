@@ -8,7 +8,7 @@ const BackToTop = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 100/*ปรับได้ว่าจะให้เห็นปุ่มเลื่อนขึ้นเมื่อถึงเกินเท่าไหร่ อันนี้ตั้งที่100*/ ) {
+      if (window.scrollY > 50/*ปรับได้ว่าจะให้เห็นปุ่มเลื่อนขึ้นเมื่อถึงเกินเท่าไหร่ อันนี้ตั้งที่100*/ ) {
         setIsVisible(true);
       } else {
         setIsVisible(false);

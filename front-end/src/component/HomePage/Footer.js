@@ -59,7 +59,7 @@ export default function CustomFooter() {
           </div>
         </div>
         <div>
-          <strong>Support</strong>
+          <strong>Contact</strong>
           
           <p>
             Facebook:
