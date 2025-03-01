@@ -27,34 +27,35 @@ export default function Sidebar() {
   };
 
   return (
-    <Sider collapsible>
-      <div className="demo-logo-vertical" />
+    <Sider collapsible style={{ display: "flex", flexDirection: "column", backgroundColor: "#005C78" }}>
+      <div>
+        <Menu
+          className="Menu-admin"
+          selectedKeys={getSelectedKey()}
+          mode="inline"
+          items={items}
+          onSelect={({ key }) => {
+            switch (key) {
+              case "1":
+                navigate("/admin/create-package");
+                break;
+              case "2":
+                navigate("/admin/verify");
+                break;
+              case "3":
+                navigate("/admin/approve");
+                break;
+              default:
+                break;
+            }
+          }}
+        />
+      </div>
       <Menu
-        className="Menu-admin"
-        selectedKeys={getSelectedKey()}
+        className="logout-menu"
         mode="inline"
-        items={items}
-        onSelect={({ key }) => {
-          switch (key) {
-            case "1":
-              navigate("/admin/create-package");
-              break;
-            case "2":
-              navigate("/admin/verify");
-              break;
-            case "3":
-              navigate("/admin/approve");
-              break;
-            default:
-              break;
-          }
-        }}
-      />
-      <Menu
-        theme="dark"
-        mode="inline"
-        style={{ marginTop: "270%" }}
-        items={[getItem(<span>&nbsp;&nbsp;&nbsp;&nbsp;Logout</span>, "4", <LogoutOutlined />)]}
+        style={{ marginTop: "auto" }}
+        items={[getItem(<span>Logout</span>, "4", <LogoutOutlined />)]}
         onSelect={({ key }) => {
           if (key === "4") {
             logout();

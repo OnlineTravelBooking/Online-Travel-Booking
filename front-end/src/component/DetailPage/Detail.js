@@ -211,14 +211,14 @@ export default function Detail() {
 
                           return (
                             <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
-                              <CalendarTwoTone style={{ marginRight: "10px" }} />
+                              <CalendarTwoTone style={{ marginRight: "5px" }} />
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                              {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+                              {date.End_Date !== date.Start_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
                               {/* จำนวนสูงสุดที่จองได้ */}
                               <span
                                 className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
-                                style={date.End_Date ? { marginLeft: "23%" } : { marginLeft: "48%" }}
+                                style={date.End_Date === date.Start_Date ? { marginLeft: "35%" } : { marginLeft: "3%" }}
                               >
                                 <UserOutlined />
                                 {`${totalPeople}/${date.MaxPeople}`}
@@ -231,11 +231,11 @@ export default function Detail() {
                   </div>
                   {Accommodation && (
                     <>
-                      <div className="Meeting-box">สถานที่พัก</div>
+                      <div className="Meeting-box">สถานที่พัก🏢</div>
                       <div className="Meeting">{Accommodation}</div>
                     </>
                   )}
-                  <div className="Meeting-box">จุดนัดพบ</div>
+                  <div className="Meeting-box">จุดนัดพบ📍</div>
                   <div className="Meeting">{MeetingPoint}</div>
                   <hr className="line" />
                   <div className="title-cost">ราคาที่ต้องชำระ</div>
