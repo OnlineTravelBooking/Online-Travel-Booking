@@ -449,7 +449,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #4da1a9;
+  background-color: #005C78;
   color: #f6f4f0;
   font-size: 30px;
   font-weight: bold;
@@ -466,9 +466,9 @@ body {
 .title-input {
   text-align: center;
   font-size: 30px;
-  background-color: #4DA1A9;
+  background-color: #005C78;
   border-radius: 0 0 20% 20%;
-  padding: 10px;
+  padding: 5px;
   color: #ffffff;
   font-weight: 600;
 }
@@ -549,10 +549,10 @@ body {
 .Meeting-box {
   text-align: center;
   font-size: 30px;
-  background-color: #4DA1A9;
+  background-color: #005C78;
   border-style: solid;
   border-radius: 0 0 20% 20%;
-  padding: 10px;
+  padding: 5px;
   color: #ffffff;
   font-weight: 600;
 }
@@ -578,7 +578,7 @@ body {
   height: 60%;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px #0000001A;
   transition: all 0.5s;
 }
 
@@ -623,15 +623,14 @@ body {
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 500px;
-  width: 500px;
 }
 
 .Input-search{
   height: 40px;
-  height: 40px;
+  
   border-radius: 20px;
   background-color: #d5dee6de;
-  background-color: #d5dee6de;
+  
   border-color: whitesmoke;
   transition: all 0.3s ease-in;
 }
@@ -698,12 +697,12 @@ body {
 }
 
 .Main-Content {
-  padding-bottom: 25px;
-  min-height: 1000px;
-  max-height: fit-content;
-  background-color: #FFF6ee;
+  margin-right: 0px;
+  margin-left: 30px;
   display: flex;
   flex-direction: column;
+  background-color: #fff6ee;
+  margin-bottom: 30px;
 }
 
 .custom-footer {
@@ -866,4 +865,46 @@ body {
   border-color: #005C78 !important;
   font-size: large !important;
   color: #005C78;
+}
+
+.Menu-admin {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #005C78 !important;
+}
+
+.Menu-admin .ant-menu-item {
+  color: white !important;
+}
+
+.Menu-admin .ant-menu-item:hover,
+.Menu-admin .ant-menu-item:hover .anticon{
+  color: #70ece8 !important;
+}
+
+.Menu-admin .ant-menu-item-selected {
+  background-color: #004558 !important;
+}
+
+.logout-menu .ant-menu-item {
+  color: white !important;
+}
+
+.logout-menu .ant-menu-item:hover,
+.logout-menu .ant-menu-item:hover .anticon {
+  color: #ee6d6d !important;
+}
+
+.Menu-admin .ant-menu-item:hover,
+.logout-menu .ant-menu-item:hover {
+  background-color: #004558 !important;
+}
+
+.logout-menu {
+  background-color: #005C78 !important;
+}
+
+.ant-layout-sider-trigger {
+  background: #377f86 !important; 
 }

@@ -22,7 +22,6 @@ export default function PackageCard({ filters }) {
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
   useEffect(() => {
-    console.log("filters", filters);
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
       
