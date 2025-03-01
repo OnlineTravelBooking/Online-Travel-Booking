@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Result } from "antd";
 
 export default function ErrorIcon(error) {
-  console.log("errror", error);
   return (
     <div
       style={{
