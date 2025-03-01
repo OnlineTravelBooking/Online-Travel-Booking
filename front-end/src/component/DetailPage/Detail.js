@@ -165,8 +165,8 @@ export default function Detail() {
               style={{
                 marginLeft: "10px",
                 cursor: "pointer",
-                fontSize: "20px",
-                marginTop: "16px",  // เพิ่มระยะห่างด้านบนเล็กน้อย
+                fontSize: "30px",
+                marginTop: "4px",  // เพิ่มระยะห่างด้านบนเล็กน้อย
                 color: favorites.includes(documentId) ? "#ff0000" : "#000",
               }}
               onClick={() => toggleFavorite(documentId)}

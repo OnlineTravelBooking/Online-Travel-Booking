@@ -47,16 +47,24 @@ export const UserHeader = () => {
       ]);
     } else {
       setMenuItems([
+        //
         {
           key: "favorite",
-          label: (
-            <>
-              <HeartOutlined /> Favorite package
-            </>
-          ),
-          onClick: () => navigate("/favorite"),
+          label:
+            location.pathname === "/favorite" ? (
+              <>
+                <HomeOutlined /> Home
+              </>
+            ) : (
+              <>
+                <HeartOutlined /> Favorite package
+              </>
+            ),
+          onClick: () =>
+            navigate(location.pathname === "/favorite" ? "/" : "/favorite"),
           style: { marginLeft: "auto" },
         },
+        //
         {
           key: "nav-toggle",
           label:
