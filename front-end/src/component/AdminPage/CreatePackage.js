@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { Layout, theme, Card, Row, Col, Modal, message, Button } from "antd";
 import CreatePackageButton from "./AdminComponent/CreatePackageButton";
-import { CloseOutlined } from "@ant-design/icons";
+import EditPackage from "./AdminComponent/EditPackage";
 import LoadingSpin from "../LoadingSpin";
 import ErrorIcon from "../ErrorIcon";
 const { Content } = Layout;
@@ -20,7 +20,8 @@ export default function CreatePackage() {
   const [deletePackage] = useMutation(DELETE_PACKAGE);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState(null);
-
+  const [selectPackage, setselectPackage] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = useToken();
@@ -28,13 +29,14 @@ export default function CreatePackage() {
   useEffect(() => {
     if (data && data.packages) {
       const mapData = data.packages.map((item) => ({
-        documentId: item.documentId,
-        Price: item.Price,
-        Title: item.Title,
-        Type: item.Type,
-        urlImage: item.Image[0]?.url,
-        Description: item.Description,
-        MeetingPoint: item.MeetingPoint,
+        documentId: item?.documentId,
+        Price: item?.Price,
+        Title: item?.Title,
+        Type: item?.Type,
+        Images: item?.Image || [],
+        Description: item?.Description,
+        MeetingPoint: item?.MeetingPoint,
+        Accommodation: item?.Accommodation,
       }));
       setDataSource(mapData);
     }
@@ -61,7 +63,6 @@ export default function CreatePackage() {
       message.error("Delete failed: " + error.message);
     }
   };
-
   return (
     <Layout style={{ minHeight: "100vh", overflowX: "hidden" }}>
       <Sidebar />
@@ -82,15 +83,16 @@ export default function CreatePackage() {
                     hoverable
                     style={{ width: "100%", height: "100%" }}
                     cover={
-                      <>
-                        <img
-                          alt={item.Title}
-                          src={`${StrapiUrl}${item.urlImage}`}
-                          style={{ height: "200px", objectFit: "cover" }}
-                        />
-                      </>
+                      <img
+                        alt={item.Title}
+                        src={`${StrapiUrl}${item.Images[0].url}`}
+                        style={{ height: "200px", objectFit: "cover" }}
+                      />
                     }
-                    onClick={() => navigate("/admin/approve", { state: { ...item } })}
+                    onClick={() => {
+                      setselectPackage(item);
+                      setIsEditModalOpen(true);
+                    }}
                   >
                     <Meta
                       title={item.Title}
@@ -116,7 +118,14 @@ export default function CreatePackage() {
                       </Button>
                     </div>
                   </Card>
-
+                  {selectPackage && (
+                    <EditPackage
+                      packageData={selectPackage}
+                      visible={isEditModalOpen}
+                      onClose={() => setIsEditModalOpen(false)}
+                      refetchPackages={refetch}
+                    />
+                  )}
                   <Modal
                     title="Confirm Delete"
                     open={isModalOpen}

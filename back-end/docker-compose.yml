@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0 
+    container_name: southex
+    environment:
+      MYSQL_DATABASE: southex 
+      MYSQL_USER: team14
+      MYSQL_PASSWORD: team14password
+      MYSQL_ROOT_PASSWORD: team14password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:

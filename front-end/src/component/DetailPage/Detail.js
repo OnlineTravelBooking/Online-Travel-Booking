@@ -140,17 +140,6 @@ export default function Detail() {
       });
   };
 
-  const toggleFavorite = (documentId) => {
-    const updatedFavorites = favorites.includes(documentId)
-      ? favorites.filter((id) => id !== documentId)
-      : [...favorites, documentId];
-
-    setFavorites(updatedFavorites);
-
-    // เก็บข้อมูล favorites ใน localStorage
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-  };
-
   return (
     <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />
