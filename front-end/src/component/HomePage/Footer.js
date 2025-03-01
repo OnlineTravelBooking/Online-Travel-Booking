@@ -16,7 +16,7 @@ const footerStyle = {
 
 const sectionStyle = {
   width: "100%",
-  maxWidth: "800px",
+  maxWidth: "1000px",
   display: "flex",
   justifyContent: "space-between",
   textAlign: "left",
@@ -29,12 +29,12 @@ const developerContainerStyle = {
 };
 
 const developerStyle = {
-  marginLeft: "100px", // ขยับไปทางซ้ายอีกหน่อย
+  marginLeft: "300px", // ขยับไปทางซ้ายอีกหน่อย
 };
 
 const taglineStyle = {
   marginTop: "0px", // ขยับขึ้นข้างบน
-  marginLeft: "-100px", // ขยับไปทางซ้าย
+  marginLeft: "-400px", // ขยับไปทางซ้าย
 };
 
 const iconStyle = {
