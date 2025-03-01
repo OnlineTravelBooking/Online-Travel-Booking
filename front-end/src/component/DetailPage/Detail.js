@@ -13,6 +13,7 @@ import "./Detail.css";
 import CustomFooter from "../HomePage/Footer";
 import { motion } from "framer-motion";
 
+
 const { Option } = Select;
 const { Content } = Layout;
 
@@ -139,7 +140,16 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
+     const toggleFavorite = (documentId) => {
+    const updatedFavorites = favorites.includes(documentId)
+      ? favorites.filter((id) => id !== documentId)
+      : [...favorites, documentId];
 
+    setFavorites(updatedFavorites);
+
+    // เก็บข้อมูล favorites ใน localStorage
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
   return (
     <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />

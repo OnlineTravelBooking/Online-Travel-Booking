@@ -5,6 +5,7 @@ import ErrorIcon from "../ErrorIcon";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";//
 import { motion, AnimatePresence } from "framer-motion";
 const StrapiUrl = process.env.REACT_APP_API_URL;
 
@@ -13,14 +14,25 @@ const { Meta } = Card;
 export default function PackageCard({ filters }) {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
-
+  const [favorites, setFavorites] = useState(() => {
+    // โหลดข้อมูล favorites จาก localStorage เมื่อโหลดหน้า
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  }); //
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
 
   useEffect(() => {
     console.log("filters", filters);
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
-
+      
+      // กรองแพ็คเกจที่เป็น favorites หากมีการเลือก
+      if (filters.favorites?.length > 0) {
+        filteredData = filteredData.filter((item) =>
+          filters.favorites.includes(item.documentId)
+        );
+      }
+      //
       if (filters.searchTitle) {
         filteredData = filteredData.filter((item) =>
           item.Title.toLowerCase().includes(filters.searchTitle.toLowerCase())
@@ -64,7 +76,18 @@ export default function PackageCard({ filters }) {
       setDataSource(mapData);
     }
   }, [data_package, filters]);
+  //
+  const toggleFavorite = (documentId) => {
+    const updatedFavorites = favorites.includes(documentId)
+      ? favorites.filter((id) => id !== documentId)
+      : [...favorites, documentId];
 
+    setFavorites(updatedFavorites);
+
+    // เก็บข้อมูล favorites ใน localStorage
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+  //
   if (loading_package) {
     return <LoadingSpin />;
   }
@@ -124,6 +147,24 @@ export default function PackageCard({ filters }) {
                   });
                 }}
               >
+                {/**/}
+                <div
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "10px",
+                        fontSize: "24px",
+                        color: favorites.includes(item.documentId) ? "#ff0000" : "#000",
+                        cursor: "pointer",
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(item.documentId);
+                      }}
+                    >
+                      {favorites.includes(item.documentId) ? <HeartFilled /> : <HeartOutlined />}
+                    </div>
+                {/**/}
                 <Meta
                   title={item.Title}
                   description={
