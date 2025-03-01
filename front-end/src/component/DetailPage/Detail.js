@@ -134,7 +134,7 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
-  console.log("accommodation", Accommodation);
+
   return (
     <Layout style={{ backgroundColor: "#FFF6ee" }}>
       <UserHeader />

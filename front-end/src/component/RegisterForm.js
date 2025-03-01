@@ -29,7 +29,7 @@ export default function RegisterForm() {
       Fname: fullName.firstname,
       Lname: fullName.lastname,
       password: values.Password,
-      role: 5,
+      role: 4,
       confirmed: true,
     };
 
