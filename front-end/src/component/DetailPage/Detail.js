@@ -211,14 +211,14 @@ export default function Detail() {
 
                           return (
                             <Option key={date.documentId} disabled={totalPeople >= date.MaxPeople}>
-                              <CalendarTwoTone style={{ marginRight: "10px" }} />
+                              <CalendarTwoTone style={{ marginRight: "5px" }} />
                               {dayjs(date.Start_Date).format("DD/MM/YYYY")}
-                              {date.End_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
+                              {date.End_Date !== date.Start_Date && ` - ${dayjs(date.End_Date).format("DD/MM/YYYY")}`}
 
                               {/* จำนวนสูงสุดที่จองได้ */}
                               <span
                                 className={`Total-people ${totalPeople >= date.MaxPeople ? "full" : ""}`}
-                                style={date.End_Date ? { marginLeft: "3%" } : { marginLeft: "48%" }}
+                                style={date.End_Date === date.Start_Date ? { marginLeft: "35%" } : { marginLeft: "3%" }}
                               >
                                 <UserOutlined />
                                 {`${totalPeople}/${date.MaxPeople}`}
