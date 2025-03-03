@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Layout, message } from "antd";
 import { LockOutlined, UserOutlined, EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useAuth } from "../AuthContext";
 
 export default function RegisterForm() {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState({ firstname: "Grace", lastname: "Katherine" });
+  const [fullName, setFullName] = useState({ firstname: "", lastname: "" });
   const images = ["Login.jpg"];
   const { login } = useAuth();
   const [registerMutation, { loading }] = useMutation(MUTATION_REGISTER);
@@ -48,15 +48,16 @@ export default function RegisterForm() {
           },
         },
       });
-
       const jwt = loginResult.data.login.jwt;
       const userData = {
+        documentId: loginResult.data.login.user.documentId,
         username: values.Username,
         Fname: fullName.firstname,
         Lname: fullName.lastname,
         email: values.email,
       };
       message.destroy();
+
       login(userData, jwt, "user");
       message.success("สมัครสมาชิกสำเร็จและล็อกอินแล้ว!");
       navigate("/");
@@ -113,7 +114,18 @@ export default function RegisterForm() {
             <Form.Item
               name="Fullname"
               wrapperCol={{ span: 24 }}
-              rules={[{ required: true, message: "Please input your full name!" }]}
+              rules={[
+                { required: true, message: "Please input your full name!" },
+                {
+                  validator: (_, value) => {
+                    const names = value.split(" ");
+                    if (names.length < 2 || !names[0] || !names[1]) {
+                      return Promise.reject("Please input both first name and last name!");
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <Input
                 className="Input-login"

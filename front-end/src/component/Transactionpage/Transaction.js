@@ -15,14 +15,11 @@ message.config({
 });
 const { Content } = Layout;
 export default function Transaction() {
-  const [messageApi, contextHolder] = message.useMessage();
-
   const [paymentStatus, setPaymentStatus] = useState(0);
   const [isUploaded, setIsUploaded] = useState(false);
   const navigate = useNavigate();
   const { data, Title, Price, selectedDate, people, packageId } = useLocation().state;
   const [form] = Form.useForm();
-  const { Option } = Select;
 
   const onFinish = async (values) => {
     const hide = message.loading({

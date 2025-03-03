@@ -20,6 +20,7 @@ export const MUTATION_REGISTER = gql`
   mutation Mutation($data: UsersPermissionsUserInput!) {
     createUsersPermissionsUser(data: $data) {
       data {
+        documentId
         username
         email
         Fname
