@@ -62,7 +62,7 @@ export default function ApprovePage() {
       render: (_, record) => (
         <Tag color="blue">
           {moment(record.Start).format("DD MMM")}
-          {record.End && ` - ${moment(record.End).format("DD MMM")}`}
+          {record.End !== record.Start && ` - ${moment(record.End).format("DD MMM")}`}
         </Tag>
       ),
     },
