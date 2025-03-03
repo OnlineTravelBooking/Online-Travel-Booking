@@ -20,6 +20,7 @@ export const MUTATION_REGISTER = gql`
   mutation Mutation($data: UsersPermissionsUserInput!) {
     createUsersPermissionsUser(data: $data) {
       data {
+        documentId
         username
         email
         Fname
@@ -163,6 +164,7 @@ export const GET_APPROVED_BOOKINGS = gql`
       slip {
         url
       }
+      updatedAt
     }
   }
 `;

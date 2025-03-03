@@ -8,7 +8,7 @@ export default function FavoritePackage() {
 
   // ดึงข้อมูล favorites จาก localStorage
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(storedFavorites);
   }, []);
 
@@ -23,18 +23,25 @@ export default function FavoritePackage() {
   }
 
   return (
-    
     <div>
       <UserHeader />
       <BackToTop />
-      <h1 style={{ display: "flex", justifyContent: "center", width: "100%", color: "#2E5077", marginTop: "2%", marginBottom: "0%", fontSize: "300%" }}>
-         Favorite Packages
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          color: "#2E5077",
+          marginTop: "2%",
+          marginBottom: "0%",
+          fontSize: "300%",
+        }}
+      >
+        Favorite Packages
       </h1>
-      <div >
-      <PackageCard filters={{ favorites }} />
+      <div>
+        <PackageCard filters={{ favorites }} />
       </div>
-    </div> 
-
+    </div>
   );
-  
 }

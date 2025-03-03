@@ -5,7 +5,7 @@ import ErrorIcon from "../ErrorIcon";
 import { GET_PACKAGES } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import { data, useNavigate } from "react-router-dom";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";//
+import { HeartOutlined, HeartFilled } from "@ant-design/icons"; //
 import { motion, AnimatePresence } from "framer-motion";
 const StrapiUrl = process.env.REACT_APP_API_URL;
 
@@ -16,7 +16,7 @@ export default function PackageCard({ filters }) {
   const [dataSource, setDataSource] = useState([]);
   const [favorites, setFavorites] = useState(() => {
     // โหลดข้อมูล favorites จาก localStorage เมื่อโหลดหน้า
-    const savedFavorites = localStorage.getItem('favorites');
+    const savedFavorites = localStorage.getItem("favorites");
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   }); //
   const { loading: loading_package, error: error_package, data: data_package } = useQuery(GET_PACKAGES);
@@ -24,12 +24,10 @@ export default function PackageCard({ filters }) {
   useEffect(() => {
     if (data_package && data_package.packages) {
       let filteredData = data_package.packages;
-      
+
       // กรองแพ็คเกจที่เป็น favorites หากมีการเลือก
       if (filters.favorites?.length > 0) {
-        filteredData = filteredData.filter((item) =>
-          filters.favorites.includes(item.documentId)
-        );
+        filteredData = filteredData.filter((item) => filters.favorites.includes(item.documentId));
       }
       //
       if (filters.searchTitle) {
@@ -84,7 +82,7 @@ export default function PackageCard({ filters }) {
     setFavorites(updatedFavorites);
 
     // เก็บข้อมูล favorites ใน localStorage
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
   //
   if (loading_package) {
@@ -146,31 +144,30 @@ export default function PackageCard({ filters }) {
                   });
                 }}
               >
-                
                 <Meta
                   title={item.Title}
                   description={
                     <>
                       <div>{item.Type}</div>
                       <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
-                    {/**/}
-                <div
-                      style={{
-                        position: "absolute",
-                        bottom: "20%",
-                        left: "90%",
-                        fontSize: "200%",
-                        color: favorites.includes(item.documentId) ? "#ff0000" : "#000",
-                        cursor: "pointer",
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleFavorite(item.documentId);
-                      }}
-                    >
-                      {favorites.includes(item.documentId) ? <HeartFilled /> : <HeartOutlined />}
-                    </div>
-                     {/**/}
+                      {/**/}
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "20%",
+                          left: "90%",
+                          fontSize: "200%",
+                          color: favorites.includes(item.documentId) ? "#ff0000" : "#000",
+                          cursor: "pointer",
+                          zIndex: 0,
+                        }}
+                        onClick={() => {
+                          toggleFavorite(item.documentId);
+                        }}
+                      >
+                        {favorites.includes(item.documentId) ? <HeartFilled /> : <HeartOutlined />}
+                      </div>
+                      {/**/}
                     </>
                   }
                 />
