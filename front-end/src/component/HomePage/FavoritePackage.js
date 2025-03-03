@@ -23,21 +23,18 @@ export default function FavoritePackage() {
   }
 
   return (
-    <div style={{ 
-      backgroundColor: "#F6F4F0", 
-      minHeight: "100vh", 
-      width: "100%",  
-      flexDirection: "column", 
-      justifyContent: "center", 
-      alignItems: "center",
-    }}>
+    
+    <div>
       <UserHeader />
       <BackToTop />
-      <h1 style={{ display: "flex", justifyContent: "center", width: "100%", color: "#2E5077", marginTop: "20px", marginBottom: "0px", fontSize: "50px" }}>
+      <h1 style={{ display: "flex", justifyContent: "center", width: "100%", color: "#2E5077", marginTop: "2%", marginBottom: "0%", fontSize: "300%" }}>
          Favorite Packages
       </h1>
+      <div >
       <PackageCard filters={{ favorites }} />
-    </div>
+      </div>
+    </div> 
+
   );
   
 }

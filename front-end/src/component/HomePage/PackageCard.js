@@ -146,13 +146,20 @@ export default function PackageCard({ filters }) {
                   });
                 }}
               >
-                {/**/}
+                
+                <Meta
+                  title={item.Title}
+                  description={
+                    <>
+                      <div>{item.Type}</div>
+                      <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
+                    {/**/}
                 <div
                       style={{
                         position: "absolute",
-                        bottom: "10px",
-                        left: "10px",
-                        fontSize: "24px",
+                        bottom: "20%",
+                        left: "90%",
+                        fontSize: "200%",
                         color: favorites.includes(item.documentId) ? "#ff0000" : "#000",
                         cursor: "pointer",
                       }}
@@ -163,13 +170,7 @@ export default function PackageCard({ filters }) {
                     >
                       {favorites.includes(item.documentId) ? <HeartFilled /> : <HeartOutlined />}
                     </div>
-                {/**/}
-                <Meta
-                  title={item.Title}
-                  description={
-                    <>
-                      <div>{item.Type}</div>
-                      <div style={{ color: "#FF0000", textAlign: "end" }}>${item.Price}</div>
+                     {/**/}
                     </>
                   }
                 />
