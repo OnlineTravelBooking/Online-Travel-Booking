@@ -163,6 +163,7 @@ export const GET_APPROVED_BOOKINGS = gql`
       slip {
         url
       }
+      updatedAt
     }
   }
 `;

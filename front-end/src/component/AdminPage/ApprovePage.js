@@ -51,11 +51,22 @@ export default function ApprovePage() {
     },
   ];
 
-  // Columns for nested table (bookings)
   const bookingColumns = [
     {
       title: "Customer",
       render: (_, record) => `${record.customer?.Fname} ${record.customer?.Lname}`,
+      sorter: (a, b) => {
+        const nameA = `${a.customer?.Fname} ${a.customer?.Lname}`.toLowerCase();
+        const nameB = `${b.customer?.Fname} ${b.customer?.Lname}`.toLowerCase();
+        return nameA.localeCompare(nameB);
+      },
+      filters: data?.bookings
+        ?.map((booking) => ({
+          text: `${booking.customer?.Fname} ${booking.customer?.Lname}`,
+          value: `${booking.customer?.Fname} ${booking.customer?.Lname}`,
+        }))
+        .filter((v, i, a) => a.findIndex((t) => t.value === v.value) === i),
+      onFilter: (value, record) => `${record.customer?.Fname} ${record.customer?.Lname}` === value,
     },
     {
       title: "Dates",
@@ -65,11 +76,21 @@ export default function ApprovePage() {
           {record.End !== record.Start && ` - ${moment(record.End).format("DD MMM")}`}
         </Tag>
       ),
+      sorter: (a, b) => moment(a.Start).unix() - moment(b.Start).unix(),
     },
     {
       title: "Status",
       dataIndex: "Status_booking",
       render: (status) => <Badge status={status === "approved" ? "success" : "default"} text={status.toUpperCase()} />,
+      filters: [{ text: "APPROVED", value: "approved" }],
+      onFilter: (value, record) => record.Status_booking === value,
+    },
+    // เพิ่ม column ใหม่สำหรับ updatedAt
+    {
+      title: "Last Updated",
+      dataIndex: "updatedAt",
+      render: (_, record) => <Tag color="geekblue">{moment(record.updatedAt).format("DD MMM YYYY, HH:mm")}</Tag>,
+      sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix(),
     },
   ];
 
@@ -100,7 +121,13 @@ export default function ApprovePage() {
                     columns={bookingColumns}
                     dataSource={packageGroup.bookings}
                     rowKey="documentId"
-                    pagination={false}
+                    // Pagination configuration
+                    pagination={{
+                      pageSize: 5,
+                      showSizeChanger: true,
+                      pageSizeOptions: ["5", "10", "20"],
+                      showTotal: (total) => `Total ${total} bookings`,
+                    }}
                     expandable={{
                       expandedRowRender: (record) => (
                         <div style={{ margin: 0 }}>
