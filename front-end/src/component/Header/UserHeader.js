@@ -8,6 +8,7 @@ import {
   LogoutOutlined,
   UserOutlined,
   HomeOutlined,
+  HeartOutlined, // เพิ่ม icon สำหรับ Favorite
 } from "@ant-design/icons";
 
 const { Header } = Layout;
@@ -46,6 +47,24 @@ export const UserHeader = () => {
       ]);
     } else {
       setMenuItems([
+        //
+        {
+          key: "favorite",
+          label:
+            location.pathname === "/favorite" ? (
+              <>
+                <HomeOutlined /> Home
+              </>
+            ) : (
+              <>
+                <HeartOutlined /> Favorite package
+              </>
+            ),
+          onClick: () =>
+            navigate(location.pathname === "/favorite" ? "/" : "/favorite"),
+          style: { marginLeft: "auto" },
+        },
+        //
         {
           key: "nav-toggle",
           label:
@@ -60,7 +79,6 @@ export const UserHeader = () => {
             ),
           onClick: () =>
             navigate(location.pathname === "/status" ? "/" : "/status"),
-          style: { marginLeft: "auto" },
         },
         {
           key: "user-menu",

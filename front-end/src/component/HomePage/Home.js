@@ -7,6 +7,7 @@ import PriceFilter from "./PriceFilter";
 import SlideImg from "./SlideImg";
 import { Layout } from "antd";
 import CustomFooter from "./Footer";
+import BackToTop from "./BackToTop";
 
 const { Footer, Sider, Content } = Layout;
 
@@ -25,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <Layout className="Background-Home">
+    <Layout>
       <UserHeader />
       <Layout>
         <SlideImg onSearch={(title) => setSearchTitle(title)} />
@@ -39,7 +40,8 @@ export default function Home() {
           <PriceFilter onFilter={mergeFilters} />
         </Sider>
       </Layout>
-      {/* <CustomFooter /> */}
+      <BackToTop />
+      <CustomFooter />
     </Layout>
   );
 }
