@@ -3,7 +3,14 @@ import { UserHeader } from "../Header/UserHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button, Form, Select, message, Layout, Col, Row, Avatar } from "antd";
-import { PlusOutlined, MinusOutlined, UserOutlined, CalendarTwoTone, HeartOutlined, HeartFilled } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  MinusOutlined,
+  UserOutlined,
+  CalendarTwoTone,
+  HeartOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 import { TRAVEL_DATE, ALL_IMAGES_PACKAGE, APPROVE_BOOKINGSD } from "../../Graphql";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
@@ -31,7 +38,7 @@ export default function Detail() {
   const [allImages, setAllImages] = useState([]);
   const [favorites, setFavorites] = useState(() => {
     // โหลดข้อมูล favorites จาก localStorage เมื่อโหลดหน้า
-    const savedFavorites = localStorage.getItem('favorites');
+    const savedFavorites = localStorage.getItem("favorites");
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
 
@@ -140,7 +147,7 @@ export default function Detail() {
         message.log("Validation failed:", err);
       });
   };
-     const toggleFavorite = (documentId) => {
+  const toggleFavorite = (documentId) => {
     const updatedFavorites = favorites.includes(documentId)
       ? favorites.filter((id) => id !== documentId)
       : [...favorites, documentId];
@@ -148,7 +155,7 @@ export default function Detail() {
     setFavorites(updatedFavorites);
 
     // เก็บข้อมูล favorites ใน localStorage
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
   return (
     <Layout style={{ backgroundColor: "#FFF6ee" }}>
@@ -166,7 +173,7 @@ export default function Detail() {
                 marginLeft: "10px",
                 cursor: "pointer",
                 fontSize: "30px",
-                marginTop: "4px",  // เพิ่มระยะห่างด้านบนเล็กน้อย
+                marginTop: "4px", // เพิ่มระยะห่างด้านบนเล็กน้อย
                 color: favorites.includes(documentId) ? "#ff0000" : "#000",
               }}
               onClick={() => toggleFavorite(documentId)}
@@ -187,7 +194,18 @@ export default function Detail() {
                   {/* จำนวนลูกค้า */}
                   <div className="Member-Trip">จำนวนลูกค้า/ท่าน</div>
                   <div className="Background-add">
-                    <Avatar shape="square" size={50} icon={<UserOutlined />} />
+                    <Avatar
+                      shape="square"
+                      size={50}
+                      icon={<UserOutlined />}
+                      style={{
+                        backgroundColor: "#005C78",
+                        color: "white",
+                        marginLeft: "10px",
+                        marginTop: "5px",
+                        borderRadius: "5px",
+                      }}
+                    />
                     <div className="Box-add-button">
                       <Button
                         className="Add-Button"

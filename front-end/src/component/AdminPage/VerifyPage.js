@@ -42,7 +42,7 @@ export default function VerifyPage() {
     return pendingBooking.reduce((acc, { End, Start, ...booking }) => {
       const formattedStart = moment(Start).format("DD/MM/YYYY");
       const formattedEnd = End ? moment(End).format("DD/MM/YYYY") : null;
-      const dateRange = formattedEnd ? `${formattedStart} - ${formattedEnd}` : formattedStart;
+      const dateRange = formattedEnd !== formattedStart ? `${formattedStart} - ${formattedEnd}` : formattedStart;
       acc[dateRange] = acc[dateRange] || [];
       acc[dateRange].push(booking);
       return acc;
