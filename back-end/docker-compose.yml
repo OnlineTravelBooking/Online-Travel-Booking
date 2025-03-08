@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  strapi:
+    build: .
+    container_name: strapi
+    environment:
+      # Server Configuration
+      HOST: "${HOST}"
+      PORT: "${PORT}"
+
+      # Secrets
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+
+      # Database Configuration
+      DATABASE_CLIENT: "${DATABASE_CLIENT}"
+      DATABASE_HOST: "${DATABASE_HOST}"
+      DATABASE_PORT: "${DATABASE_PORT}"
+      DATABASE_NAME: "${DATABASE_NAME}"
+      DATABASE_USERNAME: "${DATABASE_USERNAME}"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
+      FRONTEND_URL: "https://w14.pupasoft.com"
+
+    ports:
+      - "1337:1337"
+    depends_on:
+      - strapi-db
+    volumes:
+      - .:/app
+    networks:
+      - strapi-network
+
+  strapi-db:
+    image: mysql:8
+    container_name: strapi-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - strapi-network
+
+volumes:
+  mysql-data:
+
+networks:
+  strapi-network:
+    driver: bridge

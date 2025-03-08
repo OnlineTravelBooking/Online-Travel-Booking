@@ -1,0 +1,27 @@
+#version: "3"
+
+services:
+  strapi:
+    container_name: strapi
+    build:
+      context: ../back-end
+      dockerfile: Dockerfile
+    image: strapi:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_FILENAME: ${DATABASE_FILENAME}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - ../back-end/config:/opt/app/config
+      - ../back-end/src:/opt/app/src
+      - ../back-end/package.json:/opt/package.json
+      - ../back-end/package-lock.json:/opt/package-lock.json
+      - ../back-end/public:/opt/app/public
+      - ../back-end/.tmp:/opt/app/.tmp
+    ports:
+      - "127.0.0.1:1337:1337"

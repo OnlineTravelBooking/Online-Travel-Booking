@@ -34,7 +34,7 @@ const developerStyle = {
 
 const taglineStyle = {
   marginTop: "0px", // ขยับขึ้นข้างบน
-  marginLeft: "-400px", // ขยับไปทางซ้าย
+  marginLeft: "-22%", // ขยับไปทางซ้าย
 };
 
 const iconStyle = {
@@ -49,7 +49,9 @@ export default function CustomFooter() {
     <Footer style={footerStyle}>
       <div style={sectionStyle}>
         <div style={developerContainerStyle}>
-          <div style={taglineStyle}><strong>Tailored Trips, Timeless Memories</strong></div>
+          <div style={taglineStyle}>
+            <strong>Tailored Trips, Timeless Memories</strong>
+          </div>
           <div style={developerStyle}>
             <strong>Developer</strong>
             <p>นายโมไนย สุชาตานนท์ - Full Stack Developer</p>
@@ -60,7 +62,7 @@ export default function CustomFooter() {
         </div>
         <div>
           <strong>Contact</strong>
-          
+
           <p>
             Facebook:
             <a href="https://facebook.com">
