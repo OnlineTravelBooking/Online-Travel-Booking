@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "vitest run src/component/ErrorIcon.test.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,9 +47,14 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
-    "husky": "^9.1.7"
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "husky": "^9.1.7",
+    "jest-environment-jsdom": "^29.7.0",
+    "vitest": "^3.0.8"
   },
   "overrides": {
     "react-refresh": "0.11.0"
-}
+  }
 }
